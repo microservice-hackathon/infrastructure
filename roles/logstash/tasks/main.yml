@@ -22,6 +22,10 @@
 
 - name: Ensure logstash config is in place
   copy: src=logstash.conf dest=/etc/logstash/conf.d/logstash.conf
+  notify:
+    - restart logstash
+
+- name: Ensure logstash redis config is in place
   copy: src=redis.conf dest=/etc/logstash/conf.d/redis.conf
   notify:
     - restart logstash
