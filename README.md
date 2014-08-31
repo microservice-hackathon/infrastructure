@@ -16,3 +16,6 @@ playbook from: https://github.com/WeAreFarmGeek/ansible-elasticsearch
 
 ## ansible-logstash
 playbook from: https://github.com/WeAreFarmGeek/ansible-logstash
+
+## kibana
+playbook from: https://github.com/johnhamelink/ansible-kibana
