@@ -9,4 +9,4 @@ kibana_domain: 127.0.0.1
 kibana_url: https://github.com/elasticsearch/kibana/archive/master.zip
 
 # Set the location of the elastic search database
-es_address: 127.0.0.1
+es_address: http://127.0.0.1:9200

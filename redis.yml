@@ -1,0 +1,10 @@
+---
+- hosts: redis
+  user: "{{ user }}"
+  sudo: yes
+
+  vars:
+    - redis_bind: 127.0.0.1
+
+  roles:
+    - { role: redis }

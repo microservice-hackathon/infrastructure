@@ -1,12 +1,17 @@
 ---
-- hosts: elastic_search
+- hosts: 127.0.0.1:2222 
   user: "{{ user }}"
   sudo: yes
+
+  vars:
+    - redis_bind: 127.0.0.1
 
   vars_files:
     - vars/global_vars.yml
 
   roles:
     - { role: elastic_search }
+    - { role: redis }
     - { role: logstash }
     - { role: kibana }
+
