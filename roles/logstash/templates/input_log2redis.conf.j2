@@ -1,0 +1,17 @@
+# {{ ansible_managed }}
+input {
+	if "for_redis" not in [tags] {
+        lumberjack {
+            port => 5043
+            ssl_certificate => "/etc/pki/tls/certs/logstash-forwarder.crt"
+            ssl_key => "/etc/pki/tls/private/logstash-forwarder.key"
+            type => "Lumberjack"
+        }
+    }
+}
+filter {
+    if "for_redis" not in [tags] {
+        mutate { add_tag => "for_redis" }
+    }
+}
+# {{ ansible_managed }}

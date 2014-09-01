@@ -1,7 +1,0 @@
----
-- hosts: kibana
-  user: "{{ user }}"
-  sudo: yes
-
-  roles:
-    - { role: kibana }

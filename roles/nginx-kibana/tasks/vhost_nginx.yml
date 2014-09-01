@@ -1,0 +1,37 @@
+- name: Disable default Vhost on Debian OS family
+  file: path=/etc/nginx/sites-enabled/default state=absent
+  when: ansible_os_family == "Debian"
+  notify:
+   - restart nginx
+
+- name: Enable Vhost on Debian OS family
+  template: src=vhost-nginx.j2 dest=/etc/nginx/sites-available/{{ domain }}.conf owner=root group=root mode=0644
+  when: ansible_os_family == "Debian"
+  notify:
+   - restart nginx
+
+- name: Activate Vhost with symlink on Debian OS family
+  file: src=/etc/nginx/sites-available/{{ domain }}.conf dest=/etc/nginx/sites-enabled/{{ domain }}.conf owner=root group=root mode=0644 state=link
+  when: ansible_os_family == "Debian"
+  notify:
+   - restart nginx
+
+- name: Disable default Vhost on CentOS OS family
+  file: path=/etc/nginx/conf.d/{{ item }} state=absent
+  with_items:
+   - default.conf
+   - example_ssl.conf
+  when: ansible_os_family == "RedHat"
+  notify:
+   - restart nginx
+
+- name: Enable Vhost on CentOS OS family
+  template: src=vhost-nginx.j2 dest=/etc/nginx/conf.d/{{ domain }}.conf owner=root group=root mode=0644
+  when: ansible_os_family == "RedHat"
+  notify:
+   - restart nginx
+
+- name: Create htpasswd User
+  htpasswd: path={{ nginx_confd }}/{{ domain }}.htpasswd name={{ usname }} password={{ htpass }} owner=root group=root mode=0644
+  notify:
+   - restart nginx

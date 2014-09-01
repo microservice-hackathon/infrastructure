@@ -1,17 +1,12 @@
 ---
-- hosts: 127.0.0.1:2222 
-  user: "{{ user }}"
+- hosts: loggers
   sudo: yes
 
-  vars:
-    - redis_bind: 127.0.0.1
-
   vars_files:
-    - vars/global_vars.yml
+   - vars/default.yml
 
   roles:
-    - { role: elastic_search }
-    - { role: redis }
-    - { role: logstash }
-    - { role: kibana }
-
+    - { role: redis, tags: ["redis"] }
+    - { role: elasticsearch, tags: ["elasticsearch"] }
+    - { role: logstash, tags: ["logstash"] }
+    - { role: nginx-kibana, tags: ["nginx-kibana"] }

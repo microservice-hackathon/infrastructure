@@ -1,0 +1,31 @@
+- name: Install python-pycurl and python-apt
+  apt: pkg={{ item }} update_cache=yes state=present
+  with_items:
+   - python-pycurl
+   - python-apt
+
+- name: Enable Logstash repository
+  apt_repository: repo="deb http://packages.elasticsearch.org/logstash/{{ logstash_version }}/debian stable main" state=present
+
+- name: Add Logstash repo  key
+  apt_key: url="http://packages.elasticsearch.org/GPG-KEY-elasticsearch" state=present
+
+- name: Install Logstash from repository
+  apt: pkg={{ item }} update_cache=yes state=present
+  with_items:
+   - logstash
+   - logstash-contrib
+
+- name: Ensure SSL certificates have the correct directories
+  file: path=/etc/pki/tls/{{item}} owner=root group=root mode=0755 state=directory
+  with_items:
+    - certs
+    - private
+  notify:
+    - restart logstash
+
+- name: Ensure logstash-forwarder has its SSL certificate
+  copy: src=certs/logstash-forwarder.crt dest=/etc/pki/tls/certs/logstash-forwarder.crt owner=root group=root mode=0755
+
+- name: Ensure logstash-forwarder has its SSL private key
+  copy: src=certs/logstash-forwarder.key dest=/etc/pki/tls/private/logstash-forwarder.key owner=root group=root mode=0755

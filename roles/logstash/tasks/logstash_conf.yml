@@ -1,0 +1,20 @@
+- name: Adjust init.d permissions
+  lineinfile: dest=/etc/init.d/logstash regexp="^LS_USER=" line="LS_USER=root" state=present backup=yes
+  notify:
+   - restart logstash
+
+- name: Adjust init.d permissions
+  lineinfile: dest=/etc/init.d/logstash regexp="^LS_GROUP=" line="LS_GROUP=root" state=present backup=yes
+  notify:
+   - restart logstash
+
+- name: Create Logstash Redis input configuration
+  template: src=input_log2redis.conf.j2 dest="/etc/logstash/conf.d/input_log2redis.conf" owner=root group=root mode=0644
+  notify:
+   - restart logstash
+
+- name: Create Logstash Redis output configuration
+  template: src=output_log2redis.conf.j2 dest="/etc/logstash/conf.d/output_log2redis.conf" owner=root group=root mode=0644
+
+- name: Create Logstash Elasticsearch configuration
+  template: src=redis2elasticsearch.conf.j2 dest="/etc/logstash/conf.d/redis2elasticsearch.conf" owner=root group=root mode=0644

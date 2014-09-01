@@ -1,0 +1,20 @@
+rsys_conf: "/etc/rsyslog.conf"
+rsys_dir: "/var/log/hosts/"
+
+epel_url: "http://ftp.linux.cz/pub/linux/fedora/epel/6/i386/epel-release-6-8.noarch.rpm"
+
+elasticsearch_version: "1.0"
+elastic_conf: "/etc/elasticsearch/elasticsearch.yml"
+logstash_version: "1.4"
+
+sincedb: "/var/lib/logstash/"
+
+nginx_repo: "http://nginx.org/packages/centos/6/noarch/RPMS/nginx-release-centos-6-0.el6.ngx.noarch.rpm"
+nginx_confd: "/etc/nginx/conf.d"
+
+usname: "mylogger"
+htpass: "mylogger"
+domain: "logger"
+
+kibana_url: "https://download.elasticsearch.org/kibana/kibana/kibana-{{ kibana_version }}.tar.gz"
+kibana_version: "3.0.1"

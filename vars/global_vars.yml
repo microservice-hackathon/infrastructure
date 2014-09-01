@@ -1,4 +1,0 @@
----
-#user: ubuntu
-es_address: 127.0.0.1
-logstash_domain: 127.0.0.1:5043

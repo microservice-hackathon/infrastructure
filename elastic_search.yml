@@ -1,7 +1,0 @@
----
-- hosts: elastic_search
-  user: "{{ user }}"
-  sudo: yes
-
-  roles:
-    - { role: elastic_search }

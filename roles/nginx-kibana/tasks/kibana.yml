@@ -1,0 +1,13 @@
+- name: Get Kibana Archive
+  get_url: url={{ kibana_url }} dest=/home/{{ usname }}/public_html/kibana.tar.gz
+
+- name: Unarchive Kibana
+  command: tar zxf /home/{{ usname }}/public_html/kibana.tar.gz -C /home/{{ usname }}/public_html/ creates=/home/{{ usname }}/public_html/kibana-{{ kibana_version }}
+
+- name: Set permissions for Kibana on Debian OS family
+  command: /bin/chown -R {{ usname }}.{{ usname }} /home/{{ usname }}/public_html/
+  when: ansible_os_family == "Debian"
+
+- name: Set permissions for Kibana on CentOS OS family
+  command: /bin/chown -R nginx.nginx /home/{{ usname }}/public_html/
+  when: ansible_os_family == "RedHat"

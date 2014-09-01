@@ -1,0 +1,21 @@
+- name: Install Nginx repo on CentOS
+  yum: name={{ nginx_repo }} state=installed
+  when: ansible_os_family == "RedHat"
+
+- name: Install Nginx on CentOS
+  yum: name={{ item }} state=latest
+  with_items:
+   - nginx
+   - python-passlib
+  when: ansible_os_family == "RedHat"
+  notify:
+   - start nginx
+
+- name: Install Nginx on Debian
+  apt: pkg={{ item }} update_cache=yes state=present
+  with_items:
+   - nginx
+   - python-passlib
+  when: ansible_os_family == "Debian"
+  notify:
+   - start nginx

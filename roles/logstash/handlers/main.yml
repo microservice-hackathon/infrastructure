@@ -1,3 +1,1 @@
----
-- name: restart logstash
-  service: name=logstash state=restarted
+- include: restart_logstash.yml
