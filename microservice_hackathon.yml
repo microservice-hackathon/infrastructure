@@ -11,3 +11,6 @@
     - { role: logstash, tags: ["logstash"] }
     - { role: nginx-kibana, tags: ["nginx-kibana"] }
     - { role: logstash-forwarder, tags: ["logstash-forwarder"] }
+    - { role: apache, tags: ["apache", "graphite_grafana"] }
+    - { role: graphite, tags: ["graphite", "graphite_grafana"] }
+    - { role: grafana, tags: ["grafana", "graphite_grafana"] }

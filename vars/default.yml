@@ -20,3 +20,5 @@ domain: "logger"
 
 kibana_url: "https://download.elasticsearch.org/kibana/kibana/kibana-{{ kibana_version }}.tar.gz"
 kibana_version: "3.0.1"
+
+graphite_vhost: "127.0.0.1"

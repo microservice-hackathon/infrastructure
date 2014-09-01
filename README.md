@@ -47,3 +47,6 @@ playbook from: https://github.com/valentinogagliardi/ansible-logstash
 playbook from: https://github.com/WeAreFarmGeek/ansible-logstash-forwarder
 configuration: /etc/logstash-forwarder
 installed as a service that logs to syslog
+
+## grahipte + graphana
+playbook from: https://github.com/gmontard/grafana-graphite-statsd-ansible-vagrant
