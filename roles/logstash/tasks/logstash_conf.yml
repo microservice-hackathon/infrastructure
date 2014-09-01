@@ -18,3 +18,6 @@
 
 - name: Create Logstash Elasticsearch configuration
   template: src=redis2elasticsearch.conf.j2 dest="/etc/logstash/conf.d/redis2elasticsearch.conf" owner=root group=root mode=0644
+  
+- name: Create Logstash application configuration
+  template: src=application.conf.j2 dest="/etc/logstash/conf.d/application.conf" owner=root group=root mode=0644

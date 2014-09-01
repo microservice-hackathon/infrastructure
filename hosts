@@ -1,2 +1,2 @@
 [loggers]
-127.0.0.1:2222
+localhost ansible_ssh_port=2222 ansible_ssh_user=root ansible_ssh_pass=root

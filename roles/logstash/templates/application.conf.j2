@@ -1,0 +1,45 @@
+# {{ ansible_managed }}
+filter {
+     if [type] =~ /.*_gc$/ {
+    mutate {                        # sanitizing input data
+      gsub => [
+        "message", "\s+", " ",      # replace all multiple whitespaces with single space
+        "message", "\r\n", "\n"     # convert windows newline encoding to unix one
+      ]
+      strip => [ "message" ]        # trim leading/trailing whitespaces
+      add_tag => [ "sanitized" ]
+    }
+    grok {                          # matching normal gc entries
+      match => { "message" => "^%{TIMESTAMP_ISO8601:timestamp}: %{NUMBER:time_since_jvm_start}: \[GC \[PSYoungGen: %{NUMBER:young_before}K->%{NUMBER:young_after}K\(%{NUMBER:young_capacity}K\)\] %{NUMBER:heap_before}K->%{NUMBER:heap_after}K\(%{NUMBER:heap_capacity}K\), %{NUMBER:duration:float} secs\] \[Times: user=%{NUMBER:time_user} sys=%{NUMBER:time_sys}, real=%{NUMBER:time_real} secs\]$" }
+      add_tag => [ "gc" ]
+    }
+    grok {                          # matching full gc entries
+      match => { "message" => "^%{TIMESTAMP_ISO8601:timestamp}: %{NUMBER:time_since_jvm_start}: \[Full GC \[PSYoungGen: %{NUMBER:young_before}K->%{NUMBER:young_after}K\(%{NUMBER:young_capacity}K\)\] \[ParOldGen: %{NUMBER:old_before}K->%{NUMBER:old_after}K\(%{NUMBER:old_capacity}K\)\] %{NUMBER:heap_before}K->%{NUMBER:heap_after}K\(%{NUMBER:heap_capacity}K\) \[PSPermGen: %{NUMBER:perm_before}K->%{NUMBER:perm_after}K\(%{NUMBER:perm_capacity}K\)\], %{NUMBER:duration:float} secs\] \[Times: user=%{NUMBER:time_user} sys=%{NUMBER:time_sys}, real=%{NUMBER:time_real} secs\]$" }
+      add_tag => [ "full_gc" ]
+    }
+    date {
+      match => [ "timestamp", "ISO8601" ]
+    }
+
+  } else {
+
+      # pattern should match the beginning of the grok match
+      multiline {
+            pattern => "(^%{TIMESTAMP_ISO8601})"
+            what => "previous"
+            negate => true
+      }
+
+      # pattern matching logback pattern
+      grok {
+           match => { "message" => "(?m)%{TIMESTAMP_ISO8601:timestamp}\s+\|\s+%{LOGLEVEL:severity}\s+\|\s+%{DATA:correlationId}\s+\|\s+%{DATA:thread}\s+\|\s+%{JAVAFILE:class}\s+\|\s+%{GREEDYDATA:shortmessage}" }
+      }
+
+      # pattern of date in logs
+      date {
+           match => [ "timestamp", "yyyy-MM-dd HH:mm:ss.SSSZ" ]
+      }
+   }
+
+}
+# {{ ansible_managed }}
