@@ -6,6 +6,8 @@ epel_url: "http://ftp.linux.cz/pub/linux/fedora/epel/6/i386/epel-release-6-8.noa
 elasticsearch_version: "1.0"
 elastic_conf: "/etc/elasticsearch/elasticsearch.yml"
 logstash_version: "1.4"
+logstash_domain: "127.0.0.1"
+lumberjack_port: "5043"
 
 sincedb: "/var/lib/logstash/"
 
