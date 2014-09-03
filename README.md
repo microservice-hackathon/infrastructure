@@ -1,24 +1,28 @@
 ansible-microservice-hackathon
 ==============================
 
-# Repository contains playbooks that provision
+During the WarsJava microservice hackathon we will need to provision:
 
-## microservice related infrastructure:
+## log monitoring (log server)
 - elasticsearch
 - redis
 - logstash
 - kibana
-- logstash-forwarder
+
+## metrics collecting (metrics server)
 - graphite
 - graphana
-- zookeeper
 
-## deployment related infrastructure:
+## microservice related stuff (app server)
+- zookeeper
+- logstash-forwarder
+
+## deployment related infrastructure: (deploy server)
 - nexus
 
 # Playbooks origin:
 
-## Log monitoring (log server)
+## Log monitoring
 
 ### elastic-search
 playbook from: https://github.com/valentinogagliardi/ansible-logstash
@@ -46,14 +50,19 @@ $ROOT/files/certs
 ### kibana + nginx
 playbook from: https://github.com/valentinogagliardi/ansible-logstash
 
-## Metrics monitoring (metrics server)
+## Metrics monitoring
 
 ### graphite + grafana
 playbook from: https://github.com/marcingrzejszczak/ansible-graphite-graphana
 
-## Applications (application server)
+## Applications
 
 ### logstash forwarder
 playbook from: https://github.com/WeAreFarmGeek/ansible-logstash-forwarder
 configuration: /etc/logstash-forwarder
 installed as a service that logs to syslog
+
+## Deployment
+
+### nexus
+playbook from: https://github.com/marcingrzejszczak/ansible-sonatype-nexus
