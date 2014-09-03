@@ -18,16 +18,18 @@ ansible-microservice-hackathon
 
 # Playbooks origin:
 
-## elastic-search
+## Log monitoring (log server)
+
+### elastic-search
 playbook from: https://github.com/valentinogagliardi/ansible-logstash
 
-## redis
+### redis
 playbook from: https://github.com/valentinogagliardi/ansible-logstash
 
-## logstash
+### logstash
 playbook from: https://github.com/valentinogagliardi/ansible-logstash
 
-### SSL keys
+#### SSL keys
 Generate SSL keys by running:
 
 ```
@@ -38,15 +40,20 @@ Copy the resultant .key and .crt files to
 
 ```
 $ROOT/files/certs
+
 ```
 
-## kibana + nginx
+### kibana + nginx
 playbook from: https://github.com/valentinogagliardi/ansible-logstash
 
-## logstash forwarder
+## Metrics monitoring (metrics server)
+
+### graphite + grafana
+playbook from: https://github.com/marcingrzejszczak/ansible-graphite-graphana
+
+## Applications (application server)
+
+### logstash forwarder
 playbook from: https://github.com/WeAreFarmGeek/ansible-logstash-forwarder
 configuration: /etc/logstash-forwarder
 installed as a service that logs to syslog
-
-## grahipte + graphana
-playbook from: https://github.com/gmontard/grafana-graphite-statsd-ansible-vagrant
