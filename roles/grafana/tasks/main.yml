@@ -1,0 +1,5 @@
+---
+
+- include: grafana_download.yml
+- include: grafana_config_file.yml
+- include: grafana_apache_vhost.yml

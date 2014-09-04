@@ -1,0 +1,51 @@
+---
+  - name: Set NEXUS_HOME
+    lineinfile: dest={{ sonatype_nexus_root_dir }}/{{ nexus_directory.stdout }}/bin/nexus
+                regexp='^NEXUS_HOME="'
+                line='NEXUS_HOME="{{ sonatype_nexus_dir }}"'
+    notify:
+      - restart sonatype-nexus
+
+  - name: Set PIDDIR
+    lineinfile: dest={{ sonatype_nexus_root_dir }}/{{ nexus_directory.stdout }}/bin/nexus
+                regexp='^PIDDIR="'
+                insertafter="#PIDDIR="
+                line='PIDDIR="{{ sonatype_nexus_pid_dir }}"'
+    notify:
+      - restart sonatype-nexus
+
+  - name: Set RUN_AS_USER
+    lineinfile: dest={{ sonatype_nexus_root_dir }}/{{ nexus_directory.stdout }}/bin/nexus
+                regexp='^RUN_AS_USER="'
+                insertafter="#RUN_AS_USER="
+                line='RUN_AS_USER="nexus"'
+    notify:
+      - restart sonatype-nexus
+
+  - name: Set application-port
+    lineinfile: dest={{ sonatype_nexus_root_dir }}/{{ nexus_directory.stdout }}/conf/nexus.properties
+                regexp='^application-port='
+                line='application-port={{ sonatype_nexus_application_port }}'
+    notify:
+      - restart sonatype-nexus
+
+  - name: Set application-host
+    lineinfile: dest={{ sonatype_nexus_root_dir }}/{{ nexus_directory.stdout }}/conf/nexus.properties
+                regexp='^application-host='
+                line='application-host={{ sonatype_nexus_application_host }}'
+    notify:
+      - restart sonatype-nexus
+
+  - name: Set nexus-work
+    lineinfile: dest={{ sonatype_nexus_root_dir }}/{{ nexus_directory.stdout }}/conf/nexus.properties
+                regexp='^nexus-work='
+                line='nexus-work={{ sonatype_nexus_work_dir }}'
+    notify:
+      - restart sonatype-nexus
+
+  - name: Set nexus-webapp-context-path
+    lineinfile: dest={{ sonatype_nexus_root_dir }}/{{ nexus_directory.stdout }}/conf/nexus.properties
+                regexp='^nexus-webapp-context-path='
+                line='nexus-webapp-context-path={{ sonatype_nexus_webapp_context_path }}'
+    notify:
+      - restart sonatype-nexus

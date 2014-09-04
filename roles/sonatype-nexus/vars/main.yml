@@ -1,0 +1,5 @@
+---
+sonatype_nexus_root_dir: "/opt"
+sonatype_nexus_dir: "{{ sonatype_nexus_root_dir }}/sonatype-nexus"
+sonatype_nexus_download_url: "http://www.sonatype.org/downloads/nexus-{{ sonatype_nexus_version }}-bundle.tar.gz"
+sonatype_nexus_download_dest: "{{ sonatype_nexus_root_dir }}/nexus-{{ sonatype_nexus_version }}-bundle.tar.gz"

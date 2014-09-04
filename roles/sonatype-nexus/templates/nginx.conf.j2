@@ -1,0 +1,32 @@
+#{{ ansible_managed }}
+{% if sonatype_nexus_nginx_ssl == true %}
+server {
+  server_name {{ sonatype_nexus_nginx_fqdn }};
+  listen 80{% if sonatype_nexus_nginx_default_site == true %} default{% endif %};
+  rewrite ^ https://$host$request_uri permanent;
+}
+
+{% endif %}
+server {
+  server_name {{ sonatype_nexus_nginx_fqdn }};
+  listen {% if sonatype_nexus_nginx_ssl == true %}443{% else %}80{% endif %}
+  {%- if sonatype_nexus_nginx_default_site == true %} default{% endif %}
+  {%- if sonatype_nexus_nginx_ssl == true %} ssl{% endif %};
+
+{% if sonatype_nexus_nginx_ssl == true %}
+  ssl_certificate     /etc/ssl/certs/sonatype_nexus.crt;
+  ssl_certificate_key /etc/ssl/private/sonatype_nexus.key;
+{% endif %}
+
+  location / {
+      proxy_pass http://localhost:{{ sonatype_nexus_application_port }};
+      proxy_set_header Host $host;
+      proxy_set_header X-Real-IP $remote_addr;
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+{% if sonatype_nexus_nginx_ssl == true %}
+      proxy_set_header X-Forwarded-Proto "https";
+      proxy_set_header X-Url-Scheme $scheme;
+{% endif %}
+      proxy_redirect off;
+  }
+}

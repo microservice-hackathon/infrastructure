@@ -1,0 +1,27 @@
+---
+  - name: Download apt plugin
+    get_url: url="https://github.com/inventage/nexus-apt-plugin/releases/download/nexus-apt-plugin-{{ sonatype_nexus_plugin_apt_version }}/nexus-apt-plugin-{{ sonatype_nexus_plugin_apt_version }}-bundle.zip"
+             dest="{{ sonatype_nexus_work_dir }}/plugin-repository/nexus-apt-plugin-{{ sonatype_nexus_plugin_apt_version }}-bundle.zip"
+    register: sonatype_nexus_plugin_apt_download
+    when: sonatype_nexus_plugin_apt_version is defined
+
+  - name: Install unzip
+    apt: name=unzip state=installed
+    when: sonatype_nexus_plugin_apt_download.changed
+
+  - name: Extract apt plugin
+    command: unzip -o nexus-apt-plugin-{{ sonatype_nexus_plugin_apt_version }}-bundle.zip chdir={{ sonatype_nexus_work_dir }}/plugin-repository
+    when: sonatype_nexus_plugin_apt_download.changed
+    notify:
+      - restart sonatype-nexus
+
+  - name: Install signing key to {{ sonatype_nexus_work_dir }}/pkg_signing_gpg.keyring if defined
+    copy: src={{ sonatype_nexus_pkg_signing_keyring }} dest={{ sonatype_nexus_work_dir }}/pkg_signing_gpg.keyring
+          owner=nexus group=nexus mode=0600
+    when: sonatype_nexus_pkg_signing_keyring is defined
+
+  - name: Plugin ownership
+    file: owner=nexus group=nexus mode=0755 recurse=true state=directory
+          dest={{ sonatype_nexus_work_dir }}/plugin-repository/nexus-apt-plugin-{{ sonatype_nexus_plugin_apt_version }}
+    notify:
+      - restart sonatype-nexus

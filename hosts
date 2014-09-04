@@ -1,2 +1,11 @@
 [loggers]
-localhost ansible_ssh_port=2222 ansible_ssh_user=vagrant
+localhost ansible_ssh_port=2222 ansible_ssh_user=root ansible_ssh_pass=root
+
+[apps]
+localhost ansible_ssh_port=2223 ansible_ssh_user=root ansible_ssh_pass=root
+
+[graphite]
+localhost ansible_ssh_port=2224 ansible_ssh_user=root ansible_ssh_pass=root
+
+[nexus]
+localhost ansible_ssh_port=2225 ansible_ssh_user=root ansible_ssh_pass=root

@@ -1,0 +1,3 @@
+---
+- name: Create config file
+  template: src=grafana.js.j2 dest="{{grafana_graphite_root}}/grafana-{{grafana_version}}/config.js" owner={{ grafana_owner }}

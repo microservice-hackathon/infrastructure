@@ -1,0 +1,18 @@
+- name: Install python-pycurl and python-apt
+  apt: pkg={{ item }} update_cache=yes state=present
+  with_items:
+   - python-pycurl
+   - python-apt
+
+- name: Enable Elasticsearch repository
+  apt_repository: repo="deb http://packages.elasticsearch.org/elasticsearch/{{ elasticsearch_version }}/debian stable main" state=present
+
+- name: Add Elasticsearch repo key
+  apt_key: url="http://packages.elasticsearch.org/GPG-KEY-elasticsearch" state=present
+
+- name: Install Elasticsearch from repository
+  apt: pkg={{ item }} update_cache=yes state=present
+  with_items:
+   - elasticsearch
+  notify:
+   - restart elasticsearch

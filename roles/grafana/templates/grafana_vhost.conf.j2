@@ -1,0 +1,5 @@
+NameVirtualHost *:80
+<VirtualHost *:80>
+        DocumentRoot "{{ grafana_graphite_root }}/dist"
+        ServerName {{ grafana_vhost_server_name }}
+</VirtualHost>

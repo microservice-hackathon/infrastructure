@@ -1,0 +1,12 @@
+---
+
+grafana_git_url: https://github.com/torkelo/grafana.git
+grafana_graphite_root: /opt/graphite
+grafana_version: 1.6.1
+grafana_vhost_server_name: grafana
+
+grafana_owner: apache
+grafana_elasticsearch_url: http://127.0.0.1:9200
+grafana_graphite_url: http://127.0.0.1:{{ graphite_apache_port }}
+
+grafana_apache_vhost_file: grafana.conf

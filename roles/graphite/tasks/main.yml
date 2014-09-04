@@ -1,0 +1,90 @@
+---
+
+- name: Lookup OS specific variables
+  include_vars: "{{ ansible_os_family }}.yml"
+
+
+- name: Install Graphite Dependencies for Debian
+  apt: "name={{ item }} state=present update_cache=yes"
+  with_items: graphite_pkgs
+  when: ansible_os_family == 'Debian'
+
+
+- name: Create PIP requirements file 
+  copy: src=opt/graphite/requirements.txt dest=/tmp/requirements.txt
+
+
+- name: Install Graphite from PIP
+  pip: requirements=/tmp/requirements.txt
+  environment:
+    PYTHONPATH: "/opt/graphite/lib:/opt/graphite/webapp"
+
+
+- name: Configure graphite apache vhost
+  template: "src=etc/apache/graphite.conf.j2 dest={{ apache_vhost_dest }}/{{ graphite_apache_vhost_name }}
+   owner={{ apache_user }} group={{ apache_user }} mode=0644"
+  notify:
+    - Reload apache
+
+
+- name: Configure Graphite webapp
+  template: src=opt/graphite/webapp/graphite/local_settings.py.j2
+    dest=/opt/graphite/webapp/graphite/local_settings.py mode=0644
+  notify:
+    - Reload apache
+
+
+- name: Configure graphite.wsgi
+  copy: src=opt/graphite/conf/graphite.wsgi dest=/opt/graphite/conf/graphite.wsgi mode=0644
+  notify:
+    - Reload apache
+
+
+- name: Include carbon-cache
+  include: carbon-cache.yml
+
+- name: Get directory permissions
+  stat: path=/opt/graphite
+  register: permissions
+
+- name: set permissions for /opt/graphite
+  file: path=/opt/graphite owner={{ apache_user }} group={{ apache_user }} state=directory recurse=yes
+
+- name: pring ownership
+  debug: msg="Changing ownership to {{ apache_user }}"
+
+- name: Get graphite directory
+  stat: path=/opt/graphite
+  register: graphite
+
+- name: print changed permissions
+  debug: msg="Graphite has permissions owner {{ graphite.stat.pw_name }} and group {{ graphite.stat.gid }} "
+
+- name: Get enforce directory
+  stat: path=/selinux/enforce
+  register: enforce
+
+- name: Create enforce file if missing
+  file: path=/selinux/enforce state=touch
+  when: "enforce.stat.isdir is not defined"
+
+- name: Disable SELinux enforcement if enforce doesn't contain 0
+  command: echo 0 > /selinux/enforce
+  when: 
+      - lineinfile: dest=/selinux/enforce regexp="^(?=.*[1-9])\d*\.?\d*$"
+
+- name: Setup sqlitedb
+  command: /usr/bin/python manage.py syncdb --noinput chdir=/opt/graphite/webapp/graphite 
+   creates=/opt/graphite/storage/graphite.db
+  #sudo_user: "{{ apache_user }}"
+  register: sqlite_setup
+
+- name: Change permissions of sqlitedb
+  file: path=/opt/graphite/storage/graphite.db mode=0755 owner={{ apache_user }} group={{ apache_user }}
+
+- name: Wait for sqlitedb to be setup
+  shell: sleep 3
+  when: sqlite_setup.changed
+
+- name: Start apache httpd
+  service: "name={{ apache_service }} state=running enabled=yes"

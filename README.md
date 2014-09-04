@@ -57,6 +57,9 @@ playbook from: https://github.com/marcingrzejszczak/ansible-graphite-graphana
 
 ## Applications
 
+### JDK8
+playbook from: https://gist.github.com/gbirke/8314571
+
 ### logstash forwarder
 playbook from: https://github.com/WeAreFarmGeek/ansible-logstash-forwarder
 configuration: /etc/logstash-forwarder

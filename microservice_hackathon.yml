@@ -1,16 +1,57 @@
 ---
-- hosts: loggers
+- name: sshd
+  hosts: all
+  gather_facts: False
+  tasks:
+    - name: Wait for sshd to be running
+      local_action: "wait_for host={{ inventory_hostname }} delay=0 port={{ ansible_ssh_port }} timeout=90 state=started"
+        
+- name: Server for logging applications
+  hosts: loggers
   sudo: yes
 
   vars_files:
-   - vars/default.yml
+   - vars/loggers.yml
 
   roles:
-    - { role: redis, tags: ["redis"] }
-    - { role: elasticsearch, tags: ["elasticsearch"] }
-    - { role: logstash, tags: ["logstash"] }
-    - { role: nginx-kibana, tags: ["nginx-kibana"] }
-    - { role: logstash-forwarder, tags: ["logstash-forwarder"] }
-    - { role: apache, tags: ["apache", "graphite_grafana"] }
-    - { role: graphite, tags: ["graphite", "graphite_grafana"] }
-    - { role: grafana, tags: ["grafana", "graphite_grafana"] }
+    - { role: redis, tags: ["loggers"] }
+    - { role: elasticsearch, tags: ["loggers"] }
+    - { role: logstash, tags: ["loggers"] }
+    - { role: nginx-kibana, tags: ["loggers"] }
+
+- name: Server for applications
+  hosts: apps
+  sudo: yes
+
+  vars_files:
+   - vars/apps.yml
+   - vars/loggers.yml
+
+  roles:
+    - { role: jdk8, tags: ["apps"] }
+    - { role: logstash-forwarder, tags: ["apps"] }
+
+- name: Server for metrics
+  hosts: graphite
+  user: '{{ ssh_user }}'
+  sudo: true
+  gather_facts: no
+  vars:
+    ssh_user: root
+  roles:
+    - { role: apache, tags: ["graphite"] }
+    - { role: graphite, tags: ["graphite"] }
+    - { role: grafana, tags: ["graphite"] }
+    - { role: elasticsearch-graphite, tags: ["graphite"] }
+    
+- name: Server for nexus
+  hosts: nexus
+  user: '{{ ssh_user }}'
+  sudo: true
+  gather_facts: no
+    
+  vars_files:
+   - vars/nexus.yml
+   
+  roles:
+    - { role: sonatype-nexus, tags: ["nexus"] }

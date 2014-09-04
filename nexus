@@ -1,0 +1,2 @@
+[nexus]
+localhost ansible_ssh_port=2225 ansible_ssh_user=root ansible_ssh_pass=root

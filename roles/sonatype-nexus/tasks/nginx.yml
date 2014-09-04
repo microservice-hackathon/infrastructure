@@ -1,0 +1,25 @@
+---
+  - name: Install nginx
+    apt: name=nginx state=installed
+    notify:
+      - restart nginx
+
+  - name: Install SSL cert
+    copy: src={{ sonatype_nexus_nginx_ssl_cert_file }} dest=/etc/ssl/certs/sonatype_nexus.crt
+          owner=root group=root mode=0644
+    when: sonatype_nexus_nginx_ssl == true
+    notify:
+      - restart nginx
+
+  - name: Install SSL key
+    copy: src={{ sonatype_nexus_nginx_ssl_key_file }} dest=/etc/ssl/private/sonatype_nexus.key
+          owner=root group=root mode=0600
+    when: sonatype_nexus_nginx_ssl == true
+    notify:
+      - restart nginx
+
+  - name: Install nginx configuration
+    template: src=nginx.conf.j2 dest=/etc/nginx/conf.d/sonatype_nexus.conf
+              owner=root group=root mode=0644
+    notify:
+      - restart nginx

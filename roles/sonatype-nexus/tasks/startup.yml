@@ -1,0 +1,17 @@
+---
+  - name: Repoint symbolic link
+    file: src={{ sonatype_nexus_root_dir }}/{{ nexus_directory.stdout }}
+          dest={{ sonatype_nexus_dir }}
+          state=link
+    notify:
+      - restart sonatype-nexus
+
+  - name: create symbolic links to /etc/init.d/nexus
+    file: src={{ sonatype_nexus_dir }}/bin/nexus
+          dest=/etc/init.d/nexus
+          state=link
+    notify:
+      - restart sonatype-nexus
+
+  - name: configure runlevel links for nexus
+    command: update-rc.d nexus defaults

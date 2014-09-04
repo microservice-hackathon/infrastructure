@@ -1,0 +1,19 @@
+---
+  - name: Create "nexus" group
+    group: name=nexus
+
+  - name: Create "nexus" user
+    user: name=nexus group=nexus
+
+  - include: openjdk.yml
+
+  - include: download.yml
+
+  - include: configure.yml
+
+  - include: plugins/apt.yml
+
+  - include: startup.yml
+
+  - include: nginx.yml
+    when: sonatype_nexus_nginx == true

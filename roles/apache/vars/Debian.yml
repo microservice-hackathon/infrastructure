@@ -1,0 +1,11 @@
+---
+
+apache_user: www-data
+apache_service: apache2
+apache_vhost_root: /etc/apache2
+apache_vhost_dest: "{{ apache_vhost_root }}/sites-available"
+apache_vhost_enabled: "{{ apache_vhost_root}}/sites-enabled"
+apache_pkgs:
+  - apache2-mpm-worker
+  - libapache2-mod-wsgi
+
