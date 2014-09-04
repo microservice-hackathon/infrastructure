@@ -1,0 +1,21 @@
+  - name: Install wget
+    apt: pkg=wget
+ 
+  - name: Download Zookeeper
+    command: 'wget {{zookeeper_download}} -P {{download_folder}} creates={{zookeeper_archive}}' 
+ 
+  - name: Extract Zookeeper archive
+    command: "tar -xzf {{zookeeper_archive}} -C {{download_folder}} creates={{download_folder}}/{{zookeeper_name}}"
+ 
+  - name: Fix ownership 
+    file: "state=directory path={{download_folder}}/{{zookeeper_name}} owner=root group=root recurse=yes"
+ 
+  - name: Create Zookeeper folder
+    file: "state=directory path={{zookeeper_folder}}"
+ 
+  - name: Move Zookeeper to final folder
+    command: "mv {{download_folder}}/{{zookeeper_name}} {{zookeeper_folder}} creates={{zookeeper_folder}}/{{java_name}}"
+ 
+  - name: Make Zookeeper available for system
+    template: src=zookeeper.j2 dest=/etc/init.d/zookeeper owner=root group=root mode=0644
+
