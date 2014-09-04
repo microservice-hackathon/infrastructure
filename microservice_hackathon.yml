@@ -29,6 +29,7 @@
 
   roles:
     - { role: jdk8, tags: ["apps"] }
+    - { role: zookeeper, tags: ["apps"] }
     - { role: logstash-forwarder, tags: ["apps"] }
 
 - name: Server for metrics
