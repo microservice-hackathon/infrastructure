@@ -18,6 +18,9 @@
  
   - name: Make Zookeeper available for system
     template: src=zookeeper.j2 dest=/etc/init.d/{{zookeeper_app_name}} owner=root group=root mode=755
+     
+  - name: Create Zookeeper configuration folder
+    file: "state=directory path={{zookeeper_config_path}}"
     
   - name: Copy Zookeeper configuration
     template: src=zoo.cfg.j2 dest={{zookeeper_config_path}}/zoo.cfg owner=root group=root mode=755

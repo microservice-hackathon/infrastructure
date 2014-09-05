@@ -11,34 +11,38 @@
  
 SCRIPT={{zookeeper_folder}}/{{zookeeper_name}}/bin/zkServer.sh
 RUNAS={{zookeeper_user}}
- 
-PIDFILE=/var/run/{{zookeeper_app_name}}.pid
+
+PIDNAME={{zookeeper_app_name}}.pid
+PIDFILE=/var/run/$PIDNAME
 LOGFILE=/var/log/{{zookeeper_app_name}}.log
 export ZOOCFGDIR={{zookeeper_config_path}}
  
 start() {
-  if [ -f /var/run/$PIDNAME ] && kill -0 $(cat /var/run/$PIDNAME); then
+  if [ -f /var/run/$PIDNAME ]; then
     echo 'Service already running' >&2
     return 1
   fi
   echo 'Starting service…' >&2
-  local CMD="$SCRIPT &> \"$LOGFILE\" & echo \$!"
+  local CMD="$SCRIPT start &> \"$LOGFILE\" & echo \$!"
   su -c "$CMD" $RUNAS > "$PIDFILE"
   echo 'Service started' >&2
 }
  
 stop() {
-  if [ ! -f "$PIDFILE" ] || ! kill -0 $(cat "$PIDFILE"); then
+  if [ ! -f "$PIDFILE" ]; then
     echo 'Service not running' >&2
     return 1
   fi
   echo 'Stopping service…' >&2
-  kill -15 $(cat "$PIDFILE") && rm -f "$PIDFILE"
+  rm -f "$PIDFILE"
+  local CMD="$SCRIPT stop &> \"$LOGFILE\" & echo \$!"
+  su -c "$CMD" $RUNAS
+  su -c "pkill zookeeper"    
   echo 'Service stopped' >&2
 }
 
 status() {
-if [ ! -f "$PIDFILE" ] || ! kill -0 $(cat "$PIDFILE"); then
+if [ ! -f "$PIDFILE" ]; then
     echo 'Service not running' >&2
     return 1
   fi
