@@ -14,8 +14,10 @@
     file: "state=directory path={{zookeeper_folder}}"
  
   - name: Move Zookeeper to final folder
-    command: "mv {{download_folder}}/{{zookeeper_name}} {{zookeeper_folder}} creates={{zookeeper_folder}}/{{java_name}}"
+    command: "mv {{download_folder}}/{{zookeeper_name}} {{zookeeper_folder}} creates={{zookeeper_folder}}/{{zookeeper_name}}"
  
   - name: Make Zookeeper available for system
-    template: src=zookeeper.j2 dest=/etc/init.d/zookeeper owner=root group=root mode=0644
-
+    template: src=zookeeper.j2 dest=/etc/init.d/{{zookeeper_app_name}} owner=root group=root mode=755
+    
+  - name: Copy Zookeeper configuration
+    template: src=zoo.cfg.j2 dest={{zookeeper_config_path}}/zoo.cfg owner=root group=root mode=755

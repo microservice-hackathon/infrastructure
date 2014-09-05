@@ -1,19 +1,20 @@
 #taken from https://gist.github.com/naholyr/4275302
 #!/bin/sh
 ### BEGIN INIT INFO
-# Provides:          <NAME>
+# Provides:          {{zookeeper_app_name}}
 # Required-Start:    $local_fs $network $named $time $syslog
 # Required-Stop:     $local_fs $network $named $time $syslog
 # Default-Start:     2 3 4 5
 # Default-Stop:      0 1 6
-# Description:       <DESCRIPTION>
+# Description:       Init script for {{zookeeper_app_name}}
 ### END INIT INFO
  
-SCRIPT={{zookeeper_home}}/bin/zkServer.sh
+SCRIPT={{zookeeper_folder}}/{{zookeeper_name}}/bin/zkServer.sh
 RUNAS={{zookeeper_user}}
  
-PIDFILE=/var/run/zookeeper.pid
-LOGFILE=/var/log/zookeeper.log
+PIDFILE=/var/run/{{zookeeper_app_name}}.pid
+LOGFILE=/var/log/{{zookeeper_app_name}}.log
+export ZOOCFGDIR={{zookeeper_config_path}}
  
 start() {
   if [ -f /var/run/$PIDNAME ] && kill -0 $(cat /var/run/$PIDNAME); then
