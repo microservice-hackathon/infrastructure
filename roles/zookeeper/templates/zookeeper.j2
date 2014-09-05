@@ -1,5 +1,5 @@
-#taken from https://gist.github.com/naholyr/4275302
 #!/bin/sh
+#taken from https://gist.github.com/naholyr/4275302
 ### BEGIN INIT INFO
 # Provides:          {{zookeeper_app_name}}
 # Required-Start:    $local_fs $network $named $time $syslog
@@ -36,6 +36,16 @@ stop() {
   kill -15 $(cat "$PIDFILE") && rm -f "$PIDFILE"
   echo 'Service stopped' >&2
 }
+
+status() {
+if [ ! -f "$PIDFILE" ] || ! kill -0 $(cat "$PIDFILE"); then
+    echo 'Service not running' >&2
+    return 1
+  fi
+  echo 'Checking status…' >&2
+  local CMD="$SCRIPT status"
+  su -c "$CMD" $RUNAS
+}
  
 uninstall() {
   echo -n "Are you really sure you want to uninstall this service? That cannot be undone. [yes|No] "
@@ -54,6 +64,9 @@ case "$1" in
   start)
     start
     ;;
+   status)
+    status
+    ;;
   stop)
     stop
     ;;
@@ -65,5 +78,5 @@ case "$1" in
     start
     ;;
   *)
-    echo "Usage: $0 {start|stop|restart|uninstall}"
+    echo "Usage: $0 {start|status|stop|restart|uninstall}"
 esac

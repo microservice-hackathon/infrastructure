@@ -21,3 +21,5 @@
     
   - name: Copy Zookeeper configuration
     template: src=zoo.cfg.j2 dest={{zookeeper_config_path}}/zoo.cfg owner=root group=root mode=755
+    notify:
+    - restart zookeeper
