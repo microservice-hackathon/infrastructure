@@ -1,7 +1,2 @@
 - include: debian.yml
-  when: ansible_os_family == "Debian"
-
-- include: centos.yml
-  when: ansible_os_family == "RedHat"
-
 - include: elasticsearch_config.yml

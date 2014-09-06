@@ -12,7 +12,7 @@ Listen {{ graphite_apache_port }}
 {% endif %}
 
 <VirtualHost *:{{ graphite_apache_port }}>
-        ServerName {{ graphite_vhost }}
+        #ServerName {{ graphite_vhost }}
         DocumentRoot "/opt/graphite/webapp"
         ErrorLog /opt/graphite/storage/log/webapp/error.log
         CustomLog /opt/graphite/storage/log/webapp/access.log common

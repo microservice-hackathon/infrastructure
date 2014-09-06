@@ -1,13 +1,12 @@
 ---
 
 - name: Lookup OS specific variables
-  include_vars: "{{ ansible_os_family }}.yml"
+  include_vars: "Debian.yml"
 
 
 - name: Install Graphite Dependencies for Debian
   apt: "name={{ item }} state=present update_cache=yes"
   with_items: graphite_pkgs
-  when: ansible_os_family == 'Debian'
 
 
 - name: Create PIP requirements file 
@@ -50,15 +49,9 @@
 - name: set permissions for /opt/graphite
   file: path=/opt/graphite owner={{ apache_user }} group={{ apache_user }} state=directory recurse=yes
 
-- name: pring ownership
-  debug: msg="Changing ownership to {{ apache_user }}"
-
 - name: Get graphite directory
   stat: path=/opt/graphite
   register: graphite
-
-- name: print changed permissions
-  debug: msg="Graphite has permissions owner {{ graphite.stat.pw_name }} and group {{ graphite.stat.gid }} "
 
 - name: Get enforce directory
   stat: path=/selinux/enforce

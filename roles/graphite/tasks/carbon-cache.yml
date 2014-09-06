@@ -19,7 +19,7 @@
 
 
 - name: Configure carbon-cache init.d script
-  copy: "src=etc/init.d/carbon-cache.{{ ansible_os_family }} dest=/etc/init.d/carbon-cache mode=0755
+  copy: "src=etc/init.d/carbon-cache.Debian dest=/etc/init.d/carbon-cache mode=0755
     owner=root group=root"
 
 

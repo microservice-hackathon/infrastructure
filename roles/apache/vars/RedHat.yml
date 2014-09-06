@@ -1,8 +1,0 @@
----
-
-apache_user: apache
-apache_service: httpd
-apache_vhost_dest: /etc/httpd/conf.d
-apache_pkgs:
-  - httpd
-  - mod_wsgi

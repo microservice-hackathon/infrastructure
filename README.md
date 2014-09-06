@@ -24,6 +24,8 @@ During the WarsJava microservice hackathon we will need to provision:
 
 ## Log monitoring
 
+After provisioning just access http://IP_OF_YOUR_HOST with __mylogger__ username and __mylogger__ pass
+
 ### elastic-search
 playbook from: https://github.com/valentinogagliardi/ansible-logstash
 
@@ -51,6 +53,10 @@ $ROOT/files/certs
 playbook from: https://github.com/valentinogagliardi/ansible-logstash
 
 ## Metrics monitoring
+
+After provisioning you can access
+- graphite at http://IP_OF_YOUR_HOST
+- graphana at http://IP_OF_YOUR_HOST:8080
 
 ### graphite + grafana
 playbook from: https://github.com/marcingrzejszczak/ansible-graphite-graphana
