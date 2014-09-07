@@ -8,4 +8,4 @@ localhost ansible_ssh_port=2223 ansible_ssh_user=root ansible_ssh_pass=root
 54.68.124.161 ansible_ssh_user=admin
 
 [nexus]
-localhost ansible_ssh_port=2222 ansible_ssh_user=root ansible_ssh_pass=root
+54.68.37.134 ansible_ssh_user=admin

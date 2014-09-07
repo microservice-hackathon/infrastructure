@@ -15,3 +15,6 @@
 
   - name: configure runlevel links for nexus
     command: update-rc.d nexus defaults
+  
+  - name: set permissions for nexus root dir
+    file: path={{sonatype_nexus_dir}} owner={{ sonatype_nexus_user }} group={{ sonatype_nexus_user }} state=directory recurse=yes

@@ -13,3 +13,4 @@ sonatype_nexus_nginx_ssl: no
 sonatype_nexus_nginx_ssl_cert_file: sonatype_nexus.crt
 sonatype_nexus_nginx_ssl_key_file: sonatype_nexus.key
 sonatype_nexus_openjdk: yes
+sonatype_nexus_user: nexus

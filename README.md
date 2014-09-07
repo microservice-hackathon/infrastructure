@@ -24,7 +24,7 @@ During the WarsJava microservice hackathon we will need to provision:
 
 ## Log monitoring
 
-After provisioning just access http://IP_OF_YOUR_HOST with __mylogger__ username and __mylogger__ pass
+After provisioning just access __http://IP_OF_YOUR_HOST__ with __mylogger__ username and __mylogger__ pass
 
 ### Instalation
 
@@ -35,6 +35,11 @@ If you provide tag
 ```
 then you'll provision the module as a whole.
 
+Example of a command to run it (assuming that you have a __host__ inventory file):
+
+```
+ansible-playbook -i hosts microservice_hackathon.yml -vvvv -t "loggers"
+```
 
 #### SSL keys
 Generate SSL keys by running:
@@ -57,6 +62,10 @@ generate_keys.sh
 
 ## Metrics monitoring
 
+After provisioning you can access
+- __graphite__ at __http://IP_OF_YOUR_HOST__
+- __graphana__ at __http://IP_OF_YOUR_HOST:8080__
+
 ### Instalation
 You have to provide 
 
@@ -71,12 +80,11 @@ to provision these modules. If you provide tag
 ```
 then you'll provision the module as a whole.
 
-After provisioning you can access
-- graphite at http://IP_OF_YOUR_HOST
-- graphana at http://IP_OF_YOUR_HOST:8080
+Example of a command to run it (assuming that you have a __host__ inventory file):
 
-### graphite + grafana
-playbook from: https://github.com/marcingrzejszczak/ansible-graphite-graphana
+```
+ansible-playbook -i hosts microservice_hackathon.yml -vvvv -t "graphite"
+```
 
 ## Applications
 
@@ -86,12 +94,28 @@ playbook from: https://gist.github.com/gbirke/8314571
 ### logstash forwarder
 installed as a service that logs to syslog
 
-## Deployment
+## Deployment - nexus
 
-### nexus
-playbook from: https://github.com/marcingrzejszczak/ansible-sonatype-nexus
+After provisioning you can access Nexus at __http://IP_OF_YOUR_HOST:8081/nexus/#welcome__
 
-## Playbook origins
+### Installation
+
+If you provide tag 
+
+```
+-t nexus 
+```
+then you'll provision the module as a whole.
+
+Example of a command to run it (assuming that you have a __host__ inventory file):
+
+```
+ansible-playbook -i hosts microservice_hackathon.yml -vvvv -t "loggers"
+```
+
+
+Playbook origins
+_____________________________
 
 ## Log monitoring
 

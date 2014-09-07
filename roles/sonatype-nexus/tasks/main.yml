@@ -3,7 +3,7 @@
     group: name=nexus
 
   - name: Create "nexus" user
-    user: name=nexus group=nexus
+    user: name=nexus group=nexus groups="sudo"
 
   - include: openjdk.yml
 

@@ -18,7 +18,7 @@
     lineinfile: dest={{ sonatype_nexus_root_dir }}/{{ nexus_directory.stdout }}/bin/nexus
                 regexp='^RUN_AS_USER="'
                 insertafter="#RUN_AS_USER="
-                line='RUN_AS_USER="nexus"'
+                line='RUN_AS_USER="{{sonatype_nexus_user}}"'
     notify:
       - restart sonatype-nexus
 
