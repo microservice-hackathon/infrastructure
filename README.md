@@ -67,10 +67,10 @@ After provisioning you can access
 - __graphana__ at __http://IP_OF_YOUR_HOST:8080__
 
 ### Instalation
-You have to provide 
+You have to provide graphite url as presented below (even if it is the same address as the server you are provisioning):
 
 ```
---extra-vars target=IP_OF_YOUR_HOST 
+--extra-vars graphite_url=IP_OF_YOUR_HOST 
 ```
 
 to provision these modules. If you provide tag 
@@ -83,7 +83,7 @@ then you'll provision the module as a whole.
 Example of a command to run it (assuming that you have a __host__ inventory file):
 
 ```
-ansible-playbook -i hosts microservice_hackathon.yml -vvvv -t "graphite"
+ansible-playbook -i hosts microservice_hackathon.yml -vvvv -t "graphite" --extra-vars graphite_url=59.98.12.123
 ```
 
 ## Applications
