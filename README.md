@@ -80,13 +80,19 @@ to provision these modules. If you provide tag
 ```
 then you'll provision the module as a whole.
 
-Example of a command to run it (assuming that you have a __host__ inventory file):
+Example of a command to run it (assuming that you have a __host__ inventory file) with __graphite_url__ variable:
 
 ```
 ansible-playbook -i hosts microservice_hackathon.yml -vvvv -t "graphite" --extra-vars graphite_url=59.98.12.123
 ```
 
 ## Applications
+
+Example of a command to run it (assuming that you have a __host__ inventory file) with __graphite_url__ variable:
+
+```
+ansible-playbook -i hosts microservice_hackathon.yml -vvvv -t "apps" --extra-vars logstash_domain=59.98.12.123
+```
 
 ### JDK8
 playbook from: https://gist.github.com/gbirke/8314571
