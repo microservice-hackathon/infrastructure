@@ -20,20 +20,21 @@ During the WarsJava microservice hackathon we will need to provision:
 ## deployment related infrastructure: (deploy server)
 - nexus
 
-# Playbooks origin:
+# Playbooks:
 
 ## Log monitoring
 
 After provisioning just access http://IP_OF_YOUR_HOST with __mylogger__ username and __mylogger__ pass
 
-### elastic-search
-playbook from: https://github.com/valentinogagliardi/ansible-logstash
+### Instalation
 
-### redis
-playbook from: https://github.com/valentinogagliardi/ansible-logstash
+If you provide tag 
 
-### logstash
-playbook from: https://github.com/valentinogagliardi/ansible-logstash
+```
+-t loggers 
+```
+then you'll provision the module as a whole.
+
 
 #### SSL keys
 Generate SSL keys by running:
@@ -48,11 +49,27 @@ Copy the resultant .key and .crt files to
 $ROOT/files/certs
 
 ```
+You can also execute the provided script to do that:
 
-### kibana + nginx
-playbook from: https://github.com/valentinogagliardi/ansible-logstash
+```
+generate_keys.sh
+```
 
 ## Metrics monitoring
+
+### Instalation
+You have to provide 
+
+```
+--extra-vars target=IP_OF_YOUR_HOST 
+```
+
+to provision these modules. If you provide tag 
+
+```
+-t graphite 
+```
+then you'll provision the module as a whole.
 
 After provisioning you can access
 - graphite at http://IP_OF_YOUR_HOST
@@ -60,6 +77,34 @@ After provisioning you can access
 
 ### graphite + grafana
 playbook from: https://github.com/marcingrzejszczak/ansible-graphite-graphana
+
+## Applications
+
+### JDK8
+playbook from: https://gist.github.com/gbirke/8314571
+
+### logstash forwarder
+installed as a service that logs to syslog
+
+## Deployment
+
+### nexus
+playbook from: https://github.com/marcingrzejszczak/ansible-sonatype-nexus
+
+## Playbook origins
+
+## Log monitoring
+
+playbook from: https://github.com/valentinogagliardi/ansible-logstash
+
+### elastic-search
+playbook from: https://github.com/valentinogagliardi/ansible-logstash
+
+### redis
+playbook from: https://github.com/valentinogagliardi/ansible-logstash
+
+### logstash
+playbook from: https://github.com/valentinogagliardi/ansible-logstash
 
 ## Applications
 

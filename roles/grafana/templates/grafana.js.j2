@@ -8,7 +8,7 @@ function (Settings) {
     datasources: {
       graphite: {
         type: 'graphite',
-        url: "http://127.0.0.1:{{ graphite_apache_port }}",
+        url: "{{grafana_graphite_url}}",
         default: true
       }
     },

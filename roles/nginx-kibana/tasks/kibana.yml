@@ -6,8 +6,3 @@
 
 - name: Set permissions for Kibana on Debian OS family
   command: /bin/chown -R {{ usname }}.{{ usname }} /home/{{ usname }}/public_html/
-  when: ansible_os_family == "Debian"
-
-- name: Set permissions for Kibana on CentOS OS family
-  command: /bin/chown -R nginx.nginx /home/{{ usname }}/public_html/
-  when: ansible_os_family == "RedHat"
