@@ -12,8 +12,7 @@
   apt: pkg={{ item }} update_cache=yes state=present
   with_items:
    - openjdk-7-jre
+   - elasticsearch
 
-- name: install Elasticsearch from repository
-  apt: pkg=elasticsearch update_cache=yes state=present
-  notify:
-   - restart elasticsearch
+- name: start and enable Elasticsearch service
+  service: name=elasticsearch state=started enabled=yes
