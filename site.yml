@@ -45,7 +45,6 @@
     - { role: apache, tags: ["graphite", "graphite-apache"] }
     - { role: graphite, tags: ["graphite", "graphite-core"] }
     - { role: grafana, tags: ["graphite", "graphite-grafana"] }
-    - { role: elasticsearch-graphite, tags: ["graphite", "graphite-elasticsearch"] }
     
 - name: Server for nexus
   hosts: nexus
