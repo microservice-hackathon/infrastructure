@@ -1,5 +1,0 @@
----
-
-- include: nginx.yml
-- include: kibana.yml
-- include: vhost_nginx.yml

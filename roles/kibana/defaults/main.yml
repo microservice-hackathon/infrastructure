@@ -1,0 +1,6 @@
+---
+
+kibana_dir: /srv/kibana
+kibana_port: 80
+kibana_version: "3.0.1"
+kibana_download_url: "https://download.elasticsearch.org/kibana/kibana/kibana-{{ kibana_version }}.tar.gz"

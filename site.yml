@@ -23,10 +23,11 @@
   sudo: yes
   roles:
     - { role: common }
+    - { role: apache, tags: ["loggers", "loggers-apache"] }
     - { role: redis, tags: ["loggers", "loggers-redis"] }
     - { role: elasticsearch, tags: ["loggers", "loggers-elasticsearch"] }
     - { role: logstash, tags: ["loggers", "loggers-logstash"] }
-    - { role: nginx-kibana, tags: ["loggers", "loggers-nginx-kibana"] }
+    - { role: kibana, tags: ["loggers", "loggers-kibana"] }
 
 - name: Server for applications
   hosts: apps

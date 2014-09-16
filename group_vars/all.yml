@@ -1,6 +1,10 @@
 ---
 
-logstash_forwarder_cert: files/certs/logstash-forwarder.pem
-logstash_forwarder_key: files/certs/logstash-forwarder.key
+logstash_forwarder_cert: "files/certs/logstash-forwarder.pem"
+logstash_forwarder_key: "files/certs/logstash-forwarder.key"
+logstash_lumberjack_host: "logstash"
+logstash_lumberjack_port: "5043"
 
+graphite_url: http://graphite/ 
 
+grafana_elasticsearch_url: http://elasticsearch:9200

@@ -1,21 +1,9 @@
 ---
 
-elasticsearch_version: "1.0"
-elastic_conf: "/etc/elasticsearch/elasticsearch.yml"
-
-logstash_version: "1.4"
-logstash_domain: "127.0.0.1"
-
-lumberjack_port: "5043"
-
-
 nginx_confd: "/etc/nginx/conf.d"
 
 usname: "mylogger"
 htpass: "mylogger"
 domain: "logger"
-
-kibana_url: "https://download.elasticsearch.org/kibana/kibana/kibana-{{ kibana_version }}.tar.gz"
-kibana_version: "3.0.1"
 
 graphite_vhost: "127.0.0.1"

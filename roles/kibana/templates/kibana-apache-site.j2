@@ -1,0 +1,12 @@
+Listen {{ kibana_port }}
+NameVirtualHost *:{{ kibana_port }}
+
+<VirtualHost *:{{ kibana_port }}>
+
+	DocumentRoot {{ kibana_dir }}/current
+
+	ErrorLog ${APACHE_LOG_DIR}/kibana_error.log
+	LogLevel warn
+	CustomLog ${APACHE_LOG_DIR}/kibana_access.log combined
+
+</VirtualHost>

@@ -16,23 +16,10 @@
    - logstash
    - logstash-contrib
 
-- name: ensure SSL certificates have the correct directories
-  file: >
-    path=/etc/pki/tls/{{item}}
-    owner=root
-    group=root
-    mode=0755
-    state=directory
-  with_items:
-    - certs
-    - private
-  notify:
-    - restart logstash
-
 - name: ensure logstash-forwarder has its SSL certificate
   copy: >
     src=files/certs/logstash-forwarder.pem
-    dest=/etc/pki/tls/certs/logstash-forwarder.pem
+    dest=/etc/ssl/certs/logstash-forwarder.pem
     owner=root
     group=root
     mode=0755
@@ -40,30 +27,10 @@
 - name: ensure logstash-forwarder has its SSL private key
   copy: >
     src=files/certs/logstash-forwarder.key
-    dest=/etc/pki/tls/private/logstash-forwarder.key
+    dest=/etc/ssl/private/logstash-forwarder.key
     owner=root
     group=root
     mode=0755
-
-- name: adjust init.d permissions
-  lineinfile: >
-    dest=/etc/init.d/logstash
-    regexp="^LS_USER="
-    line="LS_USER=root"
-    state=present
-    backup=yes
-  notify:
-   - restart logstash
-
-- name: adjust init.d permissions
-  lineinfile: >
-    dest=/etc/init.d/logstash
-    regexp="^LS_GROUP="
-    line="LS_GROUP=root"
-    state=present
-    backup=yes
-  notify:
-   - restart logstash
 
 - name: create Logstash Redis input configuration
   template: >
