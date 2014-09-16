@@ -1,7 +1,19 @@
-- include: debian.yml
-  when: ansible_os_family == "Debian"
+---
 
-- include: centos.yml
-  when: ansible_os_family == "RedHat"
+- name: enable Elasticsearch repository
+  apt_repository: >
+    repo="deb http://packages.elasticsearch.org/elasticsearch/{{ elasticsearch_version }}/debian stable main"
+    state=present
 
-- include: elasticsearch_config.yml
+- name: add Elasticsearch repo key
+  apt_key: url="http://packages.elasticsearch.org/GPG-KEY-elasticsearch" state=present
+
+- name: install required packages
+  apt: pkg={{ item }} update_cache=yes state=present
+  with_items:
+   - openjdk-7-jre
+
+- name: install Elasticsearch from repository
+  apt: pkg=elasticsearch update_cache=yes state=present
+  notify:
+   - restart elasticsearch

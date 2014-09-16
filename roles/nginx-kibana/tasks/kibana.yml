@@ -1,8 +1,8 @@
-- name: Get Kibana Archive
-  get_url: url={{ kibana_url }} dest=/home/{{ usname }}/public_html/kibana.tar.gz
+---
 
-- name: Unarchive Kibana
-  command: tar zxf /home/{{ usname }}/public_html/kibana.tar.gz -C /home/{{ usname }}/public_html/ creates=/home/{{ usname }}/public_html/kibana-{{ kibana_version }}
+- name: get Kibana Archive
+  get_url: url={{ kibana_url }} dest=/tmp/kibana.tar.gz
 
-- name: Set permissions for Kibana on Debian OS family
-  command: /bin/chown -R {{ usname }}.{{ usname }} /home/{{ usname }}/public_html/
+- name: unarchive Kibana
+  unarchive: src=/tmp/kibana.tar.gz dest=/srv/kibana copy=no
+

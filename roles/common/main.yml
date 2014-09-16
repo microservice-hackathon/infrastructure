@@ -1,0 +1,10 @@
+---
+
+- name: install common packages
+  apt: pkg={{ item }} update_cache=yes state=present
+  with_items:
+   - python-pycurl
+   - python-apt
+   - vim-nox
+   - mc
+   - htop

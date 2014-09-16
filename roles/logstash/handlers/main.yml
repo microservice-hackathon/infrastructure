@@ -1,1 +1,4 @@
-- include: restart_logstash.yml
+---
+
+- name: restart logstash
+  service: name=logstash state=restarted enables=yes

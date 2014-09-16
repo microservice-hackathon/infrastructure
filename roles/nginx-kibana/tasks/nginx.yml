@@ -1,4 +1,4 @@
-- name: Install Nginx on Debian
+- name: install Nginx on Debian
   apt: pkg={{ item }} update_cache=yes state=present
   with_items:
    - nginx

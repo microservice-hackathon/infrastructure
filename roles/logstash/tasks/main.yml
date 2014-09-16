@@ -1,2 +1,101 @@
-- include: logstash_inst_debian.yml
-- include: logstash_conf.yml
+---
+
+- name: enable Logstash repository
+  apt_repository: >
+    repo="deb http://packages.elasticsearch.org/logstash/{{ logstash_version }}/debian stable main"
+    state=present
+
+- name: add Logstash repo key
+  apt_key: >
+    url="http://packages.elasticsearch.org/GPG-KEY-elasticsearch"
+    state=present
+
+- name: install Logstash from repository
+  apt: pkg={{ item }} update_cache=yes state=present
+  with_items:
+   - logstash
+   - logstash-contrib
+
+- name: ensure SSL certificates have the correct directories
+  file: >
+    path=/etc/pki/tls/{{item}}
+    owner=root
+    group=root
+    mode=0755
+    state=directory
+  with_items:
+    - certs
+    - private
+  notify:
+    - restart logstash
+
+- name: ensure logstash-forwarder has its SSL certificate
+  copy: >
+    src=files/certs/logstash-forwarder.pem
+    dest=/etc/pki/tls/certs/logstash-forwarder.pem
+    owner=root
+    group=root
+    mode=0755
+
+- name: ensure logstash-forwarder has its SSL private key
+  copy: >
+    src=files/certs/logstash-forwarder.key
+    dest=/etc/pki/tls/private/logstash-forwarder.key
+    owner=root
+    group=root
+    mode=0755
+
+- name: adjust init.d permissions
+  lineinfile: >
+    dest=/etc/init.d/logstash
+    regexp="^LS_USER="
+    line="LS_USER=root"
+    state=present
+    backup=yes
+  notify:
+   - restart logstash
+
+- name: adjust init.d permissions
+  lineinfile: >
+    dest=/etc/init.d/logstash
+    regexp="^LS_GROUP="
+    line="LS_GROUP=root"
+    state=present
+    backup=yes
+  notify:
+   - restart logstash
+
+- name: create Logstash Redis input configuration
+  template: >
+    src=input_log2redis.conf.j2
+    dest="/etc/logstash/conf.d/input_log2redis.conf"
+    owner=root
+    group=root
+    mode=0644
+  notify:
+   - restart logstash
+
+- name: create Logstash Redis output configuration
+  template: >
+    src=output_log2redis.conf.j2
+    dest="/etc/logstash/conf.d/output_log2redis.conf"
+    owner=root
+    group=root
+    mode=0644
+
+- name: create Logstash Elasticsearch configuration
+  template: >
+    src=redis2elasticsearch.conf.j2
+    dest="/etc/logstash/conf.d/redis2elasticsearch.conf"
+    owner=root
+    group=root
+    mode=0644
+  
+- name: create Logstash application configuration
+  template: >
+    src=application.conf.j2
+    dest="/etc/logstash/conf.d/application.conf"
+    owner=root
+    group=root
+    mode=0644
+

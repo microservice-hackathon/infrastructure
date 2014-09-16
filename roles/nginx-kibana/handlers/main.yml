@@ -1,1 +1,7 @@
-- include: start_nginx.yml
+---
+
+- name: start nginx
+  service: name=nginx state=started enabled=yes
+
+- name: restart nginx
+  service: name=nginx state=restarted enabled=yes
