@@ -1,0 +1,6 @@
+---
+
+logstash_forwarder_cert: files/certs/logstash-forwarder.pem
+logstash_forwarder_key: files/certs/logstash-forwarder.key
+
+

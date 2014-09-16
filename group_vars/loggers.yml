@@ -1,3 +1,5 @@
+---
+
 rsys_conf: "/etc/rsyslog.conf"
 rsys_dir: "/var/log/hosts/"
 

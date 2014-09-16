@@ -1,4 +1,15 @@
 ---
+
+- name: openssl
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  tasks:
+    - name: generate certificates for logstash forwarder
+      command: >
+        openssl req -x509 -batch -nodes -newkey rsa:2048 -keyout {{ logstash_forwarder_key }} -out {{ logstash_forwarder_cert }}
+        creates={{ logstash_forwarder_cert }}
+
 - name: sshd
   hosts: all
   gather_facts: false
@@ -9,10 +20,6 @@
 - name: Server for logging applications
   hosts: loggers
   sudo: yes
-
-  vars_files:
-   - vars/loggers.yml
-
   roles:
     - { role: redis, tags: ["loggers", "loggers-redis"] }
     - { role: elasticsearch, tags: ["loggers", "loggers-elasticsearch"] }
@@ -22,11 +29,6 @@
 - name: Server for applications
   hosts: apps
   sudo: yes
-
-  vars_files:
-   - vars/apps.yml
-   - vars/loggers.yml
-
   roles:
     - { role: jdk8, tags: ["apps", "apps-jdk8"] }
     - { role: zookeeper, tags: ["apps", "apps-zookeeper"] }
@@ -34,11 +36,7 @@
 
 - name: Server for metrics
   hosts: graphite
-  user: '{{ ssh_user }}'
   sudo: true
-  gather_facts: yes
-  vars:
-    ssh_user: root
   roles:
     - { role: apache, tags: ["graphite", "graphite-apache"] }
     - { role: graphite, tags: ["graphite", "graphite-core"] }
@@ -47,12 +45,6 @@
     
 - name: Server for nexus
   hosts: nexus
-  user: '{{ ssh_user }}'
   sudo: true
-  gather_facts: no
-    
-  vars_files:
-   - vars/nexus.yml
-   
   roles:
     - { role: sonatype-nexus, tags: ["nexus"] }
