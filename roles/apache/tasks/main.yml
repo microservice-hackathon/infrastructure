@@ -1,12 +1,17 @@
 ---
 
-- name: Lookup OS specific variables
-  include_vars: "Debian.yml"
-  tags: debian
+- name: install apache packages
+  apt: name={{ item }} state=present update_cache=yes
+  with_items:
+    - apache2-mpm-worker
+    - libapache2-mod-wsgi
 
-- name: Install apache packages for Debian
-  apt: "name={{ item }} state=present update_cache=yes"
-  with_items: apache_pkgs
+- name: enable headers module
+  command: a2enmod headers
+  register: a2enmod
+  changed_when: a2enmod.stdout.startswith('To activate the new configuration')
+  notify:
+    - restart apache
 
-- name: Create symlink for headers
-  command: ln -sf /etc/apache2/mods-available/headers.load /etc/apache2/mods-enabled/headers.load
+- name: start and enable apache service
+  service: name=apache2 state=started enabled=yes

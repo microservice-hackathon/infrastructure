@@ -1,0 +1,4 @@
+---
+
+logstash_version: "1.4"
+logstash_lumberjack_port: "5043"

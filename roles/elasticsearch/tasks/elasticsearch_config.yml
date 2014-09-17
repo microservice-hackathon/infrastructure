@@ -1,4 +1,0 @@
-- name: Elasticsearch configuration
-  template: src=elasticsearch.yml.j2 dest={{ elastic_conf }} owner=root group=root mode=0644
-  notify:
-   - restart elasticsearch

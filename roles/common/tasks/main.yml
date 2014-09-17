@@ -1,0 +1,13 @@
+---
+
+- name: install common packages
+  apt: pkg={{ item }} update_cache=yes state=present
+  with_items:
+   - python-pycurl
+   - python-apt
+   - vim-nox
+   - mc
+   - htop
+
+- name: create common directory for downloads
+  file: dest={{ common_download_dir }} state=directory

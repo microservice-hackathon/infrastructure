@@ -1,0 +1,9 @@
+---
+
+nginx_confd: "/etc/nginx/conf.d"
+
+usname: "mylogger"
+htpass: "mylogger"
+domain: "logger"
+
+graphite_vhost: "127.0.0.1"
