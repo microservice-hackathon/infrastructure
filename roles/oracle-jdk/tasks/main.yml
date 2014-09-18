@@ -45,8 +45,10 @@
 - name: create java alternatives links
   alternatives: name={{ item }} link=/usr/bin/{{ item }} path={{ jdk_location }}/java-{{ jdk_version[0] }}-oracle/bin/{{ item }}
   with_items: jdk_tools
+  when: jdk_not_default is not defined
 
 - name: create java alternatives links (jre)
   alternatives: name={{ item }} link=/usr/bin/{{ item }} path={{ jdk_location }}/java-{{ jdk_version[0] }}-oracle/jre/bin/{{ item }}
   with_items: jdk_jre_tools
+  when: jdk_not_default is not defined
 
