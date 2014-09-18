@@ -1,0 +1,52 @@
+---
+
+- assert:
+    that:
+      - jdk_version is defined
+
+- name: install wget
+  apt: name=wget state=present
+
+- name: check if JDK is already installed
+  stat: path={{ jdk_location }}/java-{{ jdk_version[0] }}-oracle-{{ jdk_version }}/release
+  register: jdk_release_exist
+
+- name: display installed JDK version
+  debug: msg="JDK already installed" 
+  when: jdk_release_exist.stat.exists
+
+- name: download JDK archive
+  command: >
+    wget --no-check-certificate --no-cookies -P /tmp --header "Cookie: oraclelicense=accept-securebackup-cookie"
+    {{ jdk_download_url }}/{{ jdk_version }}/jdk-{{ jdk_version.split('-')[0] }}-linux-{{ jdk_arch[ansible_architecture] }}.tar.gz
+    creates=/tmp/jdk-{{ jdk_version.split('-')[0] }}-linux-{{ jdk_arch[ansible_architecture] }}.tar.gz
+  when: not jdk_release_exist.stat.exists
+
+- name: create directory which contains JDK
+  file: >
+    path={{ jdk_location }}//java-{{ jdk_version[0] }}-oracle-{{ jdk_version }}
+    state=directory
+  when: not jdk_release_exist.stat.exists
+
+- name: extract JDK archive
+  command: >
+    tar --no-same-owner --strip-components=1
+    -C {{ jdk_location }}/java-{{ jdk_version[0] }}-oracle-{{ jdk_version }}
+    -xzf /tmp/jdk-{{ jdk_version.split('-')[0] }}-linux-{{ jdk_arch[ansible_architecture] }}.tar.gz
+  when: not jdk_release_exist.stat.exists
+
+- name: set selected version as default
+  file: >
+    state=link
+    src={{ jdk_location }}/java-{{ jdk_version[0] }}-oracle-{{ jdk_version }}
+    dest={{ jdk_location }}/java-{{ jdk_version[0] }}-oracle
+  when: jdk_not_default is not defined
+
+- name: create java alternatives links
+  alternatives: name={{ item }} link=/usr/bin/{{ item }} path={{ jdk_location }}/java-{{ jdk_version[0] }}-oracle/bin/{{ item }}
+  with_items: jdk_tools
+
+- name: create java alternatives links (jre)
+  alternatives: name={{ item }} link=/usr/bin/{{ item }} path={{ jdk_location }}/java-{{ jdk_version[0] }}-oracle/jre/bin/{{ item }}
+  with_items: jdk_jre_tools
+
