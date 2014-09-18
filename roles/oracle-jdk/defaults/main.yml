@@ -1,0 +1,46 @@
+---
+
+jdk_download_url: http://download.oracle.com/otn-pub/java/jdk/
+jdk_arch:
+  x86_64: x64
+  i386: i586
+jdk_location: /usr/lib/jvm
+jdk_tools:
+  - appletviewer
+  - extcheck
+  - idlj
+  - jar
+  - jarsigner
+  - javac
+  - javadoc
+  - javah
+  - javap
+  - jconsole
+  - jdb
+  - jhat
+  - jinfo
+  - jmap
+  - jmc
+  - jps
+  - jrunscript
+  - jsadebugd
+  - jstack
+  - jstat
+  - jstatd
+  - native2ascii
+  - rmic
+  - schemagen
+  - serialver
+  - wsgen
+  - wsimport
+  - xjc
+jdk_jre_tools:
+  - java
+  - keytool
+  - pack200
+  - rmid
+  - rmiregistry
+  - unpack200
+  - orbd
+  - servertool
+  - tnameserv
