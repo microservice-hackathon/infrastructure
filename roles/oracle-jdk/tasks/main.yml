@@ -24,7 +24,7 @@
 
 - name: create directory which contains JDK
   file: >
-    path={{ jdk_location }}//java-{{ jdk_version[0] }}-oracle-{{ jdk_version }}
+    path={{ jdk_location }}/java-{{ jdk_version[0] }}-oracle-{{ jdk_version }}
     state=directory
   when: not jdk_release_exist.stat.exists
 
