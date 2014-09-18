@@ -5,6 +5,8 @@
   with_items:
     - apache2-mpm-worker
     - libapache2-mod-wsgi
+  notify:
+    - enable apache
 
 - name: enable headers module
   command: a2enmod headers
@@ -12,6 +14,3 @@
   changed_when: a2enmod.stdout.startswith('To activate the new configuration')
   notify:
     - restart apache
-
-- name: start and enable apache service
-  service: name=apache2 state=started enabled=yes
