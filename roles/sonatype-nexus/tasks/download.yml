@@ -3,15 +3,9 @@
     get_url: url={{ sonatype_nexus_download_url }} dest={{ sonatype_nexus_download_dest }}
     register: nexus_download
 
-#  - name: Download nexus PGP signature
-#    get_url: url={{ sonatype_nexus_download_url }}.asc dest={{ sonatype_nexus_download_dest }}.asc
-
-#  - name: Verify PGP signature
-#    command: gpg --verify {{ sonatype_nexus_download_dest }}.asc
-#    when: nexus_download.changed
-
   - name: Get Nexus directory
     shell: "tar -tf {{ sonatype_nexus_download_dest }} | egrep '^nexus-' | cut -d/ -f1 | uniq"
+    changed_when: false
     register: nexus_directory
 
   - name: Extract Nexus
