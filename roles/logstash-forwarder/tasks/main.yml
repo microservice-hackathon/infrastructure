@@ -12,7 +12,7 @@
   - restart logstash-forwarder
 
 - name: Ensure logstash-forwarder has its SSL certificate
-  copy: src=files/certs/logstash-forwarder.crt dest=/etc/ssl/certs/logstash-forwarder.crt owner=root group=root mode=0755
+  copy: src=files/certs/logstash-forwarder.pem dest=/etc/ssl/certs/logstash-forwarder.pem owner=root group=root mode=0755
 
 - name: Ensure logstash-forwarder has its SSL private key
   copy: src=files/certs/logstash-forwarder.key dest=/etc/ssl/private/logstash-forwarder.key owner=root group=root mode=0755
