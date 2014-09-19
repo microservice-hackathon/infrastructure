@@ -34,6 +34,8 @@
     dest={{ zookeeper_exhibitor_dir }}/conf/exhibitor.properties
     owner=root
     group=root
+  notify:
+    - restart exhibitor
 
 - name: create supervisor configuration file
   template: >
