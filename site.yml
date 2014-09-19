@@ -34,6 +34,7 @@
   sudo: yes
   roles:
     - { role: common }
+    - { role: rundeck, tags: ["apps", "rundeck"] }
     - { role: oracle-jdk, jdk_version: '8u5-b13', tags: ["apps", "apps-oracle-jdk"] }
     - { role: zookeeper, tags: ["apps", "apps-zookeeper"] }
     - { role: logstash-forwarder, tags: ["apps", "apps-logstash-forwarder"] }

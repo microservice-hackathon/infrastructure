@@ -1,0 +1,4 @@
+---
+
+rundeck_deb_filename: rundeck-{{ rundeck_version }}.deb
+rundeck_download_url: http://dl.bintray.com/rundeck/rundeck-deb/{{ rundeck_deb_filename }}

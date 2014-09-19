@@ -1,0 +1,12 @@
+---
+
+- name: download rundeck package
+  get_url: >
+    url={{ rundeck_download_url }}
+    dest=/tmp
+
+- name: install rundeck package
+  apt: deb=/tmp/{{ rundeck_deb_filename }}
+
+- name: start and enable rundeck service
+  service: name=rundeckd state=started enabled=yes
