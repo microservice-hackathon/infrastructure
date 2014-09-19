@@ -1,1 +1,4 @@
+---
+
+- include: exhibitor.yml
 - include: zookeeper.yml

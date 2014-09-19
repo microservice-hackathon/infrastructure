@@ -1,28 +1,27 @@
-  - name: Install wget
-    apt: pkg=wget
- 
-  - name: Download Zookeeper
-    command: 'wget {{zookeeper_download}} -P {{download_folder}} creates={{zookeeper_archive}}' 
- 
-  - name: Extract Zookeeper archive
-    command: "tar -xzf {{zookeeper_archive}} -C {{download_folder}} creates={{download_folder}}/{{zookeeper_name}}"
- 
-  - name: Fix ownership 
-    file: "state=directory path={{download_folder}}/{{zookeeper_name}} owner=root group=root recurse=yes"
- 
-  - name: Create Zookeeper folder
-    file: "state=directory path={{zookeeper_folder}}"
- 
-  - name: Move Zookeeper to final folder
-    command: "mv {{download_folder}}/{{zookeeper_name}} {{zookeeper_folder}} creates={{zookeeper_folder}}/{{zookeeper_name}}"
- 
-  - name: Make Zookeeper available for system
-    template: src=zookeeper.j2 dest=/etc/init.d/{{zookeeper_app_name}} owner=root group=root mode=755
-     
-  - name: Create Zookeeper configuration folder
-    file: "state=directory path={{zookeeper_config_path}}"
-    
-  - name: Copy Zookeeper configuration
-    template: src=zoo.cfg.j2 dest={{zookeeper_config_path}}/zoo.cfg owner=root group=root mode=755
-    notify:
-    - restart zookeeper
+---
+
+- name: check if Zookeeper is already installed
+  stat: path={{ zookeeper_exhibitor_dir }}/zookeeper/{{ zookeeper_archive_name }}/bin/zkServer.sh
+  register: zookeeper_installed
+
+- name: download Zookeeper
+  get_url: >
+    url={{ zookeeper_download_url }}
+    dest=/tmp/{{ zookeeper_archive_name }}.tgz
+  when: not zookeeper_installed.stat.exists
+
+- name: extract Zookeeper archive
+  unarchive:
+    src=/tmp/{{ zookeeper_archive_name }}.tgz
+    dest={{ zookeeper_exhibitor_dir }}/zookeeper
+    copy=no
+  when: not zookeeper_installed.stat.exists
+
+- name: fix ownership 
+  file: >
+    state=directory
+    path={{ zookeeper_exhibitor_dir }}/zookeeper/{{ zookeeper_archive_name }}
+    owner=root
+    group=root
+    recurse=yes
+  when: not zookeeper_installed.stat.exists

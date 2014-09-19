@@ -1,4 +1,12 @@
 ---
 
 - name: Restart Apache
-  service: name={{ apache_service }} state=restarted
+  service: name=apache2 state=restarted
+
+- name: set permissions
+  file: >
+    path={{ grafana_graphite_root }}/grafana-{{ grafana_version }}
+    owner={{ grafana_owner }}
+    group={{ grafana_owner }}
+    state=directory
+

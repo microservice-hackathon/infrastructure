@@ -1,18 +1,2 @@
 ---
 
-java_archive_name: jdk-8u5-linux-x64
-java_download: http://download.oracle.com/otn-pub/java/jdk/8u5-b13/{{java_archive_name}}.tar.gz
-java_name: jdk1.8.0_05
-download_folder: /usr/src
-java_archive: "{{download_folder}}/{{java_archive_name}}.tar.gz"
-java_folder: /usr/lib/jvm
-java_alias: java-8-oracle
-
-zookeeper_user: root
-zookeeper_app_name: zookeeper
-zookeeper_version: 3.4.6
-zookeeper_name: zookeeper-{{zookeeper_version}}
-zookeeper_download: http://ftp.ps.pl/pub/apache/zookeeper/zookeeper-{{zookeeper_version}}/{{zookeeper_name}}.tar.gz
-zookeeper_archive: "{{download_folder}}/{{zookeeper_name}}.tar.gz"
-zookeeper_folder: /usr/lib/zookeeper
-zookeeper_config_path: /etc/zookeeper

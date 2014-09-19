@@ -22,6 +22,6 @@
 
   - name: Plugin ownership
     file: owner=nexus group=nexus mode=0755 recurse=true state=directory
-          dest={{ sonatype_nexus_work_dir }}/plugin-repository/nexus-apt-plugin-{{ sonatype_nexus_plugin_apt_version }}
+          dest={{ sonatype_nexus_work_dir }}/plugin-repository
     notify:
       - restart sonatype-nexus

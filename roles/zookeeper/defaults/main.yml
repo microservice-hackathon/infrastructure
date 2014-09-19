@@ -1,0 +1,7 @@
+---
+
+zookeeper_exhibitor_dir: /srv/exhibitor
+zookeeper_exhibitor_version: 1.5.1
+
+zookeeper_version: 3.4.6
+zookeeper_data_path: /var/lib/zookeeper

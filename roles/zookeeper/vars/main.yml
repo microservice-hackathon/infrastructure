@@ -1,0 +1,9 @@
+---
+
+zookeeper_exhibitor_jar: "exhibitor-{{ zookeeper_exhibitor_version }}.jar"
+zookeeper_exhibitor_download_url: "http://dl.bintray.com/warsjawa-microhackathon/3rd-party/{{ zookeeper_exhibitor_jar }}"
+
+zookeeper_apache_mirror: "http://ftp.ps.pl/pub/apache/zookeeper"
+zookeeper_archive_name: "zookeeper-{{ zookeeper_version }}"
+zookeeper_download_dest: "/tmp/{{ zookeeper_archive_name }}.tar.gz"
+zookeeper_download_url: "{{ zookeeper_apache_mirror }}/{{ zookeeper_archive_name }}/{{ zookeeper_archive_name }}.tar.gz"

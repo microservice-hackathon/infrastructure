@@ -1,4 +1,4 @@
 ---
 
 - name: restart logstash
-  service: name=logstash state=restarted enables=yes
+  service: name=logstash state=started
