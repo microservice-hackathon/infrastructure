@@ -1,40 +1,25 @@
 ---
 
-- name: Ensure SSL certificates have the correct directories
-  file: path=/etc/pki/tls/{{item}} owner=root group=root mode=0755 state=directory
-  with_items:
-    - certs
-    - private
+- name: add elasticsearch apt key
+  apt_key: url=http://packages.elasticsearch.org/GPG-KEY-elasticsearch  state=present
 
-- name: Ensure logstash-forwarder has its config file
-  template: src=config.json.j2 dest=/etc/logstash-forwarder owner=root group=root mode=0755
-  notify:
-  - restart logstash-forwarder
+- name: add elasticsearch apt repository
+  apt_repository: >
+    repo='deb http://packages.elasticsearch.org/logstashforwarder/debian stable main'
+    state=present
+    update_cache=yes
 
-- name: Ensure logstash-forwarder has its SSL certificate
+- name: install logstash-forwarder
+  apt: name=logstash-forwarder state=present
+
+
+- name: ensure logstash-forwarder has its SSL certificate
   copy: src=files/certs/logstash-forwarder.pem dest=/etc/ssl/certs/logstash-forwarder.pem owner=root group=root mode=0755
 
-- name: Ensure logstash-forwarder has its SSL private key
+- name: ensure logstash-forwarder has its SSL private key
   copy: src=files/certs/logstash-forwarder.key dest=/etc/ssl/private/logstash-forwarder.key owner=root group=root mode=0755
 
-- name: Copy logstash-forwarder deb file
-  copy: src=logstash-forwarder_0.3.1_amd64.deb dest=/tmp/logstash-forwarder_0.3.1.deb
-
-- name: Install logstash-forwarder
-  shell: dpkg --skip-same-version -i /tmp/logstash-forwarder_0.3.1.deb
-  register: dpkg_result
-
-- name: Restart Logstash
-  when: "dpkg_result.stdout.startswith('Selecting')"
-  service: name=logstash-forwarder state=restarted
-
-- name: copy logstash-forwarder init file
-  copy: src=logstash-forwarder.init dest=/etc/init.d/logstash-forwarder owner=root group=root mode=645
-
-- name: Ensure old logstash-forwarder init file is not there
-  file: path=/etc/init.d/logstash-forwarder.init state=absent
-
-- name: Enable logstash-forwarder init file
-  shell: update-rc.d logstash-forwarder defaults
+- name: ensure logstash-forwarder has its config file
+  template: src=config.json.j2 dest=/etc/logstash-forwarder owner=root group=root mode=0755
   notify:
-  - restart logstash-forwarder
+    - restart logstash-forwarder
