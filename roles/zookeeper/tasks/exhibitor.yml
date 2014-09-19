@@ -1,7 +1,7 @@
 ---
 
-- name: install wget
-  apt: pkg=wget
+- name: install supervisor package
+  apt: name=supervisor state=present
 
 - name: create exhibitor directories 
   file: >
