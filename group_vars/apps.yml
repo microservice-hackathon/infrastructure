@@ -1,10 +1,2 @@
 ---
 
-zookeeper_user: root
-zookeeper_app_name: zookeeper
-zookeeper_version: 3.4.6
-zookeeper_name: zookeeper-{{zookeeper_version}}
-zookeeper_download: http://ftp.ps.pl/pub/apache/zookeeper/zookeeper-{{zookeeper_version}}/{{zookeeper_name}}.tar.gz
-zookeeper_archive: "{{download_folder}}/{{zookeeper_name}}.tar.gz"
-zookeeper_folder: /usr/lib/zookeeper
-zookeeper_config_path: /etc/zookeeper

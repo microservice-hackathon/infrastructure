@@ -1,0 +1,44 @@
+---
+
+- name: install wget
+  apt: pkg=wget
+
+- name: create exhibitor directories 
+  file: >
+    path={{ zookeeper_exhibitor_dir }}/{{ item }}
+    state=directory
+    owner=root
+    group=root
+  with_items:
+    - bin
+    - conf
+    - zookeeper
+
+- name: create exhibitor log directory
+  file: >
+    path=/var/log/exhibitor
+    state=directory
+    owner=root
+    group=root
+
+- name: download exhibitor from Bintray
+  get_url: >
+    url={{ zookeeper_exhibitor_download_url }}
+    dest={{ zookeeper_exhibitor_dir }}/bin
+    owner=root
+    group=root
+
+- name: create exhibitor configuration
+  template: >
+    src=exhibitor.properties.j2
+    dest={{ zookeeper_exhibitor_dir }}/conf/exhibitor.properties
+    owner=root
+    group=root
+
+- name: create supervisor configuration file
+  template: >
+    src=exhibitor.supervisorj2
+    dest=/etc/supervisor/conf.d/exhibitor.conf
+    force=yes
+  notify:
+    - start exhibitor

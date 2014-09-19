@@ -1,1 +1,4 @@
-- include: restart_zookeeper.yml
+---
+
+- name: start exhibitor
+  supervisorctl: name=exhibitor state=present
