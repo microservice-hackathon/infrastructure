@@ -1,15 +1,19 @@
 ---
 - name: Create an user to host Grafana
   user: name={{ grafana_owner }}
-#- name: make grafana dir
-#  file: path={{ grafana_graphite_root }} state=directory owner={{ grafana_owner }} recurse=yes
+
 - name: download grafana
   get_url: dest={{ grafana_graphite_root }}/grafana-{{ grafana_version }}.tar.gz url=http://grafanarel.s3.amazonaws.com/grafana-{{ grafana_version }}.tar.gz
-- name: make version dir
-  file: path={{ grafana_graphite_root }}/grafana-{{ grafana_version }} state=directory owner={{ grafana_owner }} recurse=yes
+
 - name: extract grafana tarball
-  shell: tar -zxvf {{ grafana_graphite_root}}/grafana-{{ grafana_version }}.tar.gz -C {{ grafana_graphite_root}}
-- name: set permissions
-  file: path={{ grafana_graphite_root }}/grafana-{{ grafana_version }} owner={{ grafana_owner }} group={{ grafana_owner }} state=directory
+  shell: >
+    tar -zxvf {{ grafana_graphite_root}}/grafana-{{ grafana_version }}.tar.gz -C {{ grafana_graphite_root}}
+    creates={{ grafana_graphite_root}}/grafana-{{ grafana_version }}
+  notify:
+    - set permissions
+
 - name: link grafana version
-  file: path={{ grafana_graphite_root }}/dist src={{ grafana_graphite_root }}/grafana-{{ grafana_version }} state=link owner={{ grafana_owner }} 
+  file: >
+    path={{ grafana_graphite_root }}/dist
+    src={{ grafana_graphite_root }}/grafana-{{ grafana_version }}
+    state=link 

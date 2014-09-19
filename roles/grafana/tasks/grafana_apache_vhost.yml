@@ -1,8 +1,5 @@
 ---
 - name: Create VHost file
-  template: src=grafana_vhost.conf.j2 dest="{{ apache_vhost_dest }}/grafana.conf" owner={{ grafana_owner }}
+  template: src=grafana_vhost.conf.j2 dest="/etc/apache2/sites-enabled/grafana.conf" owner=root
   notify:
   - Restart Apache
-
-- name: Link grafana.conf to sites enabled
-  command: ln -sf {{ apache_vhost_dest }}/grafana.conf {{ apache_vhost_enabled }}/
