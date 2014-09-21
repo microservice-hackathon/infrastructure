@@ -1,0 +1,4 @@
+---
+
+oracle_jvm_location: "/usr/lib/jvm"
+oracle_jdk_download_url: http://download.oracle.com/otn-pub/java/jdk/{{ oracle_jdk_version }}/{{ oracle_jdk_archive }}
