@@ -22,7 +22,7 @@
   hosts: loggers
   sudo: yes
   roles:
-    - { role: common }
+    - { role: common, tags: ["common"] }
     - { role: apache, tags: ["loggers", "loggers-apache"] }
     - { role: redis, tags: ["loggers", "loggers-redis"] }
     - { role: elasticsearch, tags: ["loggers", "loggers-elasticsearch"] }
@@ -33,7 +33,7 @@
   hosts: apps
   sudo: yes
   roles:
-    - { role: common }
+    - { role: common, tags: ["common"] }
     - { role: rundeck, tags: ["apps", "rundeck"] }
     - { role: oracle_jdk, oracle_jdk_version: '8u5-b13', tags: ["apps", "apps-oracle-jdk"] }
     - { role: zookeeper, tags: ["apps", "apps-zookeeper"] }
@@ -43,7 +43,7 @@
   hosts: graphite
   sudo: true
   roles:
-    - { role: common }
+    - { role: common, tags: ["common"] }
     - { role: apache, tags: ["graphite", "apache"] }
     - { role: grafana, tags: ["graphite", "graphite-grafana"] }
     - { role: graphite, tags: ["graphite", "graphite-core"] }
@@ -52,5 +52,5 @@
   hosts: nexus
   sudo: true
   roles:
-    - { role: common }
+    - { role: common, tags: ["common"] }
     - { role: sonatype-nexus, tags: ["nexus"] }
