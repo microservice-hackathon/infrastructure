@@ -8,6 +8,7 @@
    - vim-nox
    - mc
    - htop
+   - ntp
 
 - name: create common directory for downloads
   file: dest={{ common_download_dir }} state=directory
