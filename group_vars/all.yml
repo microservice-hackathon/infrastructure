@@ -7,10 +7,14 @@ ec2_security_group: permit_all
 
 logstash_forwarder_cert: "files/certs/logstash-forwarder.pem"
 logstash_forwarder_key: "files/certs/logstash-forwarder.key"
-logstash_lumberjack_host: "{{ groups['loggers'][0] }}"
+
+logstash_lumberjack_host: "kibana.warsjawa.uservices.pl"
 logstash_lumberjack_port: "5043"
 
-graphite_url: http://graphite.warsjawa.uservices.pl/ 
-grafana_elasticsearch_url: http://{{ groups['loggers'][0] }}:9200
+graphite_host: graphite.warsjawa.uservices.pl
+elasticsearch_host: elasticsearch.warsjawa.uservices.pl
+grafana_host: grafana.warsjawa.uservices.pl
 
-grafana_server_name: grafana.warsjawa.uservices.pl
+#grafana_server_name: grafana.warsjawa.uservices.pl
+
+#elasticsearch_url: http://{{ groups['loggers'][0] }}:9200

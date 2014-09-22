@@ -18,12 +18,12 @@
     dest=/opt/graphite/webapp/graphite/local_settings.py
     mode=0644
   notify:
-    - reload apache
+    - restart apache
 
 - name: Configure graphite.wsgi
   copy: src=opt/graphite/conf/graphite.wsgi dest=/opt/graphite/conf/graphite.wsgi mode=0644
   notify:
-    - reload apache
+    - restart apache
 
 - name: Include carbon-cache
   include: carbon-cache.yml
@@ -54,3 +54,23 @@
 - name: Wait for sqlitedb to be setup
   shell: sleep 3
   when: sqlite_setup.changed
+
+- name: enable modules
+  command: a2enmod wsgi
+  register: a2enmod
+  changed_when: a2enmod.stdout.startswith('To activate the new configuration')
+  notify:
+    - restart apache
+
+- name: create apache vhost
+  template: >
+    src=graphite-vhost.j2
+    dest=/etc/apache2/sites-available/graphite
+    mode=0644
+
+- name: enable apache vhost
+  command: a2ensite graphite
+  register: a2ensite
+  changed_when: a2ensite.stdout.startswith('To activate the new configuration')
+  notify:
+    - restart apache

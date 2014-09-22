@@ -44,10 +44,9 @@
   sudo: true
   roles:
     - { role: common }
+    - { role: apache, tags: ["graphite", "apache"] }
     - { role: grafana, tags: ["graphite", "graphite-grafana"] }
     - { role: graphite, tags: ["graphite", "graphite-core"] }
-    - { role: apache, apache_vhost: 'graphite.warsjawa.uservices.pl', tags: ["graphite", "apache"] }
-    - { role: apache, apache_vhost: 'grafana.warsjawa.uservices.pl', tags: ["graphite", "apache"] }
     
 - name: Server for nexus
   hosts: nexus
