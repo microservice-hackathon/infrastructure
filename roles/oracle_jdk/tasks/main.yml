@@ -1,0 +1,66 @@
+---
+
+- assert:
+    that:
+      - oracle_jdk_version is defined
+
+- name: install wget
+  apt: name=wget state=present
+
+- name: check if JDK is already installed
+  stat: path={{ oracle_jdk_location }}/release
+  register: oracle_jdk_release_exist
+
+- name: check installed JDK version
+  shell: '. {{ oracle_jdk_location }}/release && echo ${JAVA_VERSION}'
+  register: oracle_jdk_installed_version
+  changed_when: false
+  when: oracle_jdk_release_exist.stat.exists
+
+- name: display info about JDK version
+  debug: msg="JDK version {{ oracle_jdk_installed_version.stdout }}"
+  when: oracle_jdk_release_exist.stat.exists
+
+- name: download JDK archive
+  command: >
+    wget {{ oracle_jdk_download_url }}
+         --no-check-certificate --no-cookies -P /tmp
+         --header "Cookie: oraclelicense=accept-securebackup-cookie"
+    creates=/tmp/{{ oracle_jdk_archive }}
+  when: not oracle_jdk_release_exist.stat.exists
+
+- name: create directory which contains JDK
+  file: >
+    path={{ oracle_jdk_location }}
+    state=directory
+  when: not oracle_jdk_release_exist.stat.exists
+
+- name: extract JDK archive
+  command: >
+    tar --no-same-owner --strip-components=1 -C {{ oracle_jdk_location }}
+    -xzf /tmp/{{ oracle_jdk_archive }}
+  when: not oracle_jdk_release_exist.stat.exists
+
+- name: set selected version as default
+  file: >
+    state=link
+    src={{ oracle_jdk_location }}
+    dest={{ oracle_jdk_default_link }}
+  when: oracle_jdk_not_default is not defined
+
+- name: create java alternatives links
+  alternatives:
+    name={{ item }}
+    link=/usr/bin/{{ item }}
+    path={{ oracle_jdk_location }}/bin/{{ item }}
+  with_items: oracle_jdk_tools
+  when: oracle_jdk_not_default is not defined
+
+- name: create java alternatives links (jre)
+  alternatives: >
+    name={{ item }}
+    link=/usr/bin/{{ item }}
+    path={{ oracle_jdk_location }}/jre/bin/{{ item }}
+  with_items: oracle_jdk_jre_tools
+  when: oracle_jdk_not_default is not defined
+

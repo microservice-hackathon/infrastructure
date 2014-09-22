@@ -1,11 +1,16 @@
 ---
 
-jdk_download_url: http://download.oracle.com/otn-pub/java/jdk/
-jdk_arch:
+oracle_jvm_location: "/usr/lib/jvm"
+
+oracle_jdk_arch:
   x86_64: x64
   i386: i586
-jdk_location: /usr/lib/jvm
-jdk_tools:
+
+oracle_jdk_location: "{{ oracle_jvm_location }}/java-{{ oracle_jdk_version[0] }}-oracle-{{ oracle_jdk_version }}"
+oracle_jdk_archive: "jdk-{{ oracle_jdk_version.split('-')[0] }}-linux-{{ oracle_jdk_arch[ansible_architecture] }}.tar.gz"
+oracle_jdk_default_link: "{{ oracle_jvm_location }}/java-{{ oracle_jdk_version[0] }}-oracle"
+
+oracle_jdk_tools:
   - appletviewer
   - extcheck
   - idlj
@@ -34,7 +39,8 @@ jdk_tools:
   - wsgen
   - wsimport
   - xjc
-jdk_jre_tools:
+
+oracle_jdk_jre_tools:
   - java
   - keytool
   - pack200
