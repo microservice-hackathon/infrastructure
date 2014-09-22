@@ -1,11 +1,11 @@
 [loggers]
-54.68.139.142 ansible_ssh_user=admin
+54.69.24.78 ansible_ssh_user=admin
 
 [apps]
-54.68.141.224 ansible_ssh_user=admin
+54.68.13.66 ansible_ssh_user=admin
 
 [graphite]
-54.68.124.161 ansible_ssh_user=admin
+54.69.55.47 ansible_ssh_user=admin
 
 [nexus]
-54.68.37.134 ansible_ssh_user=admin
+54.69.68.66 ansible_ssh_user=admin

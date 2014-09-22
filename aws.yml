@@ -1,0 +1,24 @@
+---
+
+- name: ec2
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  tasks:
+    - local_action:
+        instance_tags:
+          Name: "{{ item }}"
+        module: ec2
+        key_name: "{{ ec2_key_name  }}"
+        instance_type: "{{ ec2_instance_type }}"
+        image: "{{ ec2_image }}"
+        wait: yes
+        group: "{{ ec2_security_group }}"
+        count: 1
+        region: "{{ ec2_region }}"
+      with_items:
+        - loggers
+        - nexus
+        - apps
+        - graphite
+

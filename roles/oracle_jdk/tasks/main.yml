@@ -49,7 +49,7 @@
   when: oracle_jdk_not_default is not defined
 
 - name: create java alternatives links
-  alternatives:
+  alternatives: >
     name={{ item }}
     link=/usr/bin/{{ item }}
     path={{ oracle_jdk_location }}/bin/{{ item }}

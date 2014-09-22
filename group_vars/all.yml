@@ -1,5 +1,10 @@
 ---
 
+ec2_image: ami-bf1e688f
+ec2_region: us-west-2 
+ec2_instance_type: t1.micro
+ec2_security_group: permit_all
+
 logstash_forwarder_cert: "files/certs/logstash-forwarder.pem"
 logstash_forwarder_key: "files/certs/logstash-forwarder.key"
 logstash_lumberjack_host: "{{ groups['loggers'][0] }}"
