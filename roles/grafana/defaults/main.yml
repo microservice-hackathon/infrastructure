@@ -8,6 +8,6 @@ grafana_port: 8080
 
 grafana_owner: apache
 grafana_elasticsearch_url: http://{{graphite_url}}:9200
-grafana_graphite_url: http://{{graphite_url}}:{{ graphite_apache_port }}
+grafana_graphite_url: "{{graphite_url}}"
 
 grafana_apache_vhost_file: grafana.conf

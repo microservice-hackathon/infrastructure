@@ -9,3 +9,4 @@ graphite_pkgs:
   - python-pip
   - python-cairo
   - sqlite3
+  - libapache2-mod-wsgi

@@ -1,6 +1,0 @@
-Listen {{grafana_port}}
-NameVirtualHost *:{{grafana_port}}
-<VirtualHost *:{{grafana_port}}>
-        DocumentRoot "{{ grafana_graphite_root }}/dist"
-        #ServerName {{ grafana_vhost_server_name }}
-</VirtualHost>

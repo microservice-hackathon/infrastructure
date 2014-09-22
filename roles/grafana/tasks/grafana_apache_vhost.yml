@@ -1,5 +1,0 @@
----
-- name: Create VHost file
-  template: src=grafana_vhost.conf.j2 dest="/etc/apache2/sites-enabled/grafana.conf" owner=root
-  notify:
-  - Restart Apache

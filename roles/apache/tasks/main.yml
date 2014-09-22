@@ -8,9 +8,25 @@
   notify:
     - enable apache
 
-- name: enable headers module
-  command: a2enmod headers
+- name: enable modules
+  command: a2enmod {{ item }}
   register: a2enmod
   changed_when: a2enmod.stdout.startswith('To activate the new configuration')
+  with_items: apache_modules
+  notify:
+    - restart apache
+
+- name: create apache vhost
+  template: >
+    src={{ apache_vhost }}.conf
+    dest=/etc/apache2/sites-available/{{ apache_vhost }}.conf
+    mode=0644
+  when: apache_vhost is defined
+
+- name: enable apache vhost
+  command: a2ensite {{ apache_vhost }}.conf
+  register: a2ensite
+  changed_when: a2ensite.stdout.startswith('To activate the new configuration')
+  when: apache_vhost is defined
   notify:
     - restart apache

@@ -10,5 +10,7 @@ logstash_forwarder_key: "files/certs/logstash-forwarder.key"
 logstash_lumberjack_host: "{{ groups['loggers'][0] }}"
 logstash_lumberjack_port: "5043"
 
-graphite_url: http://{{ groups['graphite'][0] }}/ 
+graphite_url: http://graphite.warsjawa.uservices.pl/ 
 grafana_elasticsearch_url: http://{{ groups['loggers'][0] }}:9200
+
+grafana_server_name: grafana.warsjawa.uservices.pl
