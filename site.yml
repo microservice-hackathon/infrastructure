@@ -45,8 +45,8 @@
   roles:
     - { role: common, tags: ["common"] }
     - { role: apache, tags: ["graphite", "apache"] }
-    - { role: grafana, tags: ["graphite", "graphite-grafana"] }
     - { role: graphite, tags: ["graphite", "graphite-core"] }
+    - { role: grafana, tags: ["graphite", "graphite-grafana"] }
     
 - name: Server for nexus
   hosts: nexus
