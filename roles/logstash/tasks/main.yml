@@ -49,6 +49,8 @@
     owner=root
     group=root
     mode=0644
+  notify:
+   - restart logstash
 
 - name: create Logstash Elasticsearch configuration
   template: >
@@ -57,6 +59,8 @@
     owner=root
     group=root
     mode=0644
+  notify:
+   - restart logstash
   
 - name: create Logstash application configuration
   template: >
@@ -65,4 +69,6 @@
     owner=root
     group=root
     mode=0644
+  notify:
+   - restart logstash
 
