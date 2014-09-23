@@ -14,4 +14,4 @@ logstash_lumberjack_port: 5043
 graphite_host: graphite.warsjawa.uservices.pl
 grafana_host: grafana.warsjawa.uservices.pl
 elasticsearch_host: elasticsearch.warsjawa.uservices.pl
-
+rundeck_host: rundeck.warsjawa.uservices.pl
