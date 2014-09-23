@@ -2,7 +2,7 @@
 
 ec2_image: ami-bf1e688f
 ec2_region: us-west-2 
-ec2_instance_type: t1.micro
+ec2_instance_type: m3.medium
 ec2_security_group: permit_all
 
 logstash_forwarder_cert: files/certs/logstash-forwarder.pem
