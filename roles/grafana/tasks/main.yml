@@ -8,7 +8,7 @@
 - name: extract grafana tarball
   shell: >
     tar -zxvf {{ grafana_graphite_root}}/grafana-{{ grafana_version }}.tar.gz
-        -C {{ grafana_graphite_root}}
+    -C {{ grafana_graphite_root}}
     creates={{ grafana_graphite_root}}/grafana-{{ grafana_version }}
 
 - name: link grafana version
