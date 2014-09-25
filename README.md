@@ -19,6 +19,7 @@ During the WarsJava microservice hackathon we will need to provision:
 
  - zookeeper
  - logstash-forwarder
+ - rundeck
 
 ## deployment related infrastructure: (deploy server)
 
