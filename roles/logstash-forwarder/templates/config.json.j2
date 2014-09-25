@@ -40,6 +40,54 @@
     {
       "paths": [ "/var/www/*/log/logstash_production.log" ],
       "fields": { "type": "rails" }
+    },
+    {
+      "paths": [ "/srv/deploy/test/pl/warsjawa/warsjava-client-service/logs/*.log" ],
+      "fields": { "type": "prepared-warsjava-client-service" }
+    },
+    {
+      "paths": [ "/srv/deploy/test/pl/warsjawa/warsjava-fraud-detection-service/logs/*.log" ],
+      "fields": { "type": "prepared-warsjava-fraud-detection-service" }
+    },
+    {
+      "paths": [ "/srv/deploy/test/pl/warsjawa/warsjava-loan-application-decision-maker/logs/*.log" ],
+      "fields": { "type": "prepared-warsjava-decision-maker" }
+    },
+    {
+      "paths": [ "/srv/deploy/test/pl/warsjawa/warsjava-ui/logs/*.log" ],
+      "fields": { "type": "prepared-warsjava-ui" }
+    },
+    {
+      "paths": [ "/srv/deploy/test/pl/warsjawa/warsjava-marketing-offer-generator/logs/*.log" ],
+      "fields": { "type": "prepared-warsjava-marketing-offer-generator" }
+    },
+    {
+      "paths": [ "/srv/deploy/test/pl/warsjawa/warsjava-reporting-service/logs/*.log" ],
+      "fields": { "type": "prepared-warsjava-reporting-service" }
+    },
+    {
+      "paths": [ "/srv/deploy/pl/warsjawa/client-service/logs/*.log" ],
+      "fields": { "type": "client-service" }
+    },
+    {
+      "paths": [ "/srv/deploy/pl/warsjawa/fraud-detection-service/logs/*.log" ],
+      "fields": { "type": "fraud-detection-service" }
+    },
+    {
+      "paths": [ "/srv/deploy/pl/warsjawa/loan-application-decision-maker/logs/*.log" ],
+      "fields": { "type": "decision-maker" }
+    },
+    {
+      "paths": [ "/srv/deploy/pl/warsjawa/ui/logs/*.log" ],
+      "fields": { "type": "ui" }
+    },
+    {
+      "paths": [ "/srv/deploy/pl/warsjawa/marketing-offer-generator/logs/*.log" ],
+      "fields": { "type": "marketing-offer-generator" }
+    },
+    {
+      "paths": [ "/srv/deploy/pl/warsjawa/reporting-service/logs/*.log" ],
+      "fields": { "type": "reporting-service" }
     }
   ]
 }
