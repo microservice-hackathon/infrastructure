@@ -15,6 +15,13 @@
     owner=rundeck
     group=rundeck
 
+- name: create /srv/deploy directory
+  file: >
+    path=/srv/deploy
+    state=directory
+    owner=rundeck
+    group=rundeck
+
 - name: create rundeck configuration
   template: >
     src=rundeck-config.properties.j2
