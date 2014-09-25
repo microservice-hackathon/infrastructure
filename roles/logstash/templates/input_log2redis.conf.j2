@@ -3,7 +3,7 @@ input {
 	if "for_redis" not in [tags] {
         lumberjack {
             port => {{ logstash_lumberjack_port }}
-            ssl_certificate => "/etc/ssl/certs/logstash-forwarder.crt"
+            ssl_certificate => "/etc/ssl/certs/logstash-forwarder.pem"
             ssl_key => "/etc/ssl/private/logstash-forwarder.key"
             type => "Lumberjack"
         }
