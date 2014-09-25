@@ -1,7 +1,5 @@
-Listen {{ kibana_port }}
-NameVirtualHost *:{{ kibana_port }}
 
-<VirtualHost *:{{ kibana_port }}>
+<VirtualHost *:80>
 
 	DocumentRoot {{ kibana_dir }}/current
 
