@@ -1,7 +1,7 @@
 ansible-microservice-hackathon
 ==============================
 
-During the WarsJava microservice hackathon we will need to provision:
+During the Warsjawa microservice hackathon we will need to provision:
 
 ## log monitoring (log server)
 
