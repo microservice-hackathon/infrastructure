@@ -1,5 +1,5 @@
 [program:exhibitor]
-command = java -jar /srv/exhibitor/bin/exhibitor-1.5.1.jar -c file --fsconfigdir {{ zookeeper_exhibitor_dir }}/conf
-stdout_logfile = /var/log/exhibitor/exhibitor.out
-stderr_logfile = /var/log/exhibitor/exhibitor.err
+command = java -jar {{ zookeeper_exhibitor_dir }}/bin/{{ zookeeper_exhibitor_jar }} -c file --fsconfigdir {{ zookeeper_exhibitor_dir }}/conf
+stdout_logfile = {{ zookeeper_exhibitor_logs }}/exhibitor.out
+stderr_logfile = {{ zookeeper_exhibitor_logs }}/exhibitor.err
 autorestart = true

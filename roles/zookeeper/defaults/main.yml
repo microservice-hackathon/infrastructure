@@ -1,7 +1,13 @@
 ---
 
+zookeeper_user: zookeeper
+zookeeper_group: zookeeper
+
+zookeeper_exhibitor_download_url: "http://dl.bintray.com/warsjawa-microhackathon/3rd-party/{{ zookeeper_exhibitor_jar }}"
 zookeeper_exhibitor_dir: /srv/exhibitor
+zookeeper_exhibitor_logs: /var/log/exhibitor
 zookeeper_exhibitor_version: 1.5.1
 
-zookeeper_version: 3.4.6
 zookeeper_data_path: /var/lib/zookeeper
+zookeeper_version: 3.4.6
+zookeeper_apache_mirror: "http://ftp.ps.pl/pub/apache/zookeeper"

@@ -1,16 +1,16 @@
 ---
 
-- name: check if Zookeeper is already installed
+- name: check if zookeeper is already installed
   stat: path={{ zookeeper_exhibitor_dir }}/zookeeper/{{ zookeeper_archive_name }}/bin/zkServer.sh
   register: zookeeper_installed
 
-- name: download Zookeeper
+- name: download zookeeper
   get_url: >
     url={{ zookeeper_download_url }}
     dest=/tmp/{{ zookeeper_archive_name }}.tgz
   when: not zookeeper_installed.stat.exists
 
-- name: extract Zookeeper archive
+- name: extract zookeeper archive
   unarchive:
     src=/tmp/{{ zookeeper_archive_name }}.tgz
     dest={{ zookeeper_exhibitor_dir }}/zookeeper
@@ -21,7 +21,7 @@
   file: >
     state=directory
     path={{ zookeeper_exhibitor_dir }}/zookeeper/{{ zookeeper_archive_name }}
-    owner=root
-    group=root
+    owner={{ zookeeper_user }}
+    group={{ zookeeper_group }}
     recurse=yes
   when: not zookeeper_installed.stat.exists
