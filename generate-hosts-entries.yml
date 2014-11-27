@@ -1,0 +1,32 @@
+---
+
+- name: create in-memory inventory
+  hosts: all
+  user: vagrant
+  gather_facts: true
+  vars:
+    hosts_entries:
+      loggers:
+        - loggers.{{ domain }}
+        - elasticsearch.{{ domain }}
+        - kibana.{{ domain }}
+        - rundeck.{{ domain }}
+      graphite:
+        - graphite.{{ domain }}
+        - grafana.{{ domain }}
+      apps:
+        - apps.{{ domain }}
+      nexus:
+        - nexus.{{ domain }}
+  tasks:
+
+    - local_action: command mktemp
+      register: tmp_file
+      run_once: true
+
+    - local_action: shell echo "{{ facter_ipaddress_eth1 }}  {{ item }}" >> {{ tmp_file.stdout }}
+      with_items: "{{ hosts_entries[inventory_hostname] }}"
+
+    - debug: msg="Please execute `cat {{ tmp_file.stdout }} | sudo tee -a /etc/hosts"
+      run_once: true
+

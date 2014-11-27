@@ -1,5 +1,7 @@
 ---
 
+domain: uservices.pl
+
 ec2_image: ami-bf1e688f
 ec2_region: us-west-2 
 ec2_instance_type: m3.medium
@@ -8,10 +10,10 @@ ec2_security_group: permit_all
 logstash_forwarder_cert: files/certs/logstash-forwarder.pem
 logstash_forwarder_key: files/certs/logstash-forwarder.key
 
-logstash_lumberjack_host: kibana.warsjawa.uservices.pl
+logstash_lumberjack_host: kibana.{{ domain }}
 logstash_lumberjack_port: 5043
 
-graphite_host: graphite.warsjawa.uservices.pl
-grafana_host: grafana.warsjawa.uservices.pl
-elasticsearch_host: elasticsearch.warsjawa.uservices.pl
-rundeck_host: rundeck.warsjawa.uservices.pl
+graphite_host: graphite.{{ domain }}
+grafana_host: grafana.{{ domain }}
+elasticsearch_host: elasticsearch.{{ domain }}
+rundeck_host: rundeck.{{ domain }}
