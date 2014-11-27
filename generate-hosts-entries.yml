@@ -1,3 +1,12 @@
+
+#
+# How to run this playbook?
+#
+# WARNING: playbook must be run from project root directory!
+#
+# $ ansible-playbook -i .vagrant/provisioners/ansible/inventory/vagrant_ansible_inventory --private-key=~/.vagrant.d/insecure_private_key -u vagrant generate-hosts-entries.yml 
+#
+
 ---
 
 - name: generate /etc/hosts entries
