@@ -1,6 +1,6 @@
 ---
 
-- name: create in-memory inventory
+- name: generate /etc/hosts entries
   hosts: all
   user: vagrant
   gather_facts: true
