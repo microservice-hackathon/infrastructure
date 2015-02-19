@@ -15,4 +15,8 @@
         github_repo_user: "{{ lookup('env', 'GH_USERNAME') }}",
         github_repo_token: "{{ lookup('env', 'GH_ACCESS_TOKEN') }}"
       }
-
+    - { 
+        role: github_repo_microservice,
+        github_repo_microservice_projects: "{{ projects }}",
+        github_repo_microservice_organization: "{{ github_organization }}",
+      }

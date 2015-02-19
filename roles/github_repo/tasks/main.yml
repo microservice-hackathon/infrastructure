@@ -2,7 +2,7 @@
 
 - name: check if repository exists
   command: >
-    curl -s -u {{ github_repo_user }}:{{ github_repo_token }}
+    curl -u {{ github_repo_user }}:{{ github_repo_token }}
     https://api.github.com/repos/{{ github_repo_organization }}/{{ item.name }}
   register: curl_result
   with_items: github_repo_projects
@@ -25,7 +25,7 @@
 
 - name: create repository on Github
   command: >
-    curl -s -u {{ github_repo_user }}:{{ github_repo_token }}
+    curl -u {{ github_repo_user }}:{{ github_repo_token }}
     https://api.github.com/orgs/{{ github_repo_organization }}/repos
     -d '{ "name" : "{{ item.0.name }}" }'
   when: "'Not Found' in item.1.stdout"
@@ -51,24 +51,6 @@
     - github_repo_projects
     - curl_result.results
 
-- name: create configuration file
-  template:
-    src: application.yaml.j2
-    dest: "{{ github_repo_temp }}/{{ item.0.name }}/src/main/resources/application.yaml"
-  when: "'Not Found' in item.1.stdout"
-  with_together:
-    - github_repo_projects
-    - curl_result.results
-
-- name: commit changes
-  command: >
-    git commit -a -m "Update configuration"
-    chdir="{{ github_repo_temp }}/{{ item.0.name }}"
-  when: "'Not Found' in item.1.stdout"
-  with_together:
-    - github_repo_projects
-    - curl_result.results
-
 - name: push code to new repository
   command: >
     git push -u origin {{ item.0.template_version }}:master
@@ -77,3 +59,8 @@
   with_together:
     - github_repo_projects
     - curl_result.results
+
+- name: remove temporary directory
+  file:
+    dest: "{{ github_repo_temp }}"
+    state: absent

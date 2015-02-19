@@ -17,7 +17,7 @@ projects:
   
   - name: loan-application-decision-maker
     port: 8055
-    template: https://github.com/4finance/boot-microservice.git 
+    template: https://github.com/4finance/boot-microservice.git
     template_version: master
   
   - name: marketing-offer-generator

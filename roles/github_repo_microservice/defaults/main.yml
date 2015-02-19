@@ -1,0 +1,3 @@
+---
+
+github_repo_microservice_temp: "/tmp/{{ hackathon_edition }}"

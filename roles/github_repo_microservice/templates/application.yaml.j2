@@ -11,7 +11,7 @@ graphite:
 
 metrics.path:
   country: pl
-  app: {{ item.0.name }}
+  app: {{ item.name }}
 
 stubrunner.stubs:
   repository.root: "{{ nexus_url }}/nexus/content/repositories/releases/"
@@ -19,4 +19,4 @@ stubrunner.stubs:
   module: stub-definitions
 
 server:
-  port: {{ item.0.port }}
+  port: {{ item.port }}
