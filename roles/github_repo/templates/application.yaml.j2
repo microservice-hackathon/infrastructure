@@ -1,0 +1,22 @@
+
+spring:
+  jackson.deserialization.fail-on-unknown-properties: false
+  groovy.template.check-template-location: false
+
+rest.api.version: 1.0
+city.finding.service.url: "http://api.openweathermap.org/data/2.5/weather"
+
+graphite:
+  host: {{ graphite_host }}
+
+metrics.path:
+  country: pl
+  app: {{ item.0.name }}
+
+stubrunner.stubs:
+  repository.root: "{{ nexus_url }}/nexus/content/repositories/releases/"
+  group: com.ofg
+  module: stub-definitions
+
+server:
+  port: {{ item.0.port }}

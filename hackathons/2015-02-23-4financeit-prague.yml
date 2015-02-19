@@ -1,0 +1,36 @@
+---
+
+domain: hackathon.dev.4finance.net
+github_organization: ms-hakaton-20150219
+docs_title: "Microservice Hackathon - Prague 2015-02-23"
+projects:
+
+  - name: fraud-detection-service
+    port: 8053
+    template: https://github.com/4finance/boot-microservice.git
+    template_version: master
+  
+  - name: loan-application-service
+    port: 8054
+    template: https://github.com/4finance/boot-microservice.git
+    template_version: master
+  
+  - name: loan-application-decision-maker
+    port: 8055
+    template: https://github.com/4finance/boot-microservice.git 
+    template_version: master
+  
+  - name: marketing-offer-generator
+    port: 8056
+    template: https://github.com/4finance/boot-microservice.git
+    template_version: master
+
+  - name: reporting-service
+    port: 8057
+    template: https://github.com/4finance/boot-microservice.git
+    template_version: boot-microservice-gui
+
+  - name: client-service
+    port: 8058
+    template: https://github.com/4finance/boot-microservice.git
+    template_version: boot-microservice-gui

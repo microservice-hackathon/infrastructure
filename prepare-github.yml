@@ -1,0 +1,18 @@
+---
+
+- name: setup github repositories
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  vars:
+  pre_tasks:
+    - include_vars: "hackathons/{{ hackathon_edition }}.yml"
+  roles:
+    - { 
+        role: github_repo,
+        github_repo_projects: "{{ projects }}",
+        github_repo_organization: "{{ github_organization }}",
+        github_repo_user: "{{ lookup('env', 'GH_USERNAME') }}",
+        github_repo_token: "{{ lookup('env', 'GH_ACCESS_TOKEN') }}"
+      }
+
