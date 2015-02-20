@@ -24,22 +24,22 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.define 'loggers' do |config|
     config.vm.host_name = 'loggers'
-    config.vm.network "private_network", type: "dhcp"
+    config.vm.network "private_network", ip: "10.11.12.10"
   end
 
   config.vm.define 'apps' do |config|
     config.vm.host_name = 'apps'
-    config.vm.network "private_network", type: "dhcp"
+    config.vm.network "private_network", ip: "10.11.12.11"
   end
 
   config.vm.define 'graphite' do |config|
     config.vm.host_name = 'graphite'
-    config.vm.network "private_network", type: "dhcp"
+    config.vm.network "private_network", ip: "10.11.12.12"
   end
 
   config.vm.define 'nexus' do |config|
     config.vm.host_name = 'nexus'
-    config.vm.network "private_network", type: "dhcp"
+    config.vm.network "private_network", ip: "10.11.12.13"
   end
 
 end
