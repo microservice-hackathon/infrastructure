@@ -1,0 +1,24 @@
+---
+
+tools:
+  - name: Rundeck
+    url: "http://rundeck.{{ domain }}:4440"
+  
+  - name: Nexus
+    url: "http://nexus.{{ domain }}:8081/nexus/"
+  
+  - name: Graphite
+    url: "http://graphite.{{ domain }}/"
+  
+  - name: Grafana
+    url: "http://grafana.{{ domain }}/"
+  
+  - name: Kibana
+    url: "http://kibana.{{ domain }}/"
+  
+  - name: Exhibitor
+    url: "http://apps.{{ domain }}:8080/exhibitor/v1/ui/index.html"
+  
+  - name: Jenkins
+    url: "http://jenkins.{{ domain }}:8080/"
+  

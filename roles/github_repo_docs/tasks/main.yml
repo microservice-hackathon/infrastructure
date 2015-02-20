@@ -1,0 +1,48 @@
+---
+
+- name: create temporary directory
+  file:
+    dest: "{{ github_repo_docs_temp }}"
+    state: directory
+
+- name: clone source repository
+  git:
+    repo: "git@github.com:{{ github_repo_docs_organization }}/{{ github_repo_docs_organization }}.github.io.git"
+    dest: "{{ github_repo_docs_temp }}/{{ github_repo_docs_organization }}.github.io"
+
+- name: copy docs.md
+  copy:
+    src: hackathons/docs/{{ hackathon_edition }}.md
+    dest: "{{ github_repo_docs_temp }}/{{ github_repo_docs_organization }}.github.io/_includes/docs.md"
+
+- name: create tools list
+  copy:
+    dest: "{{ github_repo_docs_temp }}/{{ github_repo_docs_organization }}.github.io/_data/tools.yml"
+    content: "{{ github_repo_docs_tools|to_nice_yaml }}"
+
+- name: create projects list
+  copy:
+    dest: "{{ github_repo_docs_temp }}/{{ github_repo_docs_organization }}.github.io/_data/projects.yml"
+    content: "{{ github_repo_docs_projects|to_nice_yaml }}"
+
+- name: create configuration file
+  template:
+    src: _config.yml.j2
+    dest: "{{ github_repo_docs_temp }}/{{ github_repo_docs_organization }}.github.io/_config.yml"
+
+- name: stage changes
+  command: >
+    git add -A
+    chdir="{{ github_repo_docs_temp }}/{{ github_repo_docs_organization }}.github.io"
+  ignore_errors: yes
+
+- name: commit changes
+  command: >
+    git commit -m "Update docs"
+    chdir="{{ github_repo_docs_temp }}/{{ github_repo_docs_organization }}.github.io"
+  ignore_errors: yes
+
+- name: push code to new repository
+  command: >
+    git push -u origin master
+    chdir="{{ github_repo_docs_temp }}/{{ github_repo_docs_organization }}.github.io"

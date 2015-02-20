@@ -3,6 +3,12 @@
 domain: hackathon.dev.4finance.net
 github_organization: ms-hakaton-20150219
 docs_title: "Microservice Hackathon - Prague 2015-02-23"
+
+docs:
+  - name: "{{ github_organization }}.github.io"
+    template: https://github.com/microservice-hackathon/docs-template.git
+    template_version: master
+
 projects:
 
   - name: fraud-detection-service
@@ -34,3 +40,4 @@ projects:
     port: 8058
     template: https://github.com/4finance/boot-microservice.git
     template_version: boot-microservice-gui
+
