@@ -22,47 +22,47 @@
   hosts: apps
   sudo: yes
   roles:
-    - { role: common, tags: ["common"] }
-    - { role: oracle_jdk, oracle_jdk_version: '8u5-b13', tags: ["apps", "apps-oracle-jdk"] }
-    - { role: zookeeper, tags: ["apps", "apps-zookeeper"] }
-    - { role: logstash-forwarder, tags: ["apps", "apps-logstash-forwarder"] }
+    - { role: common }
+    - { role: oracle_jdk, oracle_jdk_version: '8u5-b13' }
+    - { role: zookeeper }
+    - { role: logstash-forwarder }
 
 - name: Server for logging applications
   hosts: loggers
   sudo: yes
   roles:
-    - { role: common, tags: ["common"] }
-    - { role: apache, tags: ["loggers", "loggers-apache"] }
-    - { role: elasticsearch, tags: ["loggers", "loggers-elasticsearch"] }
-    - { role: logstash, tags: ["loggers", "loggers-logstash"] }
-    - { role: kibana, tags: ["loggers", "loggers-kibana"] }
+    - { role: common }
+    - { role: apache }
+    - { role: elasticsearch }
+    - { role: logstash }
+    - { role: kibana }
 
 - name: Server for metrics
   hosts: graphite
   sudo: true
   roles:
-    - { role: common, tags: ["common"] }
-    - { role: apache, tags: ["graphite", "apache"] }
-    - { role: graphite, tags: ["graphite", "graphite-core"] }
-    - { role: grafana, tags: ["graphite", "graphite-grafana"] }
+    - { role: common }
+    - { role: apache }
+    - { role: graphite }
+    - { role: grafana }
     
 - name: Server for nexus
   hosts: nexus
   sudo: true
   roles:
-    - { role: common, tags: ["common"] }
-    - { role: sonatype-nexus, tags: ["nexus"] }
+    - { role: common }
+    - { role: sonatype-nexus }
 
 - name: Server for Jenkins
   hosts: jenkins
   sudo: true
   roles:
-    - { role: oracle_jdk, oracle_jdk_version: '8u5-b13', tags: ["apps", "apps-oracle-jdk"] }
-    - { role: common, tags: ["common"] }
+    - { role: oracle_jdk, oracle_jdk_version: '8u5-b13' }
+    - { role: common }
 
 - name: Server for Rundeck
   hosts: rundeck
   sudo: true
   roles:
-    - { role: common, tags: ["common"] }
-    - { role: rundeck, tags: ["apps", "rundeck"] }
+    - { role: common }
+    - { role: rundeck }
