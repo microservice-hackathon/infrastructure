@@ -1,0 +1,5 @@
+---
+
+logstash_forwarder_path: "/srv/deploy/*/logs/application.log"
+logstash_forwarder_package: "logstash-forwarder_0.3.1_amd64.deb"
+logstash_forwarder_package_url: "https://bintray.com/artifact/download/microhackathon/debian/pool/main/l/logstash-forwarder/{{ logstash_forwarder_package }}"

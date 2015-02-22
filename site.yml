@@ -25,7 +25,7 @@
     - { role: common }
     - { role: oracle_jdk, oracle_jdk_version: '8u5-b13' }
     - { role: zookeeper }
-    - { role: logstash-forwarder }
+    - { role: logstash_forwarder }
 
 - name: Server for logging applications
   hosts: loggers

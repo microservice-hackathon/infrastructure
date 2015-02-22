@@ -1,16 +1,13 @@
 ---
 
-- name: add elasticsearch apt key
-  apt_key: url=http://packages.elasticsearch.org/GPG-KEY-elasticsearch  state=present
-
-- name: add elasticsearch apt repository
-  apt_repository: >
-    repo='deb http://packages.elasticsearch.org/logstashforwarder/debian stable main'
-    state=present
-    update_cache=yes
+- name: download logstash-forwarder package
+  get_url:
+    url: "{{ logstash_forwarder_package_url }}"
+    dest: "/tmp/{{ logstash_forwarder_package }}"
 
 - name: install logstash-forwarder
-  apt: name=logstash-forwarder state=present
+  apt:
+    deb: "/tmp/{{ logstash_forwarder_package }}"
 
 - name: ensure logstash-forwarder has its SSL certificate
   copy: src=files/certs/logstash-forwarder.pem dest=/etc/ssl/certs/logstash-forwarder.pem owner=root group=root mode=0755
