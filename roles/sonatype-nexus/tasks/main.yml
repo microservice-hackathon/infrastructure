@@ -11,9 +11,6 @@
 
   - include: configure.yml
 
-  - include: plugins/apt.yml
-
   - include: startup.yml
 
   - include: nginx.yml
-    when: sonatype_nexus_nginx == true
