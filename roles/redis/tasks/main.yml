@@ -1,7 +1,0 @@
----
-
-- name: install Redis
-  apt: pkg=redis-server state=installed update_cache=yes
-
-- name: enable and start Redis service 
-  service: name=redis-server state=started enabled=yes

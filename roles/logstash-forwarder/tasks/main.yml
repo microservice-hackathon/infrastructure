@@ -12,7 +12,6 @@
 - name: install logstash-forwarder
   apt: name=logstash-forwarder state=present
 
-
 - name: ensure logstash-forwarder has its SSL certificate
   copy: src=files/certs/logstash-forwarder.pem dest=/etc/ssl/certs/logstash-forwarder.pem owner=root group=root mode=0755
 

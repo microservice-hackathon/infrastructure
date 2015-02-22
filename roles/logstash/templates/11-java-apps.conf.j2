@@ -1,0 +1,20 @@
+filter {
+
+	# pattern should match the beginning of the grok match
+	multiline {
+	      pattern => "(^%{TIMESTAMP_ISO8601})"
+	      what => "previous"
+	      negate => true
+	}
+	
+	# pattern matching logback pattern
+	grok {
+	     match => { "message" => "(?m)%{TIMESTAMP_ISO8601:timestamp}\s+\|\s+%{LOGLEVEL:severity}\s+\|\s+%{DATA:correlationId}\s+\|\s+%{DATA:thread}\s+\|\s+%{JAVAFILE:class}\s+\|\s+%{GREEDYDATA:shortmessage}" }
+	}
+	
+	# pattern of date in logs
+	date {
+	     match => [ "timestamp", "yyyy-MM-dd HH:mm:ss.SSSZ" ]
+	}
+
+}

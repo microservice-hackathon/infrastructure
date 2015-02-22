@@ -42,4 +42,14 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     config.vm.network "private_network", ip: "10.11.12.13"
   end
 
+  config.vm.define 'jenkins' do |config|
+    config.vm.host_name = 'jenkins'
+    config.vm.network "private_network", ip: "10.11.12.14"
+  end
+
+  config.vm.define 'rundeck' do |config|
+    config.vm.host_name = 'rundeck'
+    config.vm.network "private_network", ip: "10.11.12.15"
+  end
+
 end
