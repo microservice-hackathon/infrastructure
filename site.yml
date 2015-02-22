@@ -57,8 +57,9 @@
   hosts: jenkins
   sudo: true
   roles:
-    - { role: oracle_jdk, oracle_jdk_version: '8u5-b13' }
     - { role: common }
+    - { role: oracle_jdk, oracle_jdk_version: '8u5-b13' }
+    - { role: jenkins }
 
 - name: Server for Rundeck
   hosts: rundeck
