@@ -19,6 +19,14 @@
   with_items:
     github_repo_microservice_projects
 
+- name: update gradle properties file
+  replace:
+    dest: "{{ github_repo_microservice_temp }}/{{ item.name }}/gradle.properties"
+    regexp: '^mavenRepoUrl=.*$'
+    replace: 'mavenRepoUrl="{{ nexus_url }}/content/repositories/releases/"'
+  with_items:
+    github_repo_microservice_projects
+
 - name: commit changes
   command: >
     git commit -a -m "Update configuration"
