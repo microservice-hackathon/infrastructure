@@ -62,7 +62,7 @@
 - name: create Logstash output configuration
   template: >
     src=21-es-output.conf.j2
-    dest="/etc/logstash/conf.d/output_log2redis.conf"
+    dest=/etc/logstash/conf.d/21-es-output.conf
     owner=root
     group=root
     mode=0644
