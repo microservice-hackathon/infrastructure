@@ -1,7 +1,7 @@
 ---
 
 domain: hackathon.dev.4finance.net
-github_organization: ms-hakaton-20150219
+github_organization: microhackathon-2015-02-Prague
 docs_title: "Microservice Hackathon - Prague 2015-02-23"
 
 docs:
@@ -11,33 +11,101 @@ docs:
 
 projects:
 
-  - name: fraud-detection-service
+  - name: fraud-detection-service-pl
     port: 8053
     template: https://github.com/4finance/boot-microservice.git
     template_version: master
   
-  - name: loan-application-service
+  - name: loan-application-service-pl
     port: 8054
     template: https://github.com/4finance/boot-microservice.git
     template_version: master
   
-  - name: loan-application-decision-maker
+  - name: loan-application-decision-maker-pl
     port: 8055
     template: https://github.com/4finance/boot-microservice.git
     template_version: master
   
-  - name: marketing-offer-generator
+  - name: marketing-offer-generator-pl
     port: 8056
     template: https://github.com/4finance/boot-microservice.git
     template_version: master
 
-  - name: reporting-service
+  - name: reporting-service-pl
     port: 8057
     template: https://github.com/4finance/boot-microservice.git
     template_version: boot-microservice-gui
 
-  - name: client-service
+  - name: client-service-pl
     port: 8058
     template: https://github.com/4finance/boot-microservice.git
     template_version: boot-microservice-gui
 
+  - name: ui-pl
+    port: 8059
+    template: https://github.com/4finance/boot-microservice.git
+    template_version: boot-microservice-gui
+
+  - name: fraud-detection-service-cz
+    port: 9053
+    template: https://github.com/4finance/boot-microservice.git
+    template_version: master
+  
+  - name: loan-application-service-cz
+    port: 9054
+    template: https://github.com/4finance/boot-microservice.git
+    template_version: master
+  
+  - name: loan-application-decision-maker-cz
+    port: 9055
+    template: https://github.com/4finance/boot-microservice.git
+    template_version: master
+  
+  - name: marketing-offer-generator-cz
+    port: 9056
+    template: https://github.com/4finance/boot-microservice.git
+    template_version: master
+
+  - name: reporting-service-cz
+    port: 9057
+    template: https://github.com/4finance/boot-microservice.git
+    template_version: boot-microservice-gui
+
+  - name: client-service-cz
+    port: 9058
+    template: https://github.com/4finance/boot-microservice.git
+    template_version: boot-microservice-gui
+
+  - name: ui-cz
+    port: 9059
+    template: https://github.com/4finance/boot-microservice.git
+    template_version: boot-microservice-gui
+
+attendees:
+  - mdavidek
+  - trehak1
+  - najmanko
+  - MadalinaBidilita
+  - climbee
+  - cbuleandra
+  - skoky76
+  - j-novak
+  - stawron
+  - me3x
+  - ceyhunhan
+  - lukooo
+  - dstepanov
+  - Jakub-Smrcka
+  - lubsvo
+  - thuryn
+  - hnevkop
+  - stepanovsky
+  - danielmatteoni
+  - mmarekpohl
+  - mkurka
+  - pafkaCz
+  - smaragda
+  - moiety
+  - pirer
+  - mmadron
+  - cernya
