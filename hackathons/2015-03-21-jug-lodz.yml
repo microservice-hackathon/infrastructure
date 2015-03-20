@@ -10,7 +10,12 @@ docs:
     template_version: master
 
 projects:
-
+  
+  - name: ui
+    port: 8052
+    template: https://github.com/4finance/boot-microservice.git
+    template_version: boot-microservice-gui
+    
   - name: fraud-detection-service
     port: 8053
     template: https://github.com/4finance/boot-microservice.git
