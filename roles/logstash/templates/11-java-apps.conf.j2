@@ -1,5 +1,16 @@
 filter {
 
+	grok {
+		match => { "file" => "/srv/deploy/%{DATA:app_name}/logs/*" }
+	}
+
+	mutate {
+		gsub => [
+			"message", "\$", "-"
+		]
+		add_tag => [ "sanitized" ]
+	}
+
 	# pattern should match the beginning of the grok match
 	multiline {
 	      pattern => "(^%{TIMESTAMP_ISO8601})"
