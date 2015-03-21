@@ -18,4 +18,4 @@ grafana_host: grafana.{{ domain }}
 elasticsearch_host: elasticsearch.{{ domain }}
 rundeck_host: rundeck.{{ domain }}
 
-nexus_url: http://nexus.{{ domain }}:8081
+nexus_url: http://nexus.{{ domain }}:8081/nexus
