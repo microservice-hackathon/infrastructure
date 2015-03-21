@@ -12,18 +12,50 @@
   with_items:
     github_repo_microservice_projects
 
-- name: create configuration file
+- name: update microservice.json
   template:
-    src: application.yaml.j2
-    dest: "{{ github_repo_microservice_temp }}/{{ item.name }}/src/main/resources/application.yaml"
+    src: microservice.json.j2
+    dest: "{{ github_repo_microservice_temp }}/{{ item.name }}/src/main/resources/microservice.json"
   with_items:
     github_repo_microservice_projects
 
-- name: update gradle properties file
+- name: update gradle.properties
   replace:
     dest: "{{ github_repo_microservice_temp }}/{{ item.name }}/gradle.properties"
     regexp: '^mavenRepoUrl=.*$'
-    replace: 'mavenRepoUrl="{{ nexus_url }}/content/repositories/releases/"'
+    replace: 'mavenRepoUrl={{ nexus_url }}/content/repositories/releases/'
+  with_items:
+    github_repo_microservice_projects
+
+- name: update gradle.properties
+  replace:
+    dest: "{{ github_repo_microservice_temp }}/{{ item.name }}/gradle.properties"
+    regexp: '^mavenUser=.*$'
+    replace: 'mavenUser=admin'
+  with_items:
+    github_repo_microservice_projects
+
+- name: update gradle.properties
+  replace:
+    dest: "{{ github_repo_microservice_temp }}/{{ item.name }}/gradle.properties"
+    regexp: '^mavenPassword=.*$'
+    replace: 'mavenPassword=admin123'
+  with_items:
+    github_repo_microservice_projects
+
+- name: update settings.gradle
+  replace:
+    dest: "{{ github_repo_microservice_temp }}/{{ item.name }}/settings.gradle"
+    regexp: '^rootProject.name =.*$'
+    replace: 'rootProject.name = "{{ item.name }}"'
+  with_items:
+    github_repo_microservice_projects
+
+- name: remove unneeded files
+  command: >
+    git rm --ignore-unmatch -rf -- config docs repository properties src/test
+    chdir="{{ github_repo_microservice_temp }}/{{ item.name }}"
+  ignore_errors: yes
   with_items:
     github_repo_microservice_projects
 

@@ -60,7 +60,7 @@
     - github_repo_projects
     - curl_result.results
 
-- name: remove temporary directory
+- name: remove temp directory
   file:
     dest: "{{ github_repo_temp }}"
     state: absent

@@ -1,0 +1,10 @@
+{
+    "{{ item.name.split('-')[-1] }}": {
+        "this": "com/ofg/{{ item.name }}",
+        "dependencies": {
+            "collerator": {
+                "path": "com/ofg/some-other-service"
+            }
+        }
+    }
+}
