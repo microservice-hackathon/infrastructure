@@ -11,6 +11,8 @@
    - ntp
    - less
    - ncurses-term
+   - git
+   - screen
 
 - name: create common directory for downloads
   file: dest={{ common_download_dir }} state=directory
