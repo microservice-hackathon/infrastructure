@@ -1,0 +1,51 @@
+---
+
+- name: create temporary directory
+  file:
+    dest: "{{ github_repo_properties_temp }}"
+    state: directory
+
+- name: clone source repository
+  git:
+    repo: "git@github.com:{{ github_repo_properties_organization }}/properties.git"
+    dest: "{{ github_repo_properties_temp }}/properties"
+
+- name: create temporary directory
+  file:
+    dest: "{{ github_repo_properties_temp }}/properties/{{ item }}"
+    state: directory
+  with_items:
+    - prod
+    - prod/com
+    - prod/com/ofg
+
+- name: create temporary directory
+  file:
+    dest: "{{ github_repo_properties_temp }}/properties/prod/com/ofg/{{ item.name.split('-')[-1] }}"
+    state: directory
+  with_items:
+    github_repo_properties_projects
+
+- name: create configuration file
+  template:
+    src: application.yaml.j2
+    dest: "{{ github_repo_properties_temp }}/properties/prod/com/ofg/{{ item.name.split('-')[-1] }}/{{ item.name }}.yaml"
+  with_items:
+    github_repo_properties_projects
+
+- name: stage  changes
+  command: >
+    git add prod
+    chdir="{{ github_repo_properties_temp }}/properties"
+  ignore_errors: yes
+
+- name: commit changes
+  command: >
+    git commit -a -m "Update configuration"
+    chdir="{{ github_repo_properties_temp }}/properties"
+  ignore_errors: yes
+
+- name: push code to new repository
+  command: >
+    git push -u origin master
+    chdir="{{ github_repo_properties_temp }}/properties"
