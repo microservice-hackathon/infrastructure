@@ -1,0 +1,25 @@
+---
+
+- name: download jenkins-cli
+  get_url:
+    url: "http://{{ jenkins_job_host }}:{{ jenkins_job_port }}/jnlpJars/jenkins-cli.jar"
+    dest: "{{ jenkins_job_cli_client }}"
+  register: jarfile_get
+  until: "'OK' in jarfile_get.msg or 'file already exists' in jarfile_get.msg"
+  retries: 15
+  delay: 10
+
+- name: create job configuration
+  template:
+    src: job.xml.j2
+    dest: "/tmp/{{ item.name }}.xml"
+  with_items:
+    jenkins_job_projects
+
+- name: create jenkins jobs
+  shell: >
+    java -jar {{ jenkins_job_cli_client }} -s http://{{ jenkins_job_host }}:{{ jenkins_job_port}}/ create-job {{ item.name }} < /tmp/{{ item.name }}.xml
+  args:
+    creates: /var/lib/jenkins/jobs/{{ item.name }}/config.xml
+  with_items:
+    jenkins_job_projects
