@@ -8,3 +8,8 @@ jenkins_plugins:
   - gradle
   - greenballs
   - rundeck
+  - delivery-pipeline-plugin
+  - build-pipeline-plugin
+  - job-dsl
+  - nested-view
+  - parameterized-trigger
