@@ -1,0 +1,85 @@
+---
+
+domain: uservices.pl
+github_organization: microhackathon-test
+docs_title: "Microservice Hackathon - TEST"
+
+docs:
+  - name: "{{ github_organization }}.github.io"
+    template: https://github.com/microservice-hackathon/docs-template.git
+    template_version: master
+
+properties:
+  - name: "properties"
+
+projects:
+
+  - name: ui-waw
+    port: 8052
+    template: https://github.com/4finance/boot-microservice.git
+    template_version: boot-microservice-gui-without-node
+
+  - name: fraud-detection-service-waw
+    port: 8053
+    template: https://github.com/4finance/boot-microservice.git
+    template_version: master
+  
+  - name: loan-application-service-waw
+    port: 8054
+    template: https://github.com/4finance/boot-microservice.git
+    template_version: master
+  
+  - name: loan-application-decision-maker-waw
+    port: 8055
+    template: https://github.com/4finance/boot-microservice.git
+    template_version: master
+  
+  - name: marketing-offer-generator-waw
+    port: 8056
+    template: https://github.com/4finance/boot-microservice.git
+    template_version: master
+
+  - name: reporting-service-waw
+    port: 8057
+    template: https://github.com/4finance/boot-microservice.git
+    template_version: boot-microservice-gui-without-node
+
+  - name: client-service-waw
+    port: 8058
+    template: https://github.com/4finance/boot-microservice.git
+    template_version: boot-microservice-gui-without-node
+
+  - name: ui-lodz
+    port: 9052
+    template: https://github.com/4finance/boot-microservice.git
+    template_version: boot-microservice-gui-without-node
+
+  - name: fraud-detection-service-lodz
+    port: 9053
+    template: https://github.com/4finance/boot-microservice.git
+    template_version: master
+  
+  - name: loan-application-service-lodz
+    port: 9054
+    template: https://github.com/4finance/boot-microservice.git
+    template_version: master
+  
+  - name: loan-application-decision-maker-lodz
+    port: 9055
+    template: https://github.com/4finance/boot-microservice.git
+    template_version: master
+  
+  - name: marketing-offer-generator-lodz
+    port: 9056
+    template: https://github.com/4finance/boot-microservice.git
+    template_version: master
+
+  - name: reporting-service-lodz
+    port: 9057
+    template: https://github.com/4finance/boot-microservice.git
+    template_version: boot-microservice-gui-without-node
+
+  - name: client-service-lodz
+    port: 9058
+    template: https://github.com/4finance/boot-microservice.git
+    template_version: boot-microservice-gui-without-node
