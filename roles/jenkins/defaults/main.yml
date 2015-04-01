@@ -13,3 +13,5 @@ jenkins_plugins:
   - job-dsl
   - nested-view
   - parameterized-trigger
+  - ghprb
+  - stash-pullrequest-builder
