@@ -13,16 +13,6 @@
     dest: "{{ github_repo_temp }}"
     state: directory
 
-- name: clone source repository
-  git:
-    repo: "{{ item.0.template }}"
-    version: "{{ item.0.template_version|default('master') }}"
-    dest: "{{ github_repo_temp }}/{{ item.0.name }}"
-  when: "'Not Found' in item.1.stdout"
-  with_together:
-    - github_repo_projects
-    - curl_result.results
-
 - name: create repository on Github
   command: >
     curl -u {{ github_repo_user }}:{{ github_repo_token }}
@@ -33,11 +23,21 @@
     - github_repo_projects
     - curl_result.results
 
+- name: clone source repository
+  git:
+    repo: "{{ item.0.template }}"
+    version: "{{ item.0.template_version|default('master') }}"
+    dest: "{{ github_repo_temp }}/{{ item.0.name }}"
+  when: "'Not Found' in item.1.stdout and template is defined"
+  with_together:
+    - github_repo_projects
+    - curl_result.results
+
 - name: remove origin
   command: >
     git remote remove origin
     chdir="{{ github_repo_temp }}/{{ item.0.name }}"
-  when: "'Not Found' in item.1.stdout"
+  when: "'Not Found' in item.1.stdout and template is defined"
   with_together:
     - github_repo_projects
     - curl_result.results
@@ -46,7 +46,7 @@
   command: >
     git remote add origin git@github.com:{{ github_repo_organization }}/{{ item.0.name }}.git
     chdir="{{ github_repo_temp }}/{{ item.0.name }}"
-  when: "'Not Found' in item.1.stdout"
+  when: "'Not Found' in item.1.stdout and template is defined"
   with_together:
     - github_repo_projects
     - curl_result.results
@@ -55,7 +55,7 @@
   command: >
     git push -u origin {{ item.0.template_version }}:master
     chdir="{{ github_repo_temp }}/{{ item.0.name }}"
-  when: "'Not Found' in item.1.stdout"
+  when: "'Not Found' in item.1.stdout and template is defined"
   with_together:
     - github_repo_projects
     - curl_result.results
