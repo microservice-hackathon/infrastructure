@@ -13,6 +13,11 @@ jenkins_plugins:
   - job-dsl
   - nested-view
   - parameterized-trigger
+  - compact-columns
+  - extra-columns
+  - thinBackup
+  - timestamper
+  - jobConfigHistory
   - ghprb
   - stash-pullrequest-builder
   - stashNotifier
