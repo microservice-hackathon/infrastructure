@@ -21,3 +21,4 @@ jenkins_plugins:
   - ghprb
   - stash-pullrequest-builder
   - stashNotifier
+  - plain-credentials
