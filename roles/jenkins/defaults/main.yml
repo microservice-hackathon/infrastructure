@@ -18,6 +18,7 @@ jenkins_plugins:
   - thinBackup
   - timestamper
   - jobConfigHistory
+  - envinject 
   - ghprb
   - stash-pullrequest-builder
   - stashNotifier
