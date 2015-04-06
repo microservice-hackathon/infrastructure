@@ -1,0 +1,240 @@
+{
+  "AWSTemplateFormatVersion" : "2010-09-09",
+
+  "Description" : "Microhackathon template",
+
+  "Parameters" : {
+
+    "AmiId" : {
+      "Type" : "String"
+    },
+
+    "SecurityGroupId": {
+      "Type" : "String"
+    },
+
+    "KeyName" : {
+      "Type" : "String"
+    },
+
+    "SubnetId" : {
+      "Type" : "String"
+    }
+
+  },
+
+  "Resources" : {
+
+    "loggers" : {
+      "Type" : "AWS::EC2::Instance",
+      "Properties" : {
+        "ImageId" : { "Ref" : "AmiId" },
+        "SecurityGroupIds" : [{ "Ref" : "SecurityGroupId" }],
+        "SubnetId" : { "Ref" : "SubnetId" },
+        "KeyName" : { "Ref" : "KeyName" },
+        "InstanceType":"m3.large",
+        "Tags":[
+          {
+            "Key" : "Name",
+            "Value" : { "Fn::Join" : [ "-", [ "loggers", { "Ref" : "AWS::StackName" } ] ] }
+          }
+        ],
+        "UserData": { "Fn::Base64" : { "Fn::Join" : ["",
+              [
+                "HOSTNAME=loggers"
+              ] ] }
+        },
+        "BlockDeviceMappings" : [
+            {
+                "DeviceName" : "/dev/sda",
+                "Ebs" : {
+					"VolumeSize" : 300,
+                    "DeleteOnTermination" : true
+                }
+            }
+        ]
+      }
+    },
+
+
+    "graphite" : {
+      "Type" : "AWS::EC2::Instance",
+      "Properties" : {
+        "ImageId" : { "Ref" : "AmiId" },
+        "SecurityGroupIds" : [{ "Ref" : "SecurityGroupId" }],
+        "SubnetId" : { "Ref" : "SubnetId" },
+        "KeyName" : { "Ref" : "KeyName" },
+        "InstanceType":"m3.large",
+        "Tags":[
+          {
+            "Key" : "Name",
+            "Value" : { "Fn::Join" : [ "-", [ "graphite", { "Ref" : "AWS::StackName" } ] ] }
+          }
+        ],
+        "UserData": { "Fn::Base64" : { "Fn::Join" : ["",
+              [
+                "HOSTNAME=graphite"
+              ] ] }
+        },
+        "BlockDeviceMappings" : [
+            {
+                "DeviceName" : "/dev/sda",
+                "Ebs" : {
+					"VolumeSize" : 50,
+                    "DeleteOnTermination" : true
+                }
+            }
+        ]
+      }
+    },
+
+
+    "rundeck" : {
+      "Type" : "AWS::EC2::Instance",
+      "Properties" : {
+        "ImageId" : { "Ref" : "AmiId" },
+        "SecurityGroupIds" : [{ "Ref" : "SecurityGroupId" }],
+        "SubnetId" : { "Ref" : "SubnetId" },
+        "KeyName" : { "Ref" : "KeyName" },
+        "InstanceType":"m3.large",
+        "Tags":[
+          {
+            "Key" : "Name",
+            "Value" : { "Fn::Join" : [ "-", [ "rundeck", { "Ref" : "AWS::StackName" } ] ] }
+          }
+        ],
+        "UserData": { "Fn::Base64" : { "Fn::Join" : ["",
+              [
+                "HOSTNAME=rundeck"
+              ] ] }
+        },
+        "BlockDeviceMappings" : [
+            {
+                "DeviceName" : "/dev/sda",
+                "Ebs" : {
+                    "DeleteOnTermination" : true
+                }
+            }
+        ]
+      }
+    },
+
+    
+	"nexus" : {
+      "Type" : "AWS::EC2::Instance",
+      "Properties" : {
+        "ImageId" : { "Ref" : "AmiId" },
+        "SecurityGroupIds" : [{ "Ref" : "SecurityGroupId" }],
+        "SubnetId" : { "Ref" : "SubnetId" },
+        "KeyName" : { "Ref" : "KeyName" },
+        "InstanceType":"m3.large",
+        "Tags":[
+          {
+            "Key" : "Name",
+            "Value" : { "Fn::Join" : [ "-", [ "nexus", { "Ref" : "AWS::StackName" } ] ] }
+          }
+        ],
+        "UserData": { "Fn::Base64" : { "Fn::Join" : ["",
+              [
+                "HOSTNAME=nexus"
+              ] ] }
+        },
+        "BlockDeviceMappings" : [
+            {
+                "DeviceName" : "/dev/sda",
+                "Ebs" : {
+				   "VolumeSize" : 350,
+                   "DeleteOnTermination" : true
+                }
+            }
+        ]
+      }
+    },
+
+
+    "jenkins" : {
+      "Type" : "AWS::EC2::Instance",
+      "Properties" : {
+        "ImageId" : { "Ref" : "AmiId" },
+        "SecurityGroupIds" : [{ "Ref" : "SecurityGroupId" }],
+        "SubnetId" : { "Ref" : "SubnetId" },
+        "KeyName" : { "Ref" : "KeyName" },
+        "InstanceType":"m3.2xlarge",
+        "Tags":[
+          {
+            "Key" : "Name",
+            "Value" : { "Fn::Join" : [ "-", [ "jenkins", { "Ref" : "AWS::StackName" } ] ] }
+          }
+        ],
+        "UserData": { "Fn::Base64" : { "Fn::Join" : ["",
+              [
+                "HOSTNAME=jenkins"
+              ] ] }
+        },
+        "BlockDeviceMappings" : [
+            {
+                "DeviceName" : "/dev/sda",
+                "Ebs" : {
+					"VolumeSize" : 200,
+                    "DeleteOnTermination" : true
+                }
+            }
+        ]
+      }
+    },
+
+
+    "apps" : {
+      "Type" : "AWS::EC2::Instance",
+      "Properties" : {
+        "ImageId" : { "Ref" : "AmiId" },
+        "SecurityGroupIds" : [{ "Ref" : "SecurityGroupId" }],
+        "SubnetId" : { "Ref" : "SubnetId" },
+        "KeyName" : { "Ref" : "KeyName" },
+        "InstanceType":"m3.2xlarge",
+        "Tags":[
+          {
+            "Key" : "Name",
+            "Value" : { "Fn::Join" : [ "-", [ "apps", { "Ref" : "AWS::StackName" } ] ] }
+          }
+        ],
+        "UserData": { "Fn::Base64" : { "Fn::Join" : ["",
+              [
+                "HOSTNAME=apps"
+              ] ] }
+        },
+        "BlockDeviceMappings" : [
+            {
+                "DeviceName" : "/dev/sda",
+                "Ebs" : {
+					"VolumeSize" : 50,
+                    "DeleteOnTermination" : true
+                }
+            }
+        ]
+      }
+    }
+
+  },
+
+  "Outputs" : {
+    "loggers" : {
+      "Value" : { "Fn::GetAtt" : [ "loggers", "PrivateIp" ] }
+    },
+    "graphite" : {
+      "Value" : { "Fn::GetAtt" : [ "graphite", "PrivateIp" ] }
+    },
+    "rundeck" : {
+      "Value" : { "Fn::GetAtt" : [ "rundeck", "PrivateIp" ] }
+    },
+    "jenkins" : {
+      "Value" : { "Fn::GetAtt" : [ "nexus", "PrivateIp" ] }
+    },
+    "jenkins" : {
+      "Value" : { "Fn::GetAtt" : [ "jenkins", "PrivateIp" ] }
+    },
+    "apps" : {
+      "Value" : { "Fn::GetAtt" : [ "apps", "PrivateIp" ] }
+    }
+  }
+}
