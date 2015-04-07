@@ -24,3 +24,12 @@ jenkins_plugins:
   - stashNotifier
   - plain-credentials 
   - credentials-binding
+  - build-name-setter
+  - build-monitor-plugin
+  - claim
+  - build-timeout
+  - email-ext
+  - parameterized-trigger
+  - rebuild
+  - heavy-job
+  - global-build-stats
