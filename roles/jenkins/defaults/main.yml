@@ -35,5 +35,6 @@ jenkins_plugins:
   - buildgraph-view
   - JDK_Parameter_Plugin
   - downstream-buildview
+  - mask-passwords
   - dashboard-view
   - global-build-stats
