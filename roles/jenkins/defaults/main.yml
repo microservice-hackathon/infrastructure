@@ -32,4 +32,9 @@ jenkins_plugins:
   - parameterized-trigger
   - rebuild
   - heavy-job
+  - buildgraph-view
+  - JDK_Parameter_Plugin
+  - downstream-buildview
+  - mask-passwords
+  - dashboard-view
   - global-build-stats
