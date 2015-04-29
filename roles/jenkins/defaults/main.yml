@@ -34,6 +34,7 @@ jenkins_plugins:
   - heavy-job
   - buildgraph-view
   - JDK_Parameter_Plugin
+  - git-parameter 
   - downstream-buildview
   - mask-passwords
   - repository-connector
