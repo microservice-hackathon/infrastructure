@@ -6,8 +6,7 @@ VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
-  config.vm.box = "debian-wheezy-amd64-4118"
-  config.vm.box_url = "http://www.mimuw.edu.pl/~luk/vagrant/debian-wheezy-amd64-4118.box"
+  config.vm.box = "puppetlabs/debian-7.8-32-nocm"
 
   config.vm.provision "ansible" do |ansible|
     ansible.playbook = "site.yml"
