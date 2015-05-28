@@ -36,6 +36,12 @@
     - local_action: shell echo "{{ facter_ipaddress_eth1 }}  {{ item }}" >> {{ tmp_file.stdout }}
       with_items: hosts_entries[inventory_hostname]
 
+    - name: add hosts entries on all machines
+      copy: src="{{ tmp_file.stdout }}" dest=/tmp/hosts
+
+    - shell: cat /tmp/hosts >>  /etc/hosts
+      sudo: yes      
+
     - debug: msg="Please execute `cat {{ tmp_file.stdout }} | sudo tee -a /etc/hosts"
       run_once: true
 
