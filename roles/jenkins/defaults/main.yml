@@ -40,3 +40,5 @@ jenkins_plugins:
   - repository-connector
   - dashboard-view
   - global-build-stats
+  - groovy
+  - build-flow-plugin
