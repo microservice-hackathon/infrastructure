@@ -1,4 +1,5 @@
 {
+
   "AWSTemplateFormatVersion" : "2010-09-09",
 
   "Description" : "Microhackathon template",
@@ -18,6 +19,10 @@
     },
 
     "SubnetId" : {
+      "Type" : "String"
+    },
+
+    "Domain" : {
       "Type" : "String"
     }
 
@@ -39,9 +44,17 @@
             "Value" : { "Fn::Join" : [ "-", [ "loggers", { "Ref" : "AWS::StackName" } ] ] }
           }
         ],
-        "UserData": { "Fn::Base64" : { "Fn::Join" : ["",
+        "UserData": { "Fn::Base64" : { "Fn::Join" : ["\n",
               [
-                "HOSTNAME=loggers"
+                "#cloud-config",
+                "hostname: loggers",
+                { "Fn::Join" : [".",
+                    ["fqdn: loggers", { "Ref" : "Domain" }]
+                ]},
+                "manage_etc_hosts: True",
+                "resize_rootfs: True",
+                "package_update: True",
+                "package_upgrade: True"
               ] ] }
         },
         "BlockDeviceMappings" : [
@@ -55,7 +68,6 @@
         ]
       }
     },
-
 
     "graphite" : {
       "Type" : "AWS::EC2::Instance",
@@ -71,9 +83,17 @@
             "Value" : { "Fn::Join" : [ "-", [ "graphite", { "Ref" : "AWS::StackName" } ] ] }
           }
         ],
-        "UserData": { "Fn::Base64" : { "Fn::Join" : ["",
+        "UserData": { "Fn::Base64" : { "Fn::Join" : ["\n",
               [
-                "HOSTNAME=graphite"
+                "#cloud-config",
+                "hostname: graphite",
+                { "Fn::Join" : [".",
+                    ["fqdn: graphite", { "Ref" : "Domain" }]
+                ]},
+                "manage_etc_hosts: True",
+                "resize_rootfs: True",
+                "package_update: True",
+                "package_upgrade: True"
               ] ] }
         },
         "BlockDeviceMappings" : [
@@ -87,7 +107,6 @@
         ]
       }
     },
-
 
     "rundeck" : {
       "Type" : "AWS::EC2::Instance",
@@ -103,9 +122,17 @@
             "Value" : { "Fn::Join" : [ "-", [ "rundeck", { "Ref" : "AWS::StackName" } ] ] }
           }
         ],
-        "UserData": { "Fn::Base64" : { "Fn::Join" : ["",
+        "UserData": { "Fn::Base64" : { "Fn::Join" : ["\n",
               [
-                "HOSTNAME=rundeck"
+                "#cloud-config",
+                "hostname: rundeck",
+                { "Fn::Join" : [".",
+                    ["fqdn: rundeck", { "Ref" : "Domain" }]
+                ]},
+                "manage_etc_hosts: True",
+                "resize_rootfs: True",
+                "package_update: True",
+                "package_upgrade: True"
               ] ] }
         },
         "BlockDeviceMappings" : [
@@ -118,7 +145,6 @@
         ]
       }
     },
-
 
     "nexus" : {
       "Type" : "AWS::EC2::Instance",
@@ -134,9 +160,17 @@
             "Value" : { "Fn::Join" : [ "-", [ "nexus", { "Ref" : "AWS::StackName" } ] ] }
           }
         ],
-        "UserData": { "Fn::Base64" : { "Fn::Join" : ["",
+        "UserData": { "Fn::Base64" : { "Fn::Join" : ["\n",
               [
-                "HOSTNAME=nexus"
+                "#cloud-config",
+                "hostname: nexus",
+                { "Fn::Join" : [".",
+                    ["fqdn: nexus", { "Ref" : "Domain" }]
+                ]},
+                "manage_etc_hosts: True",
+                "resize_rootfs: True",
+                "package_update: True",
+                "package_upgrade: True"
               ] ] }
         },
         "BlockDeviceMappings" : [
@@ -150,7 +184,6 @@
         ]
       }
     },
-
 
     "jenkins" : {
       "Type" : "AWS::EC2::Instance",
@@ -166,9 +199,17 @@
             "Value" : { "Fn::Join" : [ "-", [ "jenkins", { "Ref" : "AWS::StackName" } ] ] }
           }
         ],
-        "UserData": { "Fn::Base64" : { "Fn::Join" : ["",
+        "UserData": { "Fn::Base64" : { "Fn::Join" : ["\n",
               [
-                "HOSTNAME=jenkins"
+                "#cloud-config",
+                "hostname: jenkins",
+                { "Fn::Join" : [".",
+                    ["fqdn: jenkins", { "Ref" : "Domain" }]
+                ]},
+                "manage_etc_hosts: True",
+                "resize_rootfs: True",
+                "package_update: True",
+                "package_upgrade: True"
               ] ] }
         },
         "BlockDeviceMappings" : [
@@ -182,7 +223,6 @@
         ]
       }
     },
-
 
     "apps" : {
       "Type" : "AWS::EC2::Instance",
@@ -198,9 +238,17 @@
             "Value" : { "Fn::Join" : [ "-", [ "apps", { "Ref" : "AWS::StackName" } ] ] }
           }
         ],
-        "UserData": { "Fn::Base64" : { "Fn::Join" : ["",
+        "UserData": { "Fn::Base64" : { "Fn::Join" : ["\n",
               [
-                "HOSTNAME=apps"
+                "#cloud-config",
+                "hostname: apps",
+                { "Fn::Join" : [".",
+                    ["fqdn: apps", { "Ref" : "Domain" }]
+                ]},
+                "manage_etc_hosts: True",
+                "resize_rootfs: True",
+                "package_update: True",
+                "package_upgrade: True"
               ] ] }
         },
         "BlockDeviceMappings" : [
