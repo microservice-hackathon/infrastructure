@@ -48,7 +48,7 @@
             {
                 "DeviceName" : "/dev/sda",
                 "Ebs" : {
-					"VolumeSize" : 300,
+                    "VolumeSize" : 300,
                     "DeleteOnTermination" : true
                 }
             }
@@ -80,7 +80,7 @@
             {
                 "DeviceName" : "/dev/sda",
                 "Ebs" : {
-					"VolumeSize" : 50,
+                    "VolumeSize" : 50,
                     "DeleteOnTermination" : true
                 }
             }
@@ -119,8 +119,8 @@
       }
     },
 
-    
-	"nexus" : {
+
+    "nexus" : {
       "Type" : "AWS::EC2::Instance",
       "Properties" : {
         "ImageId" : { "Ref" : "AmiId" },
@@ -143,7 +143,7 @@
             {
                 "DeviceName" : "/dev/sda",
                 "Ebs" : {
-				   "VolumeSize" : 350,
+                   "VolumeSize" : 350,
                    "DeleteOnTermination" : true
                 }
             }
@@ -175,7 +175,7 @@
             {
                 "DeviceName" : "/dev/sda",
                 "Ebs" : {
-					"VolumeSize" : 200,
+                    "VolumeSize" : 200,
                     "DeleteOnTermination" : true
                 }
             }
@@ -207,7 +207,7 @@
             {
                 "DeviceName" : "/dev/sda",
                 "Ebs" : {
-					"VolumeSize" : 50,
+                    "VolumeSize" : 50,
                     "DeleteOnTermination" : true
                 }
             }
