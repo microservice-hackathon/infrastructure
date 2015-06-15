@@ -7,6 +7,7 @@ VAGRANTFILE_API_VERSION = "2"
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.box = "puppetlabs/debian-7.8-32-nocm"
+  config.vm.box_url = "https://atlas.hashicorp.com/puppetlabs/boxes/debian-7.8-32-nocm/versions/1.0.2/providers/virtualbox.box"
 
   config.vm.provision "ansible" do |ansible|
     ansible.playbook = "site.yml"
