@@ -1,0 +1,38 @@
+---
+
+- name: create rundeck projects
+  command: >
+    rd-project -a create -p {{ item }} -v
+  register: command_result
+  failed_when: >
+    command_result.rc == 1 and '409 Conflict' not in command_result.stderr
+  changed_when: >
+    'Project was created' in command_result.stdout
+  with_items: rundeck_projects
+
+- name: create directory for storing project definitions
+  file:
+    path: "{{ rundeck_basedir }}/.ansible_managed_projects"
+    state: directory
+    owner: rundeck
+    group: rundeck
+
+- name: copy project definition to server
+  copy:
+    src: "projects/{{ item }}.yml"
+    dest: "{{ rundeck_basedir }}/.ansible_managed_projects"
+    owner: rundeck
+    group: rundeck
+  register: copy_results
+  with_items: rundeck_projects
+
+- name: update project definition
+  command: >
+    rd-jobs load -v -r -f {{ item.0 }}.yml -F yaml -p {{ item.0 }} -d update
+  args:
+    chdir: "{{ rundeck_basedir }}/.ansible_managed_projects"
+  when: rundeck_force_project_update is defined or item.1.changed
+  with_together:
+    - rundeck_projects
+    - copy_results.results
+

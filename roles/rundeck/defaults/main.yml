@@ -1,5 +1,14 @@
 ---
 
-rundeck_version: 2.2.1-1-GA
+rundeck_version: 2.5.1-1-GA
 rundeck_host: rundeck.example.com
 rundeck_port: 4440
+rundeck_datasource: "jdbc:h2:file:/var/lib/rundeck/data/rundeckdb"
+rundeck_url: "http://{{ rundeck_host }}:{{ rundeck_port }}"
+rundeck_basedir: /var/lib/rundeck
+
+rundeck_cli_user: admin
+rundeck_cli_pass: admin
+
+rundeck_projects:
+ - deploy

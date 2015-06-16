@@ -1,0 +1,19 @@
+---
+
+- name: Deploy
+  loglevel: INFO
+  multipleExecutions: true
+  sequence:
+    keepgoing: false
+    strategy: step-first
+    commands:
+      - scripturl: https://raw.githubusercontent.com/microservice-hackathon/ansible-microservice-hackathon/master/scripts/deploy-microservice.sh
+  options:
+    groupId:
+      required: true
+    artifactId:
+      required: true
+    version:
+      required: true
+    nexusUrl:
+      required: true

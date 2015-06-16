@@ -1,0 +1,54 @@
+---
+
+- name: download rundeck package
+  get_url:
+    url: "{{ rundeck_download_url }}"
+    dest: "/tmp"
+
+- name: install rundeck package
+  apt:
+    deb: "/tmp/{{ rundeck_deb_filename }}"
+  notify:
+    - restart rundeck 
+
+- name: create /tmp/rundeck directory
+  file:
+    path: /tmp/rundeck
+    state: directory
+    owner: rundeck
+    group: rundeck
+
+- name: configure rundeck
+  template:
+    src: "{{ item }}.j2"
+    dest: "/etc/rundeck/{{ item }}"
+    owner: "rundeck"
+    group: "rundeck"
+  with_items:
+    - rundeck-config.properties
+    - framework.properties
+    - jaas-loginmodule.conf
+    - realm.properties
+    - profile
+    - log4j.properties
+    - project.properties
+  notify:
+    - restart rundeck 
+
+- name: configure ACL policies
+  copy:
+    src: "{{ item }}"
+    dest: /etc/rundeck
+    owner: rundeck
+    mode: "0640"
+  with_fileglob:
+    - aclpolicies/*
+  notify:
+    - restart rundeck 
+
+- name: start and enable rundeck service
+  service:
+    name: rundeckd
+    state: started
+    enabled: yes
+
