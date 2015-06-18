@@ -19,28 +19,25 @@
     - logstash
     - logstash-contrib
 
-- name: copying SSL certificate for lumberjack clients
-  copy:
-    src: files/certs/logstash-forwarder.pem
-    dest: /etc/ssl/certs/logstash-forwarder.pem
-    owner: root
+- name: create required ssl directory
+  file:
+    dest: /etc/logstash/ssl
+    state: directory
+    owner: logstash
     group: ssl-cert
-    mode: "0644"
 
-- name: copying SSL private key for lumberjack clients
+- name: copy SSL certificate
   copy:
-    src: files/certs/logstash-forwarder.key
-    dest: /etc/ssl/private/logstash-forwarder.key
-    owner: root
+    src: "{{ item }}"
+    dest: "/etc/logstash/ssl/{{ item | basename }}"
+    owner: logstash
     group: ssl-cert
-    mode: "0644"
-
-- name: logstash permissions workaround
-  file: 
-    name: /etc/ssl/private
-    mode: 0755
-    owner: root
-    group: ssl-cert
+    mode: "0600"
+  with_items:
+    - files/certs/logstash-forwarder.pem
+    - files/certs/logstash-forwarder.key
+  notify:
+    - restart logstash
 
 - name: create logstash configuration
   template:

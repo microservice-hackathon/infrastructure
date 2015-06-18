@@ -1,21 +1,38 @@
 ---
 
-- name: download logstash-forwarder package
-  get_url:
-    url: "{{ logstash_forwarder_package_url }}"
-    dest: "/tmp/{{ logstash_forwarder_package }}"
+- name: enable logstash repository
+  apt_repository:
+    repo: "deb http://packages.elasticsearch.org/logstashforwarder/debian stable main"
+    state: present
+
+- name: add logstash apt key
+  apt_key:
+    url: http://packages.elasticsearch.org/GPG-KEY-elasticsearch
+    state: present
 
 - name: install logstash-forwarder
   apt:
-    deb: "/tmp/{{ logstash_forwarder_package }}"
+    pkg: logstash-forwarder
+    state: present
+    update_cache: yes
 
 - name: ensure logstash-forwarder has its SSL certificate
-  copy: src=files/certs/logstash-forwarder.pem dest=/etc/ssl/certs/logstash-forwarder.pem owner=root group=root mode=0755
-
-- name: ensure logstash-forwarder has its SSL private key
-  copy: src=files/certs/logstash-forwarder.key dest=/etc/ssl/private/logstash-forwarder.key owner=root group=root mode=0755
+  copy:
+    src: "{{ item }}"
+    dest: "/etc/ssl/certs/{{ item | basename }}"
+    owner: root
+    group: root
+  with_items:
+    - files/certs/logstash-forwarder.pem
+    - files/certs/logstash-forwarder.key
+  notify:
+    - restart logstash-forwarder
 
 - name: ensure logstash-forwarder has its config file
-  template: src=config.json.j2 dest=/etc/logstash-forwarder owner=root group=root mode=0755
+  template:
+    src: logstash-forwarder.conf.j2
+    dest: /etc/logstash-forwarder.conf
+    owner: root
+    group: root
   notify:
     - restart logstash-forwarder
