@@ -1,10 +1,15 @@
-
 <VirtualHost *:80>
 
-	DocumentRoot {{ kibana_dir }}/current
+    DocumentRoot {{ kibana_dir }}/current
 
-	ErrorLog ${APACHE_LOG_DIR}/kibana_error.log
-	LogLevel warn
-	CustomLog ${APACHE_LOG_DIR}/kibana_access.log combined
+    <Directory /srv/>
+        Options Indexes FollowSymLinks
+        AllowOverride None
+        Require all granted
+    </Directory>
+
+    ErrorLog ${APACHE_LOG_DIR}/kibana_error.log
+    LogLevel warn
+    CustomLog ${APACHE_LOG_DIR}/kibana_access.log combined
 
 </VirtualHost>

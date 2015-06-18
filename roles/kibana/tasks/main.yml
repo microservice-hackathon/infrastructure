@@ -1,41 +1,45 @@
 ---
 
-- name: get Kibana archive
-  get_url: >
-    url={{ kibana_download_url }}
-    dest={{ common_download_dir }}/kibana-{{ kibana_version }}.tar.gz
+- name: download archive
+  get_url:
+    url: "{{ kibana_download_url }}"
+    dest: "{{ common_download_dir }}/kibana-{{ kibana_version }}.tar.gz"
 
-- name: create Kibana installation directory
-  file: dest={{ kibana_dir }} state=directory
+- name: create installation directory
+  file:
+    dest: "{{ kibana_dir }}"
+    state: directory
 
-- name: unarchive Kibana
-  unarchive: >
-    src={{ common_download_dir }}/kibana-{{ kibana_version }}.tar.gz
-    dest={{ kibana_dir }}
-    copy=no
+- name: unarchive source
+  unarchive:
+    src: "{{ common_download_dir }}/kibana-{{ kibana_version }}.tar.gz"
+    dest: "{{ kibana_dir }}"
+    copy: no
 
 - name: create symlink to current version
-  file: >
-    src={{ kibana_dir }}/kibana-{{ kibana_version }}
-    dest={{ kibana_dir }}/current
-    state=link
+  file:
+    src: "{{ kibana_dir }}/kibana-{{ kibana_version }}"
+    dest: "{{ kibana_dir }}/current"
+    state: link
 
-- name: create Kibana vhost
-  template: >
-    src=kibana-apache-site.j2
-    dest=/etc/apache2/sites-available/kibana
-    owner=root
-    group=root
-    mode=0644
+- name: create apache vhost
+  template:
+    src: kibana-apache-site.j2
+    dest: /etc/apache2/sites-available/kibana.conf
+    owner: root
+    group: root
+    mode: "0644"
+  notify:
+    -  restart apache
 
-- name: disable default site
-  command: a2dissite default
+- name: disable default apache site
+  command: a2dissite 000-default
   register: a2dissite
   changed_when: a2dissite.stdout.startswith('Site default disabled')
   notify:
     -  restart apache
 
-- name: enable kibana site
+- name: enable site
   command: a2ensite kibana
   register: a2ensite
   changed_when: a2ensite.stdout.startswith('Enabling site')
