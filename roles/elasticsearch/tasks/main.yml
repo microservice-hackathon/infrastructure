@@ -1,18 +1,26 @@
 ---
 
-- name: enable Elasticsearch repository
-  apt_repository: >
-    repo="deb http://packages.elasticsearch.org/elasticsearch/{{ elasticsearch_version }}/debian stable main"
-    state=present
+- name: enable elasticsearch repository
+  apt_repository:
+    repo: "deb http://packages.elasticsearch.org/elasticsearch/{{ elasticsearch_version }}/debian stable main"
+    state: present
 
-- name: add Elasticsearch repo key
-  apt_key: url="http://packages.elasticsearch.org/GPG-KEY-elasticsearch" state=present
+- name: add elasticsearch repo key
+  apt_key:
+    url: http://packages.elasticsearch.org/GPG-KEY-elasticsearch
+    state: present
 
 - name: install required packages
-  apt: pkg={{ item }} update_cache=yes state=present
+  apt:
+    pkg: "{{ item }}"
+    state: present
+    update_cache: yes
   with_items:
    - openjdk-7-jre
    - elasticsearch
 
-- name: start and enable Elasticsearch service
-  service: name=elasticsearch state=started enabled=yes
+- name: start and enable elasticsearch service
+  service:
+    name: elasticsearch
+    state: started
+    enabled: yes
