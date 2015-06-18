@@ -1,71 +1,55 @@
 ---
 
-- name: enable Logstash repository
-  apt_repository: >
-    repo="deb http://packages.elasticsearch.org/logstash/{{ logstash_version }}/debian stable main"
-    state=present
+- name: enable logstash repository
+  apt_repository:
+    repo: "deb http://packages.elasticsearch.org/logstash/{{ logstash_version }}/debian stable main"
+    state: present
 
-- name: add Logstash repo key
-  apt_key: >
-    url="http://packages.elasticsearch.org/GPG-KEY-elasticsearch"
-    state=present
+- name: add logstash apt key
+  apt_key:
+    url: http://packages.elasticsearch.org/GPG-KEY-elasticsearch
+    state: present
 
-- name: install Logstash from repository
-  apt: pkg={{ item }} update_cache=yes state=present
+- name: install logstash package
+  apt:
+    pkg: "{{ item }}"
+    state: present
+    update_cache: yes
   with_items:
-   - logstash
-   - logstash-contrib
+    - logstash
+    - logstash-contrib
 
-- name: ensure logstash-forwarder has its SSL certificate
-  copy: >
-    src=files/certs/logstash-forwarder.pem
-    dest=/etc/ssl/certs/logstash-forwarder.pem
-    owner=root
-    group=ssl-cert
-    mode=0644
+- name: copying SSL certificate for lumberjack clients
+  copy:
+    src: files/certs/logstash-forwarder.pem
+    dest: /etc/ssl/certs/logstash-forwarder.pem
+    owner: root
+    group: ssl-cert
+    mode: "0644"
 
-- name: ensure logstash-forwarder has its SSL private key
-  copy: >
-    src=files/certs/logstash-forwarder.key
-    dest=/etc/ssl/private/logstash-forwarder.key
-    owner=root
-    group=ssl-cert
-    mode=0644
+- name: copying SSL private key for lumberjack clients
+  copy:
+    src: files/certs/logstash-forwarder.key
+    dest: /etc/ssl/private/logstash-forwarder.key
+    owner: root
+    group: ssl-cert
+    mode: "0644"
 
 - name: logstash permissions workaround
-  file: >
-    name=/etc/ssl/private
-    mode=0755
-    owner=root
-    group=ssl-cert
+  file: 
+    name: /etc/ssl/private
+    mode: 0755
+    owner: root
+    group: ssl-cert
 
-- name: create Logstash input configuration
+- name: create logstash configuration
   template:
-    src: 01-lumberjack-input.conf.j2
-    dest: /etc/logstash/conf.d/01-input.conf
+    src: "{{ item }}"
+    dest: "/etc/logstash/conf.d/{{ item | basename | replace('.j2', '') }}"
     owner: root
     group: root
     mode: "0644"
+  with_fileglob:
+    - ../templates/conf.d/*
   notify:
-   - restart logstash
-
-- name: create Logstash filter configuration
-  template: >
-    src=11-java-apps.conf.j2
-    dest=/etc/logstash/conf.d/10-java-apps.conf
-    owner=root
-    group=root
-    mode=0644
-  notify:
-   - restart logstash
-
-- name: create Logstash output configuration
-  template: >
-    src=21-es-output.conf.j2
-    dest=/etc/logstash/conf.d/21-es-output.conf
-    owner=root
-    group=root
-    mode=0644
-  notify:
-   - restart logstash
-
+    - restart logstash
