@@ -7,8 +7,12 @@
   tasks:
     - name: generate certificates for logstash forwarder
       command: >
-        openssl req -days 356 -x509 -batch -nodes -newkey rsa:2048 -keyout {{ logstash_forwarder_key }} -out {{ logstash_forwarder_cert }}
-        creates={{ logstash_forwarder_cert }}
+        openssl req -days 356 -x509 -batch -nodes -newkey rsa:2048
+          -keyout {{ logstash_forwarder_key }}
+          -out {{ logstash_forwarder_cert }}
+          -subj '/C=PL/ST=mazowieckie/L=Warszawa/CN={{ logstash_lumberjack_host }}'
+      args:
+        creates: "{{ logstash_forwarder_cert }}"
 
 - name: sshd
   hosts: all
