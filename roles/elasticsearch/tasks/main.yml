@@ -19,6 +19,17 @@
    - openjdk-7-jre
    - elasticsearch
 
+- name: enable CORS (required by Kibana 3)
+  lineinfile:
+    dest: /etc/elasticsearch/elasticsearch.yml
+    line: "{{ item }}"
+    state: present
+  with_items:
+    - 'http.cors.enabled: true'
+    - 'http.cors.allow-origin: "/.*/"'
+  notify:
+    - restart elasticsearch 
+
 - name: start and enable elasticsearch service
   service:
     name: elasticsearch
