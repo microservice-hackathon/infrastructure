@@ -1,0 +1,52 @@
+---
+
+- name: create seyren service group
+  group:
+    name: "{{ seyren_group }}"
+    system: yes
+    state: present
+
+- name: create seyren service user
+  user:
+    name: "{{ seyren_user }}"
+    group: "{{ seyren_group }}"
+    shell: /bin/false
+    system: yes
+    home: "{{ seyren_dir }}"
+
+- name: create seyren directories 
+  file:
+    path: "{{ seyren_dir }}"
+    state: directory
+    owner: "{{ seyren_user }}"
+    group: "{{ seyren_group }}"
+
+- name: download jar file
+  get_url:
+    url: "{{ seyren_download_url }}"
+    dest: "{{ seyren_dir }}/seyren-{{ seyren_version }}.jar"
+    owner: "{{ seyren_user }}"
+    group: "{{ seyren_group }}"
+  notify:
+    - restart seyren
+
+- name: create service configuration
+  template:
+    src: seyren.service.j2
+    dest: /etc/systemd/system/seyren.service
+  register:
+    template_result
+  notify:
+    - restart seyren
+
+- name: reload systemd manager configuration
+  command:
+    systemctl daemon-reload
+  when:
+    template_result.changed
+
+- name: start and enable service
+  service:
+    name: seyren
+    state: started
+    enabled: yes

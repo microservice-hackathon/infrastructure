@@ -1,0 +1,6 @@
+---
+
+- name: restart seyren
+  service:
+    name: seyren
+    state: restarted

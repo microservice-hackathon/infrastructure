@@ -1,21 +1,22 @@
 ---
 
-domain: uservices.pl
-
-ec2_image: ami-bf1e688f
-ec2_region: us-west-2 
-ec2_instance_type: m3.medium
-ec2_security_group: permit_all
+domain: devoxx
 
 logstash_forwarder_cert: files/certs/logstash-forwarder.pem
 logstash_forwarder_key: files/certs/logstash-forwarder.key
-
 logstash_lumberjack_host: kibana.{{ domain }}
 logstash_lumberjack_port: 5043
 
+# graphite configuration
 graphite_host: graphite.{{ domain }}
 grafana_host: grafana.{{ domain }}
 elasticsearch_host: elasticsearch.{{ domain }}
 rundeck_host: rundeck.{{ domain }}
 
+# nexus configuration
 nexus_url: http://nexus.{{ domain }}:8081/nexus
+
+# seyren configuration
+seyren_graphite_url: "http://{{ graphite_host }}"
+seyren_port: 8080
+seyren_url: "http://{{ graphite_host }}:{{ seyren_port }}"

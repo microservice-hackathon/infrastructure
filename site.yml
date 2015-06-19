@@ -49,6 +49,7 @@
     - { role: apache }
     - { role: graphite }
     - { role: grafana }
+    - { role: seyren }
     
 - name: Server for nexus
   hosts: nexus

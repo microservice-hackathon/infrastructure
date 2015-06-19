@@ -1,0 +1,5 @@
+---
+
+dependencies: 
+  - { role: mongodb }
+  - { role: oracle_jdk, oracle_jdk_version: '8u45-b14' }

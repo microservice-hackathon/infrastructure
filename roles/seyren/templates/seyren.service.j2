@@ -1,0 +1,16 @@
+[Unit]
+Description=Seyren
+After=network.target
+
+[Service]
+User={{ seyren_user }}
+Group={{ seyren_group }}
+WorkingDirectory={{ seyren_dir }}
+Environment=GRAPHITE_URL={{ seyren_graphite_url }}
+Environment=SEYREN_URL={{ seyren_url }}
+ExecStart=/usr/bin/java -jar {{ seyren_dir }}/seyren-{{ seyren_version }}.jar -httpPort={{ seyren_port }} 
+ExecStop=/bin/kill -s TERM $MAINPID
+TimeoutSec=300
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,12 @@
+---
+
+- name: install mongodb server
+  apt:
+    pkg: mongodb-server
+    state: latest
+
+- name: start and enable mongodb
+  service:
+    name: mongodb
+    state: started
+    enabled: yes
