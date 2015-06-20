@@ -1,0 +1,4 @@
+---
+
+hystrix_dashboard_download_url: "https://repo1.maven.org/maven2/com/netflix/hystrix/hystrix-dashboard/{{ hystrix_dashboard_version }}/hystrix-dashboard-{{ hystrix_dashboard_version }}.war"
+hystrix_dashboard_turbine_download_url: "https://github.com/downloads/Netflix/Turbine/turbine-web-{{ hystrix_dashboard_turbine_version }}.war"

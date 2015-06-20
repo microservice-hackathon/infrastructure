@@ -1,0 +1,7 @@
+---
+
+hystrix_dashboard_tomcat_http_port: 8090
+hystrix_dashboard_version: 1.4.11
+
+hystrix_dashboard_turbine_version: 1.0.0
+

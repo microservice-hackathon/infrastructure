@@ -30,6 +30,7 @@
     - { role: oracle_jdk, oracle_jdk_version: '8u5-b13' }
     - { role: zookeeper }
     - { role: logstash_forwarder }
+    - { role: hystrix_dashboard }
 
 - name: Server for logging applications
   hosts: loggers

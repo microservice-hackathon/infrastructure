@@ -1,0 +1,37 @@
+---
+
+- name: install tomcat7 package
+  apt:
+    pkg: tomcat7
+    state: present
+    update_cache: yes
+
+- name: configure tomcat7
+  template:
+    src: server.xml.j2
+    dest: /etc/tomcat7/server.xml
+    owner: root
+    group: tomcat7
+    mode: "0644"
+  notify:
+    - restart tomcat7
+
+- name: deploy hystrix-dashboard
+  get_url:
+    url: "{{ hystrix_dashboard_download_url }}"
+    dest: "/var/lib/tomcat7/webapps/hystrix-dashboard.war"
+    owner: tomcat7
+    group: tomcat7
+    mode: "0644"
+  notify:
+    - restart tomcat7
+
+- name: deploy turbine
+  get_url:
+    url: "{{ hystrix_dashboard_turbine_download_url }}"
+    dest: "/var/lib/tomcat7/webapps/turbine.war"
+    owner: tomcat7
+    group: tomcat7
+    mode: "0644"
+  notify:
+    - restart tomcat7
