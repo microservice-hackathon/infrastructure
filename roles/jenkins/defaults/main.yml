@@ -41,4 +41,5 @@ jenkins_plugins:
   - dashboard-view
   - global-build-stats
   - groovy
+  - groovy-postbuild
   - build-flow-plugin
