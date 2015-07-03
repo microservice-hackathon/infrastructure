@@ -43,3 +43,4 @@ jenkins_plugins:
   - groovy
   - groovy-postbuild
   - build-flow-plugin
+  - extensible-choice-parameter
