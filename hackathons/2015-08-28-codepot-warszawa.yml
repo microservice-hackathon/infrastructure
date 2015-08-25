@@ -1,0 +1,52 @@
+---
+
+domain: codepot
+github_organization: Codepot-Microservices-2015
+docs_title: "Codepot Microservices - Warszawa 2015-08-26"
+
+docs:
+  - name: "{{ github_organization }}.github.io"
+    template: https://github.com/microservice-hackathon/docs-template.git
+    template_version: master
+
+projects:
+
+  - name: aggregatr-blue
+    port: 9090
+    template: https://github.com/2015-06-devoxx-microservices/aggregatr.io.git
+    template_version: master
+
+  - name: butelkatr-blue
+    port: 9091
+    template: https://github.com/2015-06-devoxx-microservices/butelkatr.io.git
+    template_version: master
+
+  - name: dojrzewatr-blue
+    port: 9092
+    template: https://github.com/2015-06-devoxx-microservices/dojrzewatr.io.git
+    template_version: master
+
+  - name: prezentatr-blue
+    port: 9093
+    template: https://github.com/2015-06-devoxx-microservices/prezentatr.io.git
+    template_version: master
+
+  - name: aggregatr-red
+    port: 9190
+    template: https://github.com/2015-06-devoxx-microservices/aggregatr.io.git
+    template_version: master
+
+  - name: butelkatr-red
+    port: 9191
+    template: https://github.com/2015-06-devoxx-microservices/butelkatr.io.git
+    template_version: master
+
+  - name: dojrzewatr-red
+    port: 9192
+    template: https://github.com/2015-06-devoxx-microservices/dojrzewatr.io.git
+    template_version: master
+
+  - name: prezentatr-red
+    port: 9193
+    template: https://github.com/2015-06-devoxx-microservices/prezentatr.io.git
+    template_version: master
