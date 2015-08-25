@@ -25,7 +25,6 @@ oracle_jdk_tools:
   - jhat
   - jinfo
   - jmap
-  - jmc
   - jps
   - jrunscript
   - jsadebugd

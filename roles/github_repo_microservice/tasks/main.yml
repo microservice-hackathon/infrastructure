@@ -12,13 +12,6 @@
   with_items:
     github_repo_microservice_projects
 
-- name: update microservice.json
-  template:
-    src: microservice.json.j2
-    dest: "{{ github_repo_microservice_temp }}/{{ item.name }}/src/main/resources/microservice.json"
-  with_items:
-    github_repo_microservice_projects
-
 - name: update gradle.properties
   replace:
     dest: "{{ github_repo_microservice_temp }}/{{ item.name }}/gradle.properties"
@@ -48,14 +41,6 @@
     dest: "{{ github_repo_microservice_temp }}/{{ item.name }}/settings.gradle"
     regexp: '^rootProject.name =.*$'
     replace: 'rootProject.name = "{{ item.name }}"'
-  with_items:
-    github_repo_microservice_projects
-
-- name: remove unneeded files
-  command: >
-    git rm --ignore-unmatch -rf -- config docs repository properties src/test
-    chdir="{{ github_repo_microservice_temp }}/{{ item.name }}"
-  ignore_errors: yes
   with_items:
     github_repo_microservice_projects
 

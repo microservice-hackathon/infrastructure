@@ -1,11 +1,17 @@
-[loggers]
-54.68.201.125 ansible_ssh_user=admin
+[nexus]
+52.16.215.68
 
-[apps]
-54.69.16.65 ansible_ssh_user=admin
+[rundeck]
+52.19.100.152
 
 [graphite]
-54.69.57.56 ansible_ssh_user=admin
+52.19.100.44
 
-[nexus]
-54.69.33.195 ansible_ssh_user=admin
+[loggers]
+52.19.107.141
+
+[jenkins]
+52.19.96.168
+
+[apps]
+52.19.16.87

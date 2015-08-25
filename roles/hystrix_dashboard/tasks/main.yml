@@ -27,11 +27,7 @@
     - restart tomcat7
 
 - name: deploy turbine
-  get_url:
-    url: "{{ hystrix_dashboard_turbine_download_url }}"
-    dest: "/var/lib/tomcat7/webapps/turbine.war"
-    owner: tomcat7
-    group: tomcat7
-    mode: "0644"
+  command: >
+    wget "{{ hystrix_dashboard_turbine_download_url }}" -O /var/lib/tomcat7/webapps/turbine.war
   notify:
     - restart tomcat7
