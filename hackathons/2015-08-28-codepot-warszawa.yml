@@ -1,0 +1,18 @@
+---
+
+domain: codepot
+github_organization: microhackathon-2015-08-codepot
+docs_title: "Microservice Hackathon - Warszawa 2015-08-26"
+
+docs:
+  - name: "{{ github_organization }}.github.io"
+    template: https://github.com/microservice-hackathon/docs-template.git
+    template_version: master
+
+projects:
+
+  - name: ui-waw
+    port: 8052
+    template: https://github.com/4finance/boot-microservice.git
+    template_version: boot-microservice-gui-without-node
+
