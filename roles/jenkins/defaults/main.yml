@@ -50,3 +50,4 @@ jenkins_plugins:
   - swarm
   - violation-comments-to-stash
   - violations
+  - slack
