@@ -15,34 +15,18 @@ properties:
 
 projects:
 
-  - name: aggregatr-blue
+  - name: aggregatr.io
     port: 9090
     template: ssh://git@github.com/2015-06-devoxx-microservices/aggregatr.io.git
 
-  - name: butelkatr-blue
+  - name: butelkatr.io
     port: 9091
     template: ssh://git@github.com/2015-06-devoxx-microservices/butelkatr.io.git
 
-  - name: dojrzewatr-blue
+  - name: dojrzewatr.io
     port: 9092
     template: ssh://git@github.com/2015-06-devoxx-microservices/dojrzewatr.io.git
 
-  - name: prezentatr-blue
+  - name: prezentatr.io
     port: 9093
-    template: ssh://git@github.com/2015-06-devoxx-microservices/prezentatr.io.git
-
-  - name: aggregatr-red
-    port: 9190
-    template: ssh://git@github.com/2015-06-devoxx-microservices/aggregatr.io.git
-
-  - name: butelkatr-red
-    port: 9191
-    template: ssh://git@github.com/2015-06-devoxx-microservices/butelkatr.io.git
-
-  - name: dojrzewatr-red
-    port: 9192
-    template: ssh://git@github.com/2015-06-devoxx-microservices/dojrzewatr.io.git
-
-  - name: prezentatr-red
-    port: 9193
     template: ssh://git@github.com/2015-06-devoxx-microservices/prezentatr.io.git
