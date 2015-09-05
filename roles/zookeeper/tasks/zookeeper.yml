@@ -18,7 +18,7 @@
     copy: no
   when: not zookeeper_installed.stat.exists
 
-- name: fix ownership 
+- name: fix ownership
   file:
     path: "{{ zookeeper_exhibitor_dir }}/zookeeper/{{ zookeeper_archive_name }}"
     owner: "{{ zookeeper_user }}"
