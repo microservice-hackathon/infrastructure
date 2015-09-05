@@ -4,3 +4,4 @@
 .vagrant
 *.swp
 group_vars/secrets.yml
+inventory
