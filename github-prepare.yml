@@ -1,0 +1,49 @@
+---
+
+- name: setup github repositories
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  vars:
+  pre_tasks:
+    - include_vars: "hackathons/default.yml"
+    - include_vars: "hackathons/{{ hackathon_edition }}.yml"
+  roles:
+    - {
+        role: github_repo,
+        github_repo_projects: "{{ projects }}",
+        github_repo_organization: "{{ github_organization }}",
+        github_repo_user: "{{ lookup('env', 'GH_USERNAME') }}",
+        github_repo_token: "{{ lookup('env', 'GH_ACCESS_TOKEN') }}"
+      }
+    - {
+        role: github_repo,
+        github_repo_projects: "{{ docs }}",
+        github_repo_organization: "{{ github_organization }}",
+        github_repo_user: "{{ lookup('env', 'GH_USERNAME') }}",
+        github_repo_token: "{{ lookup('env', 'GH_ACCESS_TOKEN') }}"
+      }
+    - {
+        role: github_repo,
+        github_repo_projects: "{{ properties }}",
+        github_repo_organization: "{{ github_organization }}",
+        github_repo_user: "{{ lookup('env', 'GH_USERNAME') }}",
+        github_repo_token: "{{ lookup('env', 'GH_ACCESS_TOKEN') }}"
+      }
+    - {
+        role: github_repo_microservice,
+        github_repo_microservice_projects: "{{ projects }}",
+        github_repo_microservice_organization: "{{ github_organization }}",
+      }
+    - {
+        role: github_repo_docs,
+        github_repo_docs_organization: "{{ github_organization }}",
+        github_repo_docs_projects: "{{ projects }}",
+        github_repo_docs_tools: "{{ tools }}",
+      }
+    - {
+        role: github_repo_properties,
+        github_repo_properties_organization: "{{ github_organization }}",
+        github_repo_properties_projects: "{{ projects }}",
+        github_repo_properties_tools: "{{ tools }}",
+      }

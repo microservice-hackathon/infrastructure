@@ -1,0 +1,16 @@
+---
+
+- name: cleanup github repositories
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  vars:
+  pre_tasks:
+    - include_vars: "hackathons/default.yml"
+    - include_vars: "hackathons/{{ hackathon_edition }}.yml"
+  tasks:
+    - name: remove repos
+      command: >
+        curl -X "DELETE" -u {{ lookup('env', 'GH_USERNAME') }}:{{ lookup('env', 'GH_ACCESS_TOKEN') }}
+        https://api.github.com/repos/{{ github_organization }}/{{ item.name }}
+      with_items: "{{ projects }}"

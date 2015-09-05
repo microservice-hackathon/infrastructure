@@ -28,7 +28,7 @@
     repo: "{{ item.0.template }}"
     version: "{{ item.0.template_version|default('master') }}"
     dest: "{{ github_repo_temp }}/{{ item.0.name }}"
-  when: "'Not Found' in item.1.stdout and template is defined"
+  when: "'Not Found' in item.1.stdout and item.0.template is defined"
   with_together:
     - github_repo_projects
     - curl_result.results
@@ -37,7 +37,7 @@
   command: >
     git remote remove origin
     chdir="{{ github_repo_temp }}/{{ item.0.name }}"
-  when: "'Not Found' in item.1.stdout and template is defined"
+  when: "'Not Found' in item.1.stdout and item.0.template is defined"
   with_together:
     - github_repo_projects
     - curl_result.results
@@ -46,16 +46,25 @@
   command: >
     git remote add origin git@github.com:{{ github_repo_organization }}/{{ item.0.name }}.git
     chdir="{{ github_repo_temp }}/{{ item.0.name }}"
-  when: "'Not Found' in item.1.stdout and template is defined"
+  when: "'Not Found' in item.1.stdout and item.0.template is defined"
   with_together:
     - github_repo_projects
     - curl_result.results
 
 - name: push code to new repository
   command: >
-    git push -u origin {{ item.0.template_version }}:master
+    git push -u origin {{ item.0.template_version|default('master') }}:master
     chdir="{{ github_repo_temp }}/{{ item.0.name }}"
-  when: "'Not Found' in item.1.stdout and template is defined"
+  when: "'Not Found' in item.1.stdout and item.0.template is defined"
+  with_together:
+    - github_repo_projects
+    - curl_result.results
+
+- name: push tags to new repository
+  command: >
+  git push --tags
+    chdir="{{ github_repo_temp }}/{{ item.0.name }}"
+  when: "'Not Found' in item.1.stdout and item.0.template is defined"
   with_together:
     - github_repo_projects
     - curl_result.results

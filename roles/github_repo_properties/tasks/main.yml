@@ -11,33 +11,6 @@
     dest: "{{ github_repo_properties_temp }}/properties"
     update: no
 
-- name: create required directories
-  file:
-    dest: "{{ github_repo_properties_temp }}/properties/{{ item }}"
-    state: directory
-  with_items:
-    - common
-    - prod/com/ofg
-
-- name: create directories for realms
-  file:
-    dest: "{{ github_repo_properties_temp }}/properties/prod/com/ofg/{{ item.name.split('-')[-1] }}"
-    state: directory
-  with_items:
-    github_repo_properties_projects
-
-- name: create global configuration file
-  template:
-    src: global.yaml.j2
-    dest: "{{ github_repo_properties_temp }}/properties/common/global.yaml"
-
-- name: create configuration file for applications
-  template:
-    src: application.yaml.j2
-    dest: "{{ github_repo_properties_temp }}/properties/prod/com/ofg/{{ item.name.split('-')[-1] }}/{{ item.name }}.yaml"
-  with_items:
-    github_repo_properties_projects
-
 - name: stage  changes
   command: >
     git add .
