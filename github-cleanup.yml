@@ -4,10 +4,9 @@
   hosts: localhost
   connection: local
   gather_facts: no
-  vars:
-  pre_tasks:
-    - include_vars: "hackathons/default.yml"
-    - include_vars: "hackathons/{{ hackathon_edition }}.yml"
+  vars_files:
+    - hackathons/{{ hackathon_edition }}.yml
+    - hackathons/default.yml
   tasks:
     - name: remove repos
       command: >

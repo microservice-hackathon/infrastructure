@@ -4,6 +4,9 @@
   hosts: localhost
   connection: local
   gather_facts: false
+  vars_files:
+    - hackathons/{{ hackathon_edition }}.yml
+    - hackathons/default.yml
   tasks:
     - name: generate certificates for logstash forwarder
       command: >
@@ -21,10 +24,13 @@
     - name: Wait for sshd to be running
       local_action: "wait_for host={{ inventory_hostname }} delay=0 port={{ ansible_ssh_port|default(22) }} timeout=90 state=started"
       when: use_vagrant is not defined
-        
+
 - name: Server for applications
   hosts: apps
   sudo: yes
+  vars_files:
+    - hackathons/{{ hackathon_edition }}.yml
+    - hackathons/default.yml
   roles:
     - { role: common }
     - { role: oracle_jdk, oracle_jdk_version: '8u5-b13' }
@@ -35,6 +41,9 @@
 - name: Server for logging applications
   hosts: loggers
   sudo: yes
+  vars_files:
+    - hackathons/{{ hackathon_edition }}.yml
+    - hackathons/default.yml
   roles:
     - { role: common }
     - { role: apache }
@@ -45,16 +54,22 @@
 - name: Server for metrics
   hosts: graphite
   sudo: true
+  vars_files:
+    - hackathons/{{ hackathon_edition }}.yml
+    - hackathons/default.yml
   roles:
     - { role: common }
     - { role: apache }
     - { role: graphite }
     - { role: grafana }
     - { role: seyren }
-    
+
 - name: Server for nexus
   hosts: nexus
   sudo: true
+  vars_files:
+    - hackathons/{{ hackathon_edition }}.yml
+    - hackathons/default.yml
   roles:
     - { role: common }
     - { role: sonatype-nexus }
@@ -62,6 +77,9 @@
 - name: Server for Jenkins
   hosts: jenkins
   sudo: true
+  vars_files:
+    - hackathons/{{ hackathon_edition }}.yml
+    - hackathons/default.yml
   roles:
     - { role: common }
     - { role: oracle_jdk, oracle_jdk_version: '8u5-b13' }
@@ -70,6 +88,9 @@
 - name: Server for Rundeck
   hosts: rundeck
   sudo: true
+  vars_files:
+    - hackathons/{{ hackathon_edition }}.yml
+    - hackathons/default.yml
   roles:
     - { role: common }
     - { role: rundeck }

@@ -1,5 +1,30 @@
 ---
 
+# logstash configuration
+logstash_forwarder_cert: files/certs/logstash-forwarder.pem
+logstash_forwarder_key: files/certs/logstash-forwarder.key
+logstash_lumberjack_host: kibana.{{ domain }}
+logstash_lumberjack_port: 5043
+
+# graphite configuration
+graphite_host: graphite.{{ domain }}
+grafana_host: grafana.{{ domain }}
+
+# ES configuration
+elasticsearch_host: elasticsearch.{{ domain }}
+
+# rundeck configuration
+rundeck_host: rundeck.{{ domain }}
+
+# nexus configuration
+nexus_url: http://nexus.{{ domain }}:8081/nexus
+
+# seyren configuration
+seyren_graphite_url: "http://{{ graphite_host }}"
+seyren_port: 8080
+seyren_url: "http://{{ graphite_host }}:{{ seyren_port }}"
+
+# tools location
 tools:
   - name: Rundeck
     url: "http://rundeck.{{ domain }}:4440"
@@ -22,3 +47,4 @@ tools:
   - name: Jenkins
     url: "http://jenkins.{{ domain }}:8080/"
   
+
