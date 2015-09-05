@@ -17,7 +17,6 @@
     update_cache: yes
   with_items:
     - logstash
-    - logstash-contrib
 
 - name: create required ssl directory
   file:
