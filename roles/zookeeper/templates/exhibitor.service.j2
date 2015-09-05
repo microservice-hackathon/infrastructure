@@ -1,0 +1,14 @@
+[Unit]
+Description=Exibitor
+After=network.target
+
+[Service]
+User={{ zookeeper_user }}
+Group={{ zookeeper_group }}
+WorkingDirectory={{ zookeeper_exhibitor_dir }}
+ExecStart=/usr/bin/java -jar {{ zookeeper_exhibitor_dir }}/bin/{{ zookeeper_exhibitor_jar }} -c file --fsconfigdir {{ zookeeper_exhibitor_dir }}/conf
+ExecStop=/bin/kill -s TERM $MAINPID
+TimeoutSec=300
+
+[Install]
+WantedBy=multi-user.target

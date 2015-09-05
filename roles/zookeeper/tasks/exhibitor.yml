@@ -1,60 +1,71 @@
 ---
 
-- name: install supervisor package
-  apt: name=supervisor state=present
-
 - name: create zookeeper service group
-  group: >
-    name={{ zookeeper_group }}
-    system=yes
-    state=present
+  group:
+    name: "{{ zookeeper_group }}"
+    system: yes
+    state: present
 
 - name: create zookeeper service user
-  user: >
-    name={{ zookeeper_user }}
-    group={{ zookeeper_group }}
-    shell=/bin/false
-    system=yes
-    home={{ zookeeper_exhibitor_dir }}
+  user:
+    name: "{{ zookeeper_user }}"
+    group: "{{ zookeeper_group }}"
+    shell: /bin/false
+    system: yes
+    home: "{{ zookeeper_exhibitor_dir }}"
 
-- name: create exhibitor directories 
-  file: >
-    path={{ zookeeper_exhibitor_dir }}/{{ item }}
-    state=directory
-    owner={{ zookeeper_user }}
-    group={{ zookeeper_group }}
+- name: create exhibitor directories
+  file:
+    path: "{{ zookeeper_exhibitor_dir }}/{{ item }}"
+    state: directory
+    owner: "{{ zookeeper_user }}"
+    group: "{{ zookeeper_group }}"
   with_items:
     - bin
     - conf
     - zookeeper
 
 - name: create exhibitor log directory
-  file: >
-    path={{ zookeeper_exhibitor_logs }}
-    state=directory
-    owner={{ zookeeper_user }}
-    group={{ zookeeper_group }}
+  file:
+    path: "{{ zookeeper_exhibitor_logs }}"
+    state: directory
+    owner: "{{ zookeeper_user }}"
+    group: "{{ zookeeper_group }}"
 
 - name: download exhibitor from Bintray
-  get_url: >
-    url={{ zookeeper_exhibitor_download_url }}
-    dest={{ zookeeper_exhibitor_dir }}/bin
-    owner={{ zookeeper_user }}
-    group={{ zookeeper_group }}
+  get_url:
+    url: "{{ zookeeper_exhibitor_download_url }}"
+    dest: "{{ zookeeper_exhibitor_dir }}/bin"
+    owner: "{{ zookeeper_user }}"
+    group: "{{ zookeeper_group }}"
 
 - name: create exhibitor configuration
-  template: >
-    src=exhibitor.properties.j2
-    dest={{ zookeeper_exhibitor_dir }}/conf/exhibitor.properties
-    owner={{ zookeeper_user }}
-    group={{ zookeeper_group }}
+  template:
+    src: exhibitor.properties.j2
+    dest: "{{ zookeeper_exhibitor_dir }}/conf/exhibitor.properties"
+    owner: "{{ zookeeper_user }}"
+    group: "{{ zookeeper_group }}"
   notify:
     - restart exhibitor
 
-- name: create supervisor configuration file
-  template: >
-    src=exhibitor.supervisorj2
-    dest=/etc/supervisor/conf.d/exhibitor.conf
-    force=yes
+- name: create service configuration
+  template:
+    src: exhibitor.service.j2
+    dest: /etc/systemd/system/exhibitor.service
+  register:
+    template_result
   notify:
-    - start exhibitor
+    - restart exhibitor
+
+- name: reload systemd manager configuration
+  command:
+    systemctl daemon-reload
+  when:
+    template_result.changed
+
+- name: start and enable service
+  service:
+    name: exhibitor
+    state: started
+    enabled: yes
+

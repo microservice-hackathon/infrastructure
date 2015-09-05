@@ -1,7 +1,6 @@
 ---
 
-- name: start exhibitor
-  supervisorctl: name=exhibitor state=present
-
 - name: restart exhibitor
-  supervisorctl: name=exhibitor state=restarted
+  service:
+    name: exhibitor
+    state: restarted
