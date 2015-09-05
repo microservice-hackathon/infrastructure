@@ -62,7 +62,7 @@
 
 - name: push tags to new repository
   command: >
-  git push --tags
+    git push --tags
     chdir="{{ github_repo_temp }}/{{ item.0.name }}"
   when: "'Not Found' in item.1.stdout and item.0.template is defined"
   with_together:
