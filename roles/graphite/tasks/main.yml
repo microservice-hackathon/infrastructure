@@ -65,7 +65,7 @@
 - name: create apache vhost
   template: >
     src=graphite-vhost.j2
-    dest=/etc/apache2/sites-available/graphite
+    dest=/etc/apache2/sites-available/graphite.conf
     mode=0644
 
 - name: enable apache vhost
