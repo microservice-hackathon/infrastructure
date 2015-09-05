@@ -1,0 +1,48 @@
+---
+
+domain: wjug
+github_organization: 2015-09-wjug-microservices
+docs_title: "WJUG Microservices - Warszawa 2015-09-08"
+
+docs:
+  - name: "{{ github_organization }}.github.io"
+    template: ssh://git@github.com/microservice-hackathon/docs-template.git
+    template_version: master
+
+properties:
+  - name: "properties"
+    template: ssh://git@github.com/2015-06-devoxx-microservices/properties.git
+
+projects:
+
+  - name: aggregatr-blue
+    port: 9090
+    template: ssh://git@github.com/2015-06-devoxx-microservices/aggregatr.io.git
+
+  - name: butelkatr-blue
+    port: 9091
+    template: ssh://git@github.com/2015-06-devoxx-microservices/butelkatr.io.git
+
+  - name: dojrzewatr-blue
+    port: 9092
+    template: ssh://git@github.com/2015-06-devoxx-microservices/dojrzewatr.io.git
+
+  - name: prezentatr-blue
+    port: 9093
+    template: ssh://git@github.com/2015-06-devoxx-microservices/prezentatr.io.git
+
+  - name: aggregatr-red
+    port: 9190
+    template: ssh://git@github.com/2015-06-devoxx-microservices/aggregatr.io.git
+
+  - name: butelkatr-red
+    port: 9191
+    template: ssh://git@github.com/2015-06-devoxx-microservices/butelkatr.io.git
+
+  - name: dojrzewatr-red
+    port: 9192
+    template: ssh://git@github.com/2015-06-devoxx-microservices/dojrzewatr.io.git
+
+  - name: prezentatr-red
+    port: 9193
+    template: ssh://git@github.com/2015-06-devoxx-microservices/prezentatr.io.git
