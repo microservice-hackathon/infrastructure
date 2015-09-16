@@ -29,7 +29,6 @@ jenkins_plugins:
   - claim
   - build-timeout
   - email-ext
-  - parameterized-trigger
   - rebuild
   - heavy-job
   - buildgraph-view
