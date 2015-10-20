@@ -1,6 +1,7 @@
 <VirtualHost *:80>
 
     DocumentRoot {{ kibana_dir }}/current
+	ServerName {{ kibana_host }} 
 
     <Directory /srv/>
         Options Indexes FollowSymLinks
