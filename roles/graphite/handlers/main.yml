@@ -1,4 +1,11 @@
 ---
 
-- name: Restart carbon-cache
-  service: name=carbon-cache state=restarted
+- name: restart carbon-cache
+  service:
+    name: carbon-cache
+    state: restarted
+
+- name: restart apache2
+  service:
+    name: apache2
+    state: restarted

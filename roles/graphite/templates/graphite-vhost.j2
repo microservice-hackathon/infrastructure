@@ -1,35 +1,26 @@
 <VirtualHost *:80>
 
     ServerName {{ graphite_host }}
+    WSGIDaemonProcess _graphite processes=5 threads=5 display-name='%{GROUP}' inactivity-timeout=120 user={{ graphite_user }} group={{ graphite_group }}
+    WSGIProcessGroup {{ graphite_group }}
+    WSGIImportScript /usr/share/graphite-web/graphite.wsgi process-group={{ graphite_group }} application-group=%{GLOBAL}
+    WSGIScriptAlias / /usr/share/graphite-web/graphite.wsgi
 
-    DocumentRoot /opt/graphite/webapp
-    ErrorLog ${APACHE_LOG_DIR}/graphite_error.log
-    CustomLog ${APACHE_LOG_DIR}/graphite_access.log common
+	Header set Access-Control-Allow-Origin "*"
+	Header set Access-Control-Allow-Methods "GET,OPTIONS"
+	Header set Access-Control-Allow-Headers "origin, authorization, accept"
 
-    Header set Access-Control-Allow-Origin "*"
-    Header set Access-Control-Allow-Methods "GET,OPTIONS"
-    Header set Access-Control-Allow-Headers "origin, authorization, accept"
-
-    WSGIDaemonProcess graphite processes=5 threads=5 display-name='%{GROUP}' inactivity-timeout=120
-    WSGIProcessGroup graphite
-    WSGIApplicationGroup %{GLOBAL}
-    WSGIImportScript /opt/graphite/conf/graphite.wsgi process-group=graphite application-group=%{GLOBAL}
-
-    WSGIScriptAlias / /opt/graphite/conf/graphite.wsgi
-
-    Alias /content/ /opt/graphite/webapp/content/
+    Alias /content/ /usr/share/graphite-web/static/
     <Location "/content/">
-        SetHandler None
+            SetHandler None
     </Location>
 
-    Alias /media/ {{ graphite_django_admin_media }}
-    <Location "/media/">
-        SetHandler None
-    </Location>
+    ErrorLog ${APACHE_LOG_DIR}/graphite-web_error.log
 
-    <Directory /opt/graphite/conf/>
-        Order deny,allow
-        Allow from all
-    </Directory>
+    # Possible values include: debug, info, notice, warn, error, crit,
+    # alert, emerg.
+    LogLevel warn
+
+    CustomLog ${APACHE_LOG_DIR}/graphite-web_access.log combined
 
 </VirtualHost>

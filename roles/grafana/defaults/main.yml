@@ -1,7 +1,7 @@
 ---
 
 grafana_git_url: https://github.com/torkelo/grafana.git
-grafana_graphite_root: /opt/graphite
+grafana_root: /srv/grafana
 grafana_version: 1.6.1
 grafana_vhost_server_name: grafana
 grafana_port: 8080

@@ -7,10 +7,24 @@
   notify:
     - enable apache
 
+- name: allow access to /srv
+  copy:
+    src: allow-srv.conf
+    dest: /etc/apache2/conf-available/allow-srv.conf
+
+- name: allow access to /srv
+  command: >
+    a2enconf allow-srv  
+  register: a2enconf
+  changed_when: '"To activate the new configuration" in a2enconf.stdout'
+  notify:
+    - restart apache
+    
 - name: enable modules
-  command: a2enmod {{ item }}
+  command: >
+    a2enmod {{ item }}
   register: a2enmod
-  changed_when: a2enmod.stdout.startswith('To activate the new configuration')
+  changed_when: '"To activate the new configuration" in a2enconf.stdout'
   with_items: apache_modules
   notify:
     - restart apache

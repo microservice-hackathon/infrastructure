@@ -1,10 +1,8 @@
 ---
 
-graphite_apache_user: apache2
-graphite_pkgs:
-  - python-dev
-  - python-pysqlite2
-  - python-pip
-  - python-cairo
-  - sqlite3
-  - libapache2-mod-wsgi
+# default user and group in Debian GNU/Linux
+graphite_user: _graphite
+graphite_group: _graphite
+
+# default db location
+graphite_db_file: /var/lib/graphite/graphite.db

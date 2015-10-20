@@ -1,76 +1,51 @@
 ---
 
-- name: Install Graphite Dependencies for Debian
-  apt: "name={{ item }} state=present update_cache=yes"
-  with_items: graphite_pkgs
+- name: install required packages
+  apt:
+    name: "{{ item }}"
+    state: present
+    update_cache: yes
+  with_items:
+    - apache2
+    - libapache2-mod-wsgi
+    - graphite-carbon
+    - graphite-web
 
-- name: Create PIP requirements file 
-  copy: src=opt/graphite/requirements.txt dest=/tmp/requirements.txt
+- name: check if graphite db exists
+  stat:
+    path: "{{ graphite_db_file }}"
+  register: graphite_db_file_stat
+  changed_when: false
 
-- name: Install Graphite from PIP
-  pip: requirements=/tmp/requirements.txt
-  environment:
-    PYTHONPATH: "/opt/graphite/lib:/opt/graphite/webapp"
+- name: create graphtie db
+  shell: >
+    rm -f {{ graphite_db_file }} && /usr/bin/graphite-manage syncdb --noinput
+  when: graphite_db_file_stat.stat.exists == false or graphite_db_file_stat.stat.size == 0
 
-- name: Configure Graphite webapp
-  template: >
-    src=opt/graphite/webapp/graphite/local_settings.py.j2
-    dest=/opt/graphite/webapp/graphite/local_settings.py
-    mode=0644
+- name: set permissions for graphite db
+  file:
+    dest: "{{ graphite_db_file }}"
+    owner: "{{ graphite_user }}"
+    group: "{{ graphite_group }}"
+
+- name: create apache vhost
+  template:
+    src: graphite-vhost.j2
+    dest: /etc/apache2/sites-available/graphite-web.conf
+    mode: "u=rw,g=r,o=r"
   notify:
-    - restart apache
-
-- name: Configure graphite.wsgi
-  copy: src=opt/graphite/conf/graphite.wsgi dest=/opt/graphite/conf/graphite.wsgi mode=0644
-  notify:
-    - restart apache
-
-- name: Include carbon-cache
-  include: carbon-cache.yml
-
-- name: Get directory permissions
-  stat: path=/opt/graphite
-  register: permissions
-
-- name: set permissions for /opt/graphite
-  file: path=/opt/graphite owner=www-data group=www-data state=directory recurse=yes
-
-- name: Get graphite directory
-  stat: path=/opt/graphite
-  register: graphite
-
-- name: Setup sqlitedb
-  command: /usr/bin/python manage.py syncdb --noinput chdir=/opt/graphite/webapp/graphite 
-   creates=/opt/graphite/storage/graphite.db
-  register: sqlite_setup
-
-- name: Change permissions of sqlitedb
-  file: >
-    path=/opt/graphite/storage/graphite.db
-    mode=0755
-    owner=www-data
-    group=www-data
-
-- name: Wait for sqlitedb to be setup
-  shell: sleep 3
-  when: sqlite_setup.changed
+    - restart apache2
 
 - name: enable modules
   command: a2enmod wsgi
   register: a2enmod
-  changed_when: a2enmod.stdout.startswith('To activate the new configuration')
+  changed_when: '"To activate the new configuration" in a2enmod.stdout'
   notify:
-    - restart apache
+    - restart apache2
 
-- name: create apache vhost
-  template: >
-    src=graphite-vhost.j2
-    dest=/etc/apache2/sites-available/graphite.conf
-    mode=0644
-
-- name: enable apache vhost
-  command: a2ensite graphite
+- name: enable graphite-web site
+  command: a2ensite graphite-web
   register: a2ensite
-  changed_when: a2ensite.stdout.startswith('To activate the new configuration')
+  changed_when: '"To activate the new configuration" in a2ensite.stdout'
   notify:
-    - restart apache
+    - restart apache2

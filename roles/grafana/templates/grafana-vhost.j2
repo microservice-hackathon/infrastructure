@@ -3,10 +3,10 @@ NameVirtualHost *:80
 
 <VirtualHost *:80>
 
-    DocumentRoot {{ grafana_graphite_root }}/dist
+    DocumentRoot {{ grafana_root }}/dist
     ServerName {{ grafana_host }}
 
-    <Directory {{ grafana_graphite_root }}/dist>
+    <Directory {{ grafana_root }}/current>
         Options Indexes FollowSymLinks MultiViews
         AllowOverride None
         Order allow,deny
