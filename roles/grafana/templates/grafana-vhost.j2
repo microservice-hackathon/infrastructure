@@ -3,7 +3,7 @@ NameVirtualHost *:80
 
 <VirtualHost *:80>
 
-    DocumentRoot {{ grafana_root }}/dist
+    DocumentRoot {{ grafana_root }}/current
     ServerName {{ grafana_host }}
 
     <Directory {{ grafana_root }}/current>
