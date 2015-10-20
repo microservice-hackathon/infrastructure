@@ -49,4 +49,5 @@ jenkins_plugins:
   - swarm
   - violation-comments-to-stash
   - violations
+  - next-build-number
   - slack
