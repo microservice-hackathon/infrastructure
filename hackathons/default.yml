@@ -50,4 +50,4 @@ tools:
   - name: Jenkins
     url: "http://jenkins.{{ domain }}:8080/"
   
-
+domain: uservices.local
