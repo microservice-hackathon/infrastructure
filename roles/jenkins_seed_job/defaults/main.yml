@@ -1,0 +1,8 @@
+---
+jenkins_seed_job_host: localhost
+jenkins_seed_job_port: 8080
+jenkins_seed_job_cli_client: /tmp/jenkins-cli.jar
+
+jenkins_seed_job_git_url: https://github.com/microservice-hackathon/jenkins-pipeline-dsl
+jenkins_seed_job_git_branch: master
+jenkins_seed_job_name: pipeline-seed

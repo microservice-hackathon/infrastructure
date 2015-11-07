@@ -51,3 +51,7 @@ tools:
     url: "http://jenkins.{{ domain }}:8080/"
 
 domain: uservices.local
+
+jenkins_seed_job_git_url: https://github.com/uservices-hackathon/jenkins-pipeline-dsl-example.git
+jenkins_seed_job_git_branch: sample_pipeline
+

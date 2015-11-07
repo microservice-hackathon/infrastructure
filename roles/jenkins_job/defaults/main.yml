@@ -1,4 +1,0 @@
----
-jenkins_job_host: localhost
-jenkins_job_port: 8080
-jenkins_job_cli_client: /tmp/jenkins-cli.jar
