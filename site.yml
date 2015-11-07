@@ -38,9 +38,9 @@
     - { role: logstash_forwarder }
     - { role: hystrix_dashboard }
 
-- name: Server for logging applications
-  hosts: loggers
-  sudo: yes
+- name: Server for monitoring
+  hosts: monitoring
+  sudo: true
   vars_files:
     - hackathons/{{ hackathon_edition }}.yml
     - hackathons/default.yml
@@ -50,16 +50,6 @@
     - { role: elasticsearch }
     - { role: logstash }
     - { role: kibana }
-
-- name: Server for metrics
-  hosts: graphite
-  sudo: true
-  vars_files:
-    - hackathons/{{ hackathon_edition }}.yml
-    - hackathons/default.yml
-  roles:
-    - { role: common }
-    - { role: apache }
     - { role: graphite }
     - { role: grafana }
     - { role: seyren }

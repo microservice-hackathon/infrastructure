@@ -28,20 +28,20 @@
     dest: /etc/apache2/sites-available/kibana.conf
     owner: root
     group: root
-    mode: "0644"
+    mode: "u=rw,g=r,o=r"
   notify:
     -  restart apache
 
 - name: disable default apache site
   command: a2dissite 000-default
   register: a2dissite
-  changed_when: a2dissite.stdout.startswith('Site default disabled')
+  changed_when: '"Site default disabled" in a2dissite.stdout'
   notify:
     -  restart apache
 
 - name: enable site
   command: a2ensite kibana
   register: a2ensite
-  changed_when: a2ensite.stdout.startswith('Enabling site')
+  changed_when: '"Enabling site" in a2ensite.stdout'
   notify:
     -  restart apache

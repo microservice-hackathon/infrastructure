@@ -7,6 +7,12 @@
   notify:
     - restart sonatype-nexus
 
+- name: update nexus init-script
+  copy:
+    src: nexus.init
+    dest: "{{ sonatype_nexus_dir }}/bin/nexus"
+    mode: "u=rwx,g=rx,o=rx"
+
 - name: create symbolic links to /etc/init.d/nexus
   file: src={{ sonatype_nexus_dir }}/bin/nexus
         dest=/etc/init.d/nexus
@@ -14,8 +20,9 @@
   notify:
     - restart sonatype-nexus
 
+- name: set permissions for nexus root dir
+  file: path={{ sonatype_nexus_root_dir }}/{{ nexus_directory.stdout }} owner={{ sonatype_nexus_user }} group={{ sonatype_nexus_user }} state=directory recurse=yes
+
 - name: configure runlevel links for nexus
   service: name=nexus enabled=yes
 
-- name: set permissions for nexus root dir
-  file: path={{sonatype_nexus_dir}} owner={{ sonatype_nexus_user }} group={{ sonatype_nexus_user }} state=directory recurse=yes

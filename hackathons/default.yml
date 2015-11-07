@@ -24,6 +24,9 @@ seyren_graphite_url: "http://{{ graphite_host }}"
 seyren_port: 8080
 seyren_url: "http://{{ graphite_host }}:{{ seyren_port }}"
 
+# kibana
+kibana_host: "kibana.{{ domain }}"
+
 # tools location
 tools:
   - name: Rundeck
@@ -47,4 +50,4 @@ tools:
   - name: Jenkins
     url: "http://jenkins.{{ domain }}:8080/"
   
-
+domain: uservices.local

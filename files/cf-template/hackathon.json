@@ -30,7 +30,7 @@
 
   "Resources" : {
 
-    "loggers" : {
+    "monitoring" : {
       "Type" : "AWS::EC2::Instance",
       "Properties" : {
         "ImageId" : { "Ref" : "AmiId" },
@@ -41,54 +41,15 @@
         "Tags":[
           {
             "Key" : "Name",
-            "Value" : { "Fn::Join" : [ "-", [ "loggers", { "Ref" : "AWS::StackName" } ] ] }
+            "Value" : { "Fn::Join" : [ "-", [ "monitoring", { "Ref" : "AWS::StackName" } ] ] }
           }
         ],
         "UserData": { "Fn::Base64" : { "Fn::Join" : ["\n",
               [
                 "#cloud-config",
-                "hostname: loggers",
+                "hostname: monitoring",
                 { "Fn::Join" : [".",
-                    ["fqdn: loggers", { "Ref" : "Domain" }]
-                ]},
-                "manage_etc_hosts: True",
-                "resize_rootfs: True",
-                "package_update: True",
-                "package_upgrade: True"
-              ] ] }
-        },
-        "BlockDeviceMappings" : [
-            {
-                "DeviceName" : "/dev/sda",
-                "Ebs" : {
-                    "VolumeSize" : 300,
-                    "DeleteOnTermination" : true
-                }
-            }
-        ]
-      }
-    },
-
-    "graphite" : {
-      "Type" : "AWS::EC2::Instance",
-      "Properties" : {
-        "ImageId" : { "Ref" : "AmiId" },
-        "SecurityGroupIds" : [{ "Ref" : "SecurityGroupId" }],
-        "SubnetId" : { "Ref" : "SubnetId" },
-        "KeyName" : { "Ref" : "KeyName" },
-        "InstanceType":"m3.large",
-        "Tags":[
-          {
-            "Key" : "Name",
-            "Value" : { "Fn::Join" : [ "-", [ "graphite", { "Ref" : "AWS::StackName" } ] ] }
-          }
-        ],
-        "UserData": { "Fn::Base64" : { "Fn::Join" : ["\n",
-              [
-                "#cloud-config",
-                "hostname: graphite",
-                { "Fn::Join" : [".",
-                    ["fqdn: graphite", { "Ref" : "Domain" }]
+                    ["fqdn: monitoring", { "Ref" : "Domain" }]
                 ]},
                 "manage_etc_hosts: True",
                 "resize_rootfs: True",
@@ -115,7 +76,7 @@
         "SecurityGroupIds" : [{ "Ref" : "SecurityGroupId" }],
         "SubnetId" : { "Ref" : "SubnetId" },
         "KeyName" : { "Ref" : "KeyName" },
-        "InstanceType":"m3.large",
+        "InstanceType":"m3.medium",
         "Tags":[
           {
             "Key" : "Name",
@@ -153,7 +114,7 @@
         "SecurityGroupIds" : [{ "Ref" : "SecurityGroupId" }],
         "SubnetId" : { "Ref" : "SubnetId" },
         "KeyName" : { "Ref" : "KeyName" },
-        "InstanceType":"m3.large",
+        "InstanceType":"m3.medium",
         "Tags":[
           {
             "Key" : "Name",
@@ -192,7 +153,7 @@
         "SecurityGroupIds" : [{ "Ref" : "SecurityGroupId" }],
         "SubnetId" : { "Ref" : "SubnetId" },
         "KeyName" : { "Ref" : "KeyName" },
-        "InstanceType":"m3.2xlarge",
+        "InstanceType":"m3.xlarge",
         "Tags":[
           {
             "Key" : "Name",
@@ -231,7 +192,7 @@
         "SecurityGroupIds" : [{ "Ref" : "SecurityGroupId" }],
         "SubnetId" : { "Ref" : "SubnetId" },
         "KeyName" : { "Ref" : "KeyName" },
-        "InstanceType":"m3.2xlarge",
+        "InstanceType":"m3.large",
         "Tags":[
           {
             "Key" : "Name",
@@ -266,11 +227,8 @@
   },
 
   "Outputs" : {
-    "loggers" : {
-      "Value" : { "Fn::GetAtt" : [ "loggers", "PrivateIp" ] }
-    },
-    "graphite" : {
-      "Value" : { "Fn::GetAtt" : [ "graphite", "PrivateIp" ] }
+    "monitoring" : {
+      "Value" : { "Fn::GetAtt" : [ "monitoring", "PrivateIp" ] }
     },
     "rundeck" : {
       "Value" : { "Fn::GetAtt" : [ "rundeck", "PrivateIp" ] }

@@ -6,23 +6,22 @@ VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
-  config.vm.box = "puppetlabs/debian-7.8-32-nocm"
-  config.vm.box_url = "https://atlas.hashicorp.com/puppetlabs/boxes/debian-7.8-32-nocm/versions/1.0.2/providers/virtualbox.box"
+  config.vm.box = "debian/jessie64"
 
   config.vm.provision "ansible" do |ansible|
     ansible.playbook = "site.yml"
     ansible.extra_vars = {
       'use_vagrant' => 1,
     }
-    ansible.groups = {
-      "loggers"  => ["loggers"],
-      "apps"     => ["apps"],
-      "graphite" => ["graphite"],
-      "nexus"    => ["nexus"],
-    }
+#    ansible.groups = {
+#      "loggers"  => ["loggers"],
+#      "apps"     => ["apps"],
+#      "graphite" => ["graphite"],
+#      "nexus"    => ["nexus"],
+#    }
   end
 
-  config.vm.define 'loggers' do |config|
+  config.vm.define 'monitoring' do |config|
     config.vm.host_name = 'loggers'
     config.vm.network "private_network", ip: "10.11.12.10"
   end
@@ -30,11 +29,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.define 'apps' do |config|
     config.vm.host_name = 'apps'
     config.vm.network "private_network", ip: "10.11.12.11"
-  end
-
-  config.vm.define 'graphite' do |config|
-    config.vm.host_name = 'graphite'
-    config.vm.network "private_network", ip: "10.11.12.12"
   end
 
   config.vm.define 'nexus' do |config|
