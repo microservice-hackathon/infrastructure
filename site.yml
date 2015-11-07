@@ -23,7 +23,7 @@
   tasks:
     - name: Wait for sshd to be running
       local_action: "wait_for host={{ inventory_hostname }} delay=0 port={{ ansible_ssh_port|default(22) }} timeout=90 state=started"
-      when: use_vagrant is not defined
+      when: is_vagrant is not defined
 
 - name: Server for applications
   hosts: apps
