@@ -1,13 +1,12 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-# Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
-VAGRANTFILE_API_VERSION = "2"
-
-# TODO: create hackathon edition for vagrant and read this var from there
-DOMAIN = "uservices.local"
+require 'yaml'
 
 Vagrant.require_version ">= 1.7.2"
+
+default_settings = YAML.load_file 'hackathons/default.yml'
+domain = default_settings['domain']
 
 plugins = [
   'vagrant-hostmanager',
@@ -19,6 +18,8 @@ plugins.each do |plugin|
     exit 1
   end
 end
+
+VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
@@ -37,27 +38,33 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   config.vm.define "monitoring" do |config|
-    config.vm.host_name = "monitoring.#{DOMAIN}"
+    config.vm.host_name = "monitoring.#{domain}"
     config.vm.network "private_network", ip: "10.11.12.10"
+    config.hostmanager.aliases = [
+      "graphite.#{domain}",
+      "grafana.#{domain}",
+      "kibana.#{domain}",
+      "elasticsearch.#{domain}",
+    ]
   end
 
   config.vm.define "apps" do |config|
-    config.vm.host_name = "apps.#{DOMAIN}"
+    config.vm.host_name = "apps.#{domain}"
     config.vm.network "private_network", ip: "10.11.12.11"
   end
 
   config.vm.define "nexus" do |config|
-    config.vm.host_name = "nexus.#{DOMAIN}"
+    config.vm.host_name = "nexus.#{domain}"
     config.vm.network "private_network", ip: "10.11.12.13"
   end
 
   config.vm.define "jenkins" do |config|
-    config.vm.host_name = "jenkins.#{DOMAIN}"
+    config.vm.host_name = "jenkins.#{domain}"
     config.vm.network "private_network", ip: "10.11.12.14"
   end
 
   config.vm.define "rundeck" do |config|
-    config.vm.host_name = "rundeck.#{DOMAIN}"
+    config.vm.host_name = "rundeck.#{domain}"
     config.vm.network "private_network", ip: "10.11.12.15"
   end
 
