@@ -1,11 +1,11 @@
 # -*- mode: ruby -*-
-# vi: set ft=ruby :
+# vim:ft=ruby:ts=2:et:sw=2
 
 require 'yaml'
 
 Vagrant.require_version ">= 1.7.2"
 
-default_settings = YAML.load_file 'hackathons/default.yml'
+default_settings = YAML.load_file(File.expand_path(File.join(File.dirname(__FILE__), "hackathons/default.yml")))
 domain = default_settings['domain']
 
 plugins = [
