@@ -1,0 +1,57 @@
+---
+
+- name: waiting for rundeck
+  wait_for:
+    host: "{{ rundeck_host }}"
+    port: "{{ rundeck_port }}"
+
+- name: create rundeck projects
+  command: >
+    rd-project -a create -p {{ item.name }} -v
+      --project.ssh-keypath={{ item.ssh_keypath }}
+      --resources.source.1.config.file={{ rundeck_projects_dir }}/{{ item.name }}/etc/resources.yml
+      --resources.source.1.config.format=resourceyaml
+      --resources.source.1.config.generateFileAutomatically=true
+      --resources.source.1.config.includeServerNode=false
+      --resources.source.1.config.requireFileExists=false
+  register: command_result
+  failed_when: >
+    command_result.rc == 1 and '409 Conflict' not in command_result.stderr
+  changed_when: >
+    'Project was created' in command_result.stdout
+  with_items: rundeck_projects
+
+- name: configure projects' resources
+  copy:
+    content: "{{ item.resources | to_yaml }}"
+    dest: "{{ rundeck_projects_dir }}/{{ item.name }}/etc/resources.yml"
+    owner: rundeck
+    group: rundeck
+  with_items: rundeck_projects
+
+- name: create directory for storing project definitions
+  file:
+    path: "{{ rundeck_basedir }}/.ansible_managed_projects"
+    state: directory
+    owner: rundeck
+    group: rundeck
+
+- name: copy project definition to server
+  copy:
+    content: "{{ item.definition | to_yaml }}"
+    dest: "{{ rundeck_basedir }}/.ansible_managed_projects/{{ item.name }}.yml"
+    owner: rundeck
+    group: rundeck
+  register: copy_results
+  with_items: rundeck_projects
+
+- name: update project definition
+  command: >
+    rd-jobs load -v -r -f {{ item.0.name }}.yml -F yaml -p {{ item.0.name }} -d update
+  args:
+    chdir: "{{ rundeck_basedir }}/.ansible_managed_projects"
+  when: rundeck_force_project_update is defined or item.1.changed
+  with_together:
+    - rundeck_projects
+    - copy_results.results
+

@@ -1,0 +1,83 @@
+---
+
+- name: download rundeck package
+  get_url:
+    url: "{{ rundeck_download_url }}"
+    dest: /tmp
+
+- name: install java
+  apt:
+    name: default-jre
+    state: present
+
+- name: install rundeck package
+  apt:
+    deb: "/tmp/{{ rundeck_deb_filename }}"
+  notify:
+    - restart rundeck
+
+- name: create /tmp/rundeck directory
+  file:
+    path: /tmp/rundeck
+    state: directory
+    owner: rundeck
+    group: rundeck
+
+- name: configure rundeck
+  template:
+    src: "{{ item }}.j2"
+    dest: "/etc/rundeck/{{ item }}"
+    owner: rundeck
+    group: rundeck
+  with_items:
+    - rundeck-config.properties
+    - framework.properties
+    - jaas-loginmodule.conf
+    - realm.properties
+    - profile
+    - log4j.properties
+    - project.properties
+  notify:
+    - restart rundeck
+
+- name: ensure that ~rundeck/.ssh directory exists
+  file:
+    path: "{{ rundeck_basedir }}/.ssh"
+    state: directory
+    owner: rundeck
+    group: rundeck
+    mode: u=rwx,g=,o=
+
+- name: generate ssh key
+  user:
+    name: rundeck
+    generate_ssh_key: yes
+    ssh_key_file: "{{ rundeck_basedir }}/.ssh/id_rsa"
+    ssh_key_type: rsa
+  when: rundeck_ssh_private_key is not defined
+
+- name: copy ssh private key
+  copy:
+    content: "{{ rundeck_ssh_private_key }}"
+    dest: "{{ rundeck_basedir }}/.ssh/id_rsa"
+    owner: rundeck
+    group: rundeck
+    mode: u=rw,g=,o=
+  when: rundeck_ssh_private_key is defined
+
+- name: configure ACL policies
+  copy:
+    src: "{{ item }}"
+    dest: /etc/rundeck
+    owner: rundeck
+    mode: u=rw,g=r,o=
+  with_fileglob:
+    - aclpolicies/*
+  notify:
+    - restart rundeck
+
+- name: start and enable rundeck service
+  service:
+    name: rundeckd
+    state: started
+    enabled: yes

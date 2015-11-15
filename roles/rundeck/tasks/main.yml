@@ -1,34 +1,4 @@
 ---
 
-- name: download rundeck package
-  get_url: >
-    url={{ rundeck_download_url }}
-    dest=/tmp
-
-- name: install rundeck package
-  apt: deb=/tmp/{{ rundeck_deb_filename }}
-
-- name: create /tmp/rundeck directory
-  file: >
-    path=/tmp/rundeck
-    state=directory
-    owner=rundeck
-    group=rundeck
-
-- name: create /srv/deploy directory
-  file: >
-    path=/srv/deploy
-    state=directory
-    owner=rundeck
-    group=rundeck
-
-- name: create rundeck configuration
-  template: >
-    src=rundeck-config.properties.j2
-    dest=/etc/rundeck/rundeck-config.properties
-    owner=rundeck
-    group=rundeck
-
-- name: start and enable rundeck service
-  service: name=rundeckd state=started enabled=yes
-
+- include: install.yml
+- include: projects.yml
