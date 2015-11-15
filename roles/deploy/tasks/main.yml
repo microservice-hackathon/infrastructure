@@ -1,0 +1,6 @@
+---
+
+- name: add rundeck's public key to deploy user
+  authorized_key:
+    user: "{{ deploy_user }}"
+    key: "{{ lookup('file', deploy_rundeck_public_key) }}"

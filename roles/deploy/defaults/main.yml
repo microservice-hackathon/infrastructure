@@ -1,0 +1,4 @@
+---
+
+deploy_user: root
+deploy_rundeck_public_key: ""

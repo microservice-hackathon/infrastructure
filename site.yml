@@ -16,6 +16,11 @@
           -subj '/C=PL/ST=mazowieckie/L=Warszawa/CN={{ logstash_lumberjack_host }}'
       args:
         creates: "{{ logstash_forwarder_cert }}"
+    - name: generate SSH keys for rundeck
+      command: >
+        ssh-keygen -q -N "" -f {{ rundeck_ssh_private_key }}
+      args:
+        creates: "{{ rundeck_ssh_private_key }}"
 
 - name: sshd
   hosts: all
@@ -33,6 +38,7 @@
     - hackathons/{{ hackathon_edition }}.yml
   roles:
     - { role: common }
+    - { role: deploy }
     - { role: oracle_jdk, oracle_jdk_version: '8u5-b13' }
     - { role: zookeeper }
     - { role: logstash_forwarder }

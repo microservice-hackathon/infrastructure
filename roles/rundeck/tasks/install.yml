@@ -58,7 +58,7 @@
 
 - name: copy ssh private key
   copy:
-    content: "{{ rundeck_ssh_private_key }}"
+    src: "{{ rundeck_ssh_private_key }}"
     dest: "{{ rundeck_basedir }}/.ssh/id_rsa"
     owner: rundeck
     group: rundeck

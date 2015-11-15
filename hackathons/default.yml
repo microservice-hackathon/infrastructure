@@ -1,5 +1,8 @@
 ---
 
+# default domain
+domain: uservices.local
+
 # logstash configuration
 logstash_forwarder_cert: files/certs/logstash-forwarder.pem
 logstash_forwarder_key: files/certs/logstash-forwarder.key
@@ -50,11 +53,13 @@ tools:
   - name: Jenkins
     url: "http://jenkins.{{ domain }}:8080/"
 
-domain: uservices.local
-
+# jenkins
 jenkins_seed_job_git_url: https://github.com/uservices-hackathon/jenkins-pipeline-dsl-example.git
 jenkins_seed_job_git_branch: sample_pipeline
 
+# rundeck
+rundeck_ssh_private_key: files/certs/rundeck_id_rsa
+rundeck_ssh_public_key: files/certs/rundeck_id_rsa.pub
 rundeck_projects:
   - name: "deploy"
     ssh_keypath: "{{ rundeck_basedir }}/.ssh/id_rsa"
@@ -95,3 +100,5 @@ rundeck_projects:
         hostname: "apps.{{ domain }}"
         osName: Linux
 
+# deploy role configuration
+deploy_rundeck_public_key: "{{ rundeck_ssh_public_key }}"
