@@ -51,3 +51,4 @@ jenkins_plugins:
   - violations
   - next-build-number
   - slack
+  - checkstyle
